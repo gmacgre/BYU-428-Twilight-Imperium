@@ -28,11 +28,14 @@ class _BoardGridState extends State<BoardGrid> implements BoardGridView {
 
   @override
   Widget build(BuildContext context) {
+    final double screenHieght = MediaQuery.of(context).size.height;
+    final double screenWidth = MediaQuery.of(context).size.width;
     return HexagonGrid.pointy(
       depth: _depth,
       padding: EdgeInsets.zero,
-      width: 1000.0,
-      height: 1000.0,
+      //The grid will just pick whichever one is smaller so it keeps a consistent ratio
+      width: screenWidth * .8,
+      height: screenHieght * .9,
       buildTile: (coordinates) => HexagonWidgetBuilder(
         padding: 2.0,
         cornerRadius: 0,
@@ -41,9 +44,13 @@ class _BoardGridState extends State<BoardGrid> implements BoardGridView {
       ),
       buildChild: (coordinates) {
         //Adding the _depth is necessary to force everything to be a positive value.
-        //The hex grid makes the origin (0,0) the middle of the grid, but since 
-        //lists can't have negative indexes we need to adjust accordingly.  
-        return BoardSpace(initialModel: _boardState.spaces[(coordinates.q + _depth)][(coordinates.r + _depth)]);
+        //The hex grid makes the origin (0,0) the middle of the grid, but since
+        //lists can't have negative indexes we need to adjust accordingly.
+        //To translate from model to view, subtract _depth to coordinates
+        //To transalte from view to model, add _depth from coordinates
+        return BoardSpace(
+            initialModel: _boardState.spaces[(coordinates.q + _depth)]
+                [(coordinates.r + _depth)]);
       },
     );
   }

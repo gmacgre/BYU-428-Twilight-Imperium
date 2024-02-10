@@ -8,7 +8,7 @@ class BoardGridModel {
       (_depth * 2) + 1,
       (q) => List<BoardSpaceModel>.generate(
         (_depth * 2) + 1,
-        (r) => BoardSpaceModel(q - _depth, r - _depth, '${q - _depth}, ${r- _depth}'),
+        (r) => BoardSpaceModel(q, r , '$q, $r'),
         growable: false,
       ),
       growable: false,
