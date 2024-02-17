@@ -110,7 +110,7 @@ class _PoolCount extends StatelessWidget {
         OutlinedLetters(content: desc),
         CustomPaint(
           size: const Size(35.0, 35.0),
-          painter: _trianglePainter(),
+          painter: _TrianglePainter(),
           child: SizedBox(
             width: 35.0,
             height: 35.0,
@@ -138,7 +138,7 @@ A-------C
    \ /
     B
 */
-class _trianglePainter extends CustomPainter {
+class _TrianglePainter extends CustomPainter {
   @override
   void paint(Canvas c, Size s) {
     List<List<double>> points = [

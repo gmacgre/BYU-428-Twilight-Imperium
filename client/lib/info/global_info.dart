@@ -21,7 +21,7 @@ class _GlobalInfoState extends State<GlobalInfo> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return ListView(
       children: _buildChildren(),
     );
   }
@@ -49,7 +49,11 @@ class _GlobalInfoState extends State<GlobalInfo> {
     }
 
     //TODO: AGENDAS, UNTAKEN STRATEGY CARDS
-
+    toReturn.add(const Padding(
+        padding: EdgeInsets.fromLTRB(8.0, 10.0, 8.0, 10.0),
+        child: Placeholder()
+      )
+    );
     return toReturn;
   }
 }
