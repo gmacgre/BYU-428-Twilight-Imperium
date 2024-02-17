@@ -1,3 +1,5 @@
+import 'package:client/info/global_info.dart';
+import 'package:client/info/player_info.dart';
 import 'package:flutter/material.dart';
 import "package:client/info/presenter/info_panel_presenter.dart";
 
@@ -8,14 +10,14 @@ class InfoPanel extends StatefulWidget {
   State<InfoPanel> createState() => _InfoPanelState();
 }
 
-class _InfoPanelState extends State<InfoPanel> implements InfoPanelView {
+class _InfoPanelState extends State<InfoPanel> {
 
   late InfoPanelPresenter _presenter;
 
   @override
   void initState() {
     super.initState();
-    _presenter = InfoPanelPresenter(6); //TODO: THIS IS UNSUSTAINABLE
+    _presenter = InfoPanelPresenter();
   }
 
   @override
@@ -31,6 +33,7 @@ class _InfoPanelState extends State<InfoPanel> implements InfoPanelView {
               labelColor: Colors.black,
               //If we want a focus or splash color, change this line below here
               overlayColor: MaterialStateProperty.all<Color>(Colors.transparent),
+              indicatorColor: Colors.black,
               tabs: _buildTabs()
             ),
           ),
@@ -65,19 +68,13 @@ class _InfoPanelState extends State<InfoPanel> implements InfoPanelView {
     List<Widget> toReturn = [];
     for(int i = 0; i < _presenter.getNumPlayers() + 1; i++) {
       toReturn.add(
-        //TODO: Player widgets and World Info Wigdets called and made here
+        //Player widgets and Global Info Wigdets called and made here
         Center(
-          child: Text('$i'),
+          child: _presenter.isPlayer(i) ? PlayerInfo(playerIndex: i) : const GlobalInfo()
         )
       );
     }
     return toReturn;
   }
 
-  @override
-  void reload() {
-    setState(() {
-      
-    });
-  }
 }
