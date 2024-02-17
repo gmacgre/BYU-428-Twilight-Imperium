@@ -35,18 +35,14 @@ class _GlobalInfoState extends State<GlobalInfo> {
       toReturn.add(
         Padding(
           padding: const EdgeInsets.fromLTRB(8.0, 10.0, 8.0, 10.0),
-          child: DecoratedBox(
-            decoration: const BoxDecoration(
-              color: Colors.green,
-            ),
-            child: PlayerOverview(
-              icon: _presenter.getIcon(i),
-              strategyCardId: _presenter.getStrategyCard(i),
-              tacticTokenCount: _presenter.getTacticPool(i),
-              fleetTokenCount: _presenter.getFleetPool(i),
-              strategyTokenCount: _presenter.getStrategyPool(i),
-              objScoredCount: _presenter.getObjScoredCount(i)
-            )
+          child: PlayerOverview(
+            icon: _presenter.getIcon(i),
+            strategyCardId: _presenter.getStrategyCard(i),
+            tacticTokenCount: _presenter.getTacticPool(i),
+            fleetTokenCount: _presenter.getFleetPool(i),
+            strategyTokenCount: _presenter.getStrategyPool(i),
+            objScoredCount: _presenter.getObjScoredCount(i),
+            playerColor: i,
           )
         )
       );

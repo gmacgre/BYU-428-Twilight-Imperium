@@ -3,14 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:client/info/strategy_card.dart';
 
 class PlayerOverview extends StatelessWidget {
-  const PlayerOverview({
+  PlayerOverview({
     super.key,
     this.icon = "",
     this.strategyCardId = -1,
     this.tacticTokenCount = -1,
     this.fleetTokenCount = -1,
     this.strategyTokenCount = -1,
-    this.objScoredCount = -1
+    this.objScoredCount = -1,
+    this.playerColor = 6
   });
 
   final String icon;
@@ -19,15 +20,30 @@ class PlayerOverview extends StatelessWidget {
   final int fleetTokenCount;
   final int strategyTokenCount;
   final int objScoredCount;
+  final int playerColor;
+  final List<Color> background = [
+    Colors.red,
+    Colors.blue,
+    Colors.purple,
+    Colors.black87,
+    Colors.green,
+    Colors.yellow,
+    Colors.orange
+  ];
 
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 70,
-      child: Row(
-        children: _buildRow()
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: background[playerColor]
       ),
+      child: SizedBox(
+        height: 70,
+        child: Row(
+          children: _buildRow()
+        ),
+      )
     );
   }
 
@@ -131,7 +147,7 @@ class _trianglePainter extends CustomPainter {
       [s.width       , 0.0      ]
     ];
     Paint paint = Paint();
-    paint.color = Colors.grey;
+    paint.color = Colors.blueGrey;
     Path path = Path();
     for(int i = 0; i < points.length + 1; i++) {
       path.lineTo(points[i % points.length][0], points[i % points.length][1]);
