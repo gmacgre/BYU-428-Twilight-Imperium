@@ -28,19 +28,14 @@ class _BoardGridState extends State<BoardGrid> implements BoardGridView {
 
   @override
   Widget build(BuildContext context) {
-    final double screenHieght = MediaQuery.of(context).size.height;
-    final double screenWidth = MediaQuery.of(context).size.width;
     return HexagonGrid.pointy(
       depth: _depth,
       padding: EdgeInsets.zero,
       //The grid will just pick whichever one is smaller so it keeps a consistent ratio
-      width: screenWidth * .8,
-      height: screenHieght * .9,
       buildTile: (coordinates) => HexagonWidgetBuilder(
         padding: 2.0,
         cornerRadius: 0,
-        color: const Color.fromARGB(255, 0, 144, 99),
-        child: const Text('test'),
+        color: const Color.fromARGB(255, 0, 0, 70),
       ),
       buildChild: (coordinates) {
         //Adding the _depth is necessary to force everything to be a positive value.

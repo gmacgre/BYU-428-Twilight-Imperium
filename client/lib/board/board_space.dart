@@ -1,3 +1,5 @@
+import 'package:client/board/planet.dart';
+import 'package:client/board/system.dart';
 import 'package:client/model/board_space_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -25,6 +27,6 @@ class _BoardSpaceState extends State<BoardSpace> {
 
   @override
   Widget build(BuildContext context) {
-    return Text(_model.name);
+    return Container();
   }
 }
