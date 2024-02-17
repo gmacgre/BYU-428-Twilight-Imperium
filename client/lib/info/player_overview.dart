@@ -91,19 +91,60 @@ class _PoolCount extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(desc, 
-          style: const TextStyle(
-            fontFamily: 'Courier',
-            fontWeight: FontWeight.bold
-          ),
-        ),
-        Text("$count", 
-          style: const TextStyle(
-            fontFamily: 'Courier',
-            fontWeight: FontWeight.bold
+        OutlinedLetters(content: desc),
+        CustomPaint(
+          size: const Size(35.0, 35.0),
+          painter: _trianglePainter(),
+          child: SizedBox(
+            width: 35.0,
+            height: 35.0,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(35.0 * 0.40, 35.0 * 0.10, 0.0, 0.0),
+              child: OutlinedLetters(content: '$count')
+            ),
           ),
         ),
       ],
     );
+  }
+}
+
+
+
+/*
+
+This class paints a grey triangle to be filled with a child of size s.
+It uses 3 points to draw a path that is filled. The color is grey, and this is not mutable.
+It also draws a border in white to make sure it stands out against any colored background.
+A-------C
+ \     /
+  \   /
+   \ /
+    B
+*/
+class _trianglePainter extends CustomPainter {
+  @override
+  void paint(Canvas c, Size s) {
+    List<List<double>> points = [
+      [0.0           , 0.0      ],
+      [s.width * 0.50, s.height ],
+      [s.width       , 0.0      ]
+    ];
+    Paint paint = Paint();
+    paint.color = Colors.grey;
+    Path path = Path();
+    for(int i = 0; i < points.length + 1; i++) {
+      path.lineTo(points[i % points.length][0], points[i % points.length][1]);
+    }
+    c.drawPath(path, paint);
+    paint.color = Colors.white;
+    paint.strokeWidth = 2.0;
+    paint.style = PaintingStyle.stroke;
+    c.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return false;
   }
 }
