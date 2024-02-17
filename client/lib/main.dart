@@ -1,5 +1,5 @@
+import 'package:client/create_join/create_join.dart';
 import 'package:flutter/material.dart';
-import 'package:client/info/info_panel.dart';
 
 
 void main() {
@@ -35,7 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: SafeArea(child: Center(child: InfoPanel())),
+      body: SafeArea(child: Center(child: CreateAndJoinPage())),
     );
   }
 }
