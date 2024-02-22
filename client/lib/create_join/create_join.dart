@@ -162,6 +162,7 @@ class _CreateAndJoinPageState extends State<CreateAndJoinPage> implements Create
           _presenter.joinGame();
         },
         style: ButtonStyle(
+          overlayColor: MaterialStateProperty.all(Colors.white24),
           backgroundColor: MaterialStateProperty.all(Colors.amber)
         ),
         child: const Text('Join Game',
@@ -173,6 +174,7 @@ class _CreateAndJoinPageState extends State<CreateAndJoinPage> implements Create
           _presenter.createGame();
         },
         style: ButtonStyle(
+          overlayColor: MaterialStateProperty.all(Colors.white24),
           backgroundColor: MaterialStateProperty.all(Colors.amber)
         ),
         child: const Text('Create Game',
