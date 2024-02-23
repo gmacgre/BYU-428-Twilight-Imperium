@@ -84,6 +84,21 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
+
+  fonts:
+    - family: Ambroise Firmin
+      fonts:
+        - asset: assets/fonts/ambroise_firmin/regular.otf
+        - asset: assets/fonts/ambroise_firmin/bold.otf
+          weight: 700
+    - family: Handel Gothic D
+      fonts:
+        - asset: assets/fonts/handel_gothic_d/regular.ttf
+        - asset: assets/fonts/handel_gothic_d/medium.otf
+          weight: 400
+        - asset: assets/fonts/handel_gothic_d/bold.otf
+          weight: 700
+        
   # fonts:
   #   - family: Schyler
   #     fonts:
