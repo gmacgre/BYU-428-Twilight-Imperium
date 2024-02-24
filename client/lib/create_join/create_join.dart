@@ -15,6 +15,8 @@ class _CreateAndJoinPageState extends State<CreateAndJoinPage> implements Create
 
   late CreateAndJoinPagePresenter _presenter;
 
+  bool buttonsActive = true;
+
   @override
   void initState() {
     super.initState();
@@ -158,24 +160,24 @@ class _CreateAndJoinPageState extends State<CreateAndJoinPage> implements Create
   List<Widget> _buildButtonRow() {
     List<Widget> protoReturn = [
       TextButton(
-        onPressed: () {
+        onPressed: buttonsActive ? () {
           _presenter.joinGame();
-        },
-        style: ButtonStyle(
-          overlayColor: MaterialStateProperty.all(Colors.white24),
-          backgroundColor: MaterialStateProperty.all(Colors.amber)
+        } : null,
+        style: TextButton.styleFrom(
+          backgroundColor: Colors.amber,
+          disabledBackgroundColor: Colors.grey         
         ),
         child: const Text('Join Game',
           style: TextStyle(color: Colors.black),
         )
       ),
       TextButton(
-        onPressed: () {
+        onPressed: buttonsActive ? () {
           _presenter.createGame();
-        },
-        style: ButtonStyle(
-          overlayColor: MaterialStateProperty.all(Colors.white24),
-          backgroundColor: MaterialStateProperty.all(Colors.amber)
+        } : null,
+        style: TextButton.styleFrom(
+          backgroundColor: Colors.amber,
+          disabledBackgroundColor: Colors.grey         
         ),
         child: const Text('Create Game',
           style: TextStyle(color: Colors.black),
@@ -210,5 +212,12 @@ class _CreateAndJoinPageState extends State<CreateAndJoinPage> implements Create
         duration: const Duration(milliseconds: 1500),
       )
     );
+  }
+
+  @override
+  void setButtonState(bool state) {
+    setState(() {
+      buttonsActive = state;
+    });
   }
 }

@@ -4,8 +4,8 @@ import 'package:client/service/http/http_login_service.dart';
 class CreateAndJoinPagePresenter {
 
   CreateAndJoinPagePresenter(this._view) {
-    _loginService = LoginService(_LoginServiceObserver(this._view));
-    _createService = CreateService(_CreateServiceObserver(this._view));
+    _loginService = LoginService(_LoginServiceObserver(_view));
+    _createService = CreateService(_CreateServiceObserver(_view));
   }
 
   String _text = "";
@@ -22,17 +22,24 @@ class CreateAndJoinPagePresenter {
   }
 
   void joinGame() {
+    if(_noInput()) return;
+    _view.setButtonState(false);
     _loginService.sendLoginRequest(_text, _pass);
   }
 
   void createGame() {
+    if(_noInput()) return;
+    _view.setButtonState(false);
     _createService.sendCreateRequest(_text, _pass);
   }
 
-  void swapToBoard() {
-    _view.swapToBoard();
-  }
-  
+  bool _noInput() {
+    if(_pass == "" || _text == "") {
+      _view.postToast("Enter both the Room Code and Password.");
+      return true;
+    }
+    return false;
+  } 
 }
 
 class _LoginServiceObserver implements LoginServiceObserver {
@@ -46,6 +53,7 @@ class _LoginServiceObserver implements LoginServiceObserver {
   @override
   void notifyFailure(String message) {
     _view.postToast(message);
+    _view.setButtonState(true);
   }
 
   @override
@@ -65,6 +73,7 @@ class _CreateServiceObserver implements CreateServiceObserver {
   @override
   void notifyFailure(String message) {
     _view.postToast(message);
+    _view.setButtonState(true);
   }
 
   @override
@@ -76,4 +85,5 @@ class _CreateServiceObserver implements CreateServiceObserver {
 abstract interface class CreateAndJoinPageView {
   void swapToBoard();
   void postToast(String msg);
+  void setButtonState(bool state);
 }
