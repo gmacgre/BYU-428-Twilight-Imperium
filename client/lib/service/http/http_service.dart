@@ -18,8 +18,8 @@ class HTTPService {
     );
     _determineResult(res);
     }
-    on http.ClientException {
-      _observer.processException("Failed to Connect to Server.");
+    on http.ClientException catch (error) {
+      _observer.processException('Failed to call ${error.uri.toString()}: ${error.message}');
     }
   }
 
@@ -33,8 +33,8 @@ class HTTPService {
       );
       _determineResult(res);
     }
-    on http.ClientException {
-      _observer.processException("Failed to Connect to Server.");
+    on http.ClientException catch (error) {
+      _observer.processException('Failed to call ${error.uri.toString()}: ${error.message}');
     }
   }
 

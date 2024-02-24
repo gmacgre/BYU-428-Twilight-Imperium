@@ -1,5 +1,5 @@
-import 'package:client/service/http/http_create_service.dart';
-import 'package:client/service/http/http_login_service.dart';
+import 'package:client/service/http/create_service.dart';
+import 'package:client/service/http/login_service.dart';
 
 class CreateAndJoinPagePresenter {
 

@@ -29,7 +29,6 @@ class CreateService implements HTTPServiceObserver {
   void processSuccess(String body) {
     CreateResponse res = JSONEncoder.decodeCreateResponse(body);
     _observer.notifySuccess(res.roomCode, res.roomPassword, res.gameId, res.userToken);
-    //TODO: Finish this part
   }
 
   @override
