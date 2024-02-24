@@ -20,19 +20,27 @@ class LoginService implements HTTPServiceObserver {
     String body = JSONEncoder.encode(request);
     _httpService.postRequest('/login', {}, body);
     _observer.notifySent();
-    //Let our observer know that they can make the loading show up now :)
   }
 
   @override
   void processFailure(int errorCode, String body) {
-    ErrorResponse res = JSONEncoder.decodeErrorResponse(body);
-    _observer.notifyFailure("$errorCode: ${res.message}");
+    try {
+      ErrorResponse res = JSONEncoder.decodeErrorResponse(body);
+      _observer.notifyFailure("$errorCode: ${res.message}");
+    } on FormatException  catch (e){
+      _observer.notifyFailure('Error Processing /login: ${e.message}');
+    }
+    
   }
 
   @override
   void processSuccess(String body) {
-    LoginResponse res = JSONEncoder.decodeLoginResponse(body);
-    _observer.notifySuccess(res.roomCode, res.roomPassword, res.gameId, res.userToken);
+    try {
+      LoginResponse res = JSONEncoder.decodeLoginResponse(body);
+      _observer.notifySuccess(res.roomCode, res.roomPassword, res.gameId, res.userToken);
+    } on FormatException catch (e) {
+      _observer.notifyFailure('Error Processing /login: ${e.message}');
+    }
   }
 
   @override

@@ -21,14 +21,22 @@ class CreateService implements HTTPServiceObserver {
 
   @override
   void processFailure(int errorCode, String body) {
-    ErrorResponse res = JSONEncoder.decodeErrorResponse(body);
-    _observer.notifyFailure('$errorCode: ${res.message}');
+    try {
+      ErrorResponse res = JSONEncoder.decodeErrorResponse(body);
+      _observer.notifyFailure('$errorCode: ${res.message}');
+    } on FormatException catch (e) {
+      _observer.notifyFailure('Error Processing /create: ${e.message}');
+    }
   }
 
   @override
   void processSuccess(String body) {
-    CreateResponse res = JSONEncoder.decodeCreateResponse(body);
-    _observer.notifySuccess(res.roomCode, res.roomPassword, res.gameId, res.userToken);
+    try {
+      CreateResponse res = JSONEncoder.decodeCreateResponse(body);
+      _observer.notifySuccess(res.roomCode, res.roomPassword, res.gameId, res.userToken);
+    } on FormatException catch (e) {
+      _observer.notifyFailure('Error Processing /create: ${e.message}');
+    }
   }
 
   @override
