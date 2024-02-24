@@ -201,4 +201,14 @@ class _CreateAndJoinPageState extends State<CreateAndJoinPage> implements Create
       MaterialPageRoute(builder: (context) => const InfoPanel())
     );
   }
+
+  @override
+  void postToast(String msg) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(msg),
+        duration: const Duration(milliseconds: 1500),
+      )
+    );
+  }
 }

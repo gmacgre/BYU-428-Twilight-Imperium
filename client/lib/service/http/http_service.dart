@@ -11,21 +11,31 @@ class HTTPService {
 
   //A GET request. Requires only the URI, and Headers (with one of the headers being a key for User Authentication).
   void getRequest(String uri, Map<String, String> headers) async {
-    http.Response res =  await http.get(
+    try {
+      http.Response res =  await http.get(
       Uri.parse('$_serverDomain$uri'),
       headers: headers
     );
     _determineResult(res);
+    }
+    on http.ClientException {
+      _observer.processException("Failed to Connect to Server.");
+    }
   }
 
   //A POST Request. Requires the URI, Headers (with the UserAuth header), and a body serialized.
   void postRequest(String uri, Map<String, String> headers, String body) async {
-    http.Response res = await http.post(
-      Uri.parse('$_serverDomain$uri'),
-      headers: headers,
-      body: body
-    );
-    _determineResult(res);
+    try {
+      http.Response res = await http.post(
+        Uri.parse('$_serverDomain$uri'),
+        headers: headers,
+        body: body
+      );
+      _determineResult(res);
+    }
+    on http.ClientException {
+      _observer.processException("Failed to Connect to Server.");
+    }
   }
 
 
@@ -43,4 +53,5 @@ class HTTPService {
 abstract interface class HTTPServiceObserver {
   void processFailure(int errorCode, String body);
   void processSuccess(String body);
+  void processException(String body);
 }

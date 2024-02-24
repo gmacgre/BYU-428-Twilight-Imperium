@@ -1,3 +1,4 @@
+import 'package:client/model/request_response/error_response.dart';
 import 'package:client/model/request_response/login/login_request.dart';
 import 'package:client/model/request_response/login/login_response.dart';
 import 'package:client/service/http/http_service.dart';
@@ -5,8 +6,9 @@ import 'package:client/service/json/json_encoder.dart';
 
 class LoginService implements HTTPServiceObserver {
   late HTTPService _httpService;
-
-  LoginService() {
+  late final LoginServiceObserver _observer;
+  
+  LoginService(this._observer) {
     _httpService = HTTPService(this);
   }
 
@@ -17,19 +19,31 @@ class LoginService implements HTTPServiceObserver {
     );
     String body = JSONEncoder.encode(request);
     _httpService.postRequest('/login', {}, body);
+    _observer.notifySent();
     //Let our observer know that they can make the loading show up now :)
   }
 
   @override
   void processFailure(int errorCode, String body) {
-    print('FAILURE:\n$body');
+    ErrorResponse res = JSONEncoder.decodeErrorResponse(body);
+    _observer.notifyFailure("$errorCode: ${res.message}");
   }
 
   @override
   void processSuccess(String body) {
-    print('SUCCESS:\n$body');
     LoginResponse res = JSONEncoder.decodeLoginResponse(body);
-    print(res);
+    _observer.notifySuccess(res.roomCode, res.roomPassword, res.gameId, res.userToken);
   }
+
+  @override
+  void processException(String body) {
+    _observer.notifyFailure(body);
+  }
+}
+
+abstract interface class LoginServiceObserver {
+  void notifyFailure(String message);
+  void notifySuccess(String code, String pass, String id, String userToken);
+  void notifySent();
 }
 
