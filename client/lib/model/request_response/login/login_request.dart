@@ -19,4 +19,9 @@ class LoginRequest {
       _ => throw const FormatException('Failed to load LoginRequest.'),
     };
   }
+
+  Map<String, dynamic> toJson() => {
+    'roomCode': roomCode,
+    'roomPassword': roomPassword,
+  };
 }

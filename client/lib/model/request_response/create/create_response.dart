@@ -28,4 +28,11 @@ class CreateResponse {
       _ => throw const FormatException('Failed to load LoginResponse.'),
     };
   }
+
+  Map<String, dynamic> toJson() => {
+    'roomCode': roomCode,
+    'roomPassword': roomPassword,
+    'gameId': gameId,
+    'userToken': userToken
+  };
 }

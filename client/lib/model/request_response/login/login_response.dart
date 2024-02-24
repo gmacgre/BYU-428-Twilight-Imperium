@@ -5,10 +5,10 @@ class LoginResponse {
   final String userToken;
 
   LoginResponse({
-    required this.roomCode,
-    required this.roomPassword,
-    required this.gameId,
-    required this.userToken
+    this.roomCode = "",
+    this.roomPassword = "",
+    this.gameId = "",
+    this.userToken = "",
   });
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) {
@@ -28,4 +28,11 @@ class LoginResponse {
       _ => throw const FormatException('Failed to load LoginResponse.'),
     };
   }
+
+  Map<String, dynamic> toJson() => {
+    'roomCode': roomCode,
+    'roomPassword': roomPassword,
+    'gameId': gameId,
+    'userToken': userToken,
+  };
 }

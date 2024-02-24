@@ -19,4 +19,10 @@ class CreateRequest {
       _ => throw const FormatException('Failed to load CreateRequest'),
     };
   }
+
+
+  Map<String, dynamic> toJson() => {
+    'roomCode': roomCode,
+    'roomPassword': roomPassword,
+  };
 }
