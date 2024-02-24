@@ -47,7 +47,8 @@ class _LoginServiceObserver implements LoginServiceObserver {
   _LoginServiceObserver(this._view);
   @override
   void notifySuccess(String code, String pass, String id, String userToken) {
-    _view.postToast("Success! $id $code $pass $userToken");
+    _view.postToast("Success! Connecting to $code ($id)...");
+    //TODO Set off the Game state Service
   }
 
   @override
@@ -67,7 +68,8 @@ class _CreateServiceObserver implements CreateServiceObserver {
   _CreateServiceObserver(this._view);
   @override
   void notifySuccess(String code, String pass, String id, String userToken) {
-    _view.postToast("Success! $id $code $pass $userToken");
+    _view.postToast("Success! Connecting to $code ($id)...");
+    //TODO Set off the Game state Service
   }
 
   @override
