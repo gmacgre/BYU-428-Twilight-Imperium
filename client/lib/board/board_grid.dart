@@ -28,7 +28,7 @@ class _BoardGridState extends State<BoardGrid> implements BoardGridView {
 
   @override
   Widget build(BuildContext context) {
-    return HexagonGrid.pointy(
+    return HexagonGrid.flat(
       depth: _depth,
       padding: EdgeInsets.zero,
       //The grid will just pick whichever one is smaller so it keeps a consistent ratio

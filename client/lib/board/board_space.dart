@@ -27,6 +27,6 @@ class _BoardSpaceState extends State<BoardSpace> {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return System(_model.system);
   }
 }

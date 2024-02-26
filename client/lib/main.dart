@@ -1,5 +1,4 @@
 import 'package:client/board/board_grid.dart';
-import 'package:client/board/board_space.dart';
 import 'package:flutter/material.dart';
 import 'package:client/info/info_panel.dart';
 
@@ -57,4 +56,3 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-
