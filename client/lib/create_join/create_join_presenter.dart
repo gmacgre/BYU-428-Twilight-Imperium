@@ -116,6 +116,9 @@ class _GameStateServiceObserver implements GameStateServiceObserver {
   void notifySuccess() {
     _presenter._swapToBoard();
   }
+
+  @override
+  void notifySent() {}
 }
 
 abstract interface class CreateAndJoinPageView {

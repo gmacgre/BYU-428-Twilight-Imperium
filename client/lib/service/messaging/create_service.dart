@@ -2,6 +2,7 @@ import 'package:client/model/request_response/create/create_request.dart';
 import 'package:client/model/request_response/create/create_response.dart';
 import 'package:client/model/request_response/error_response.dart';
 import 'package:client/service/http/http_service.dart';
+import 'package:client/service/http/service_observer.dart';
 import 'package:client/service/json/json_encoder.dart';
 
 class CreateService implements HTTPServiceObserver {
@@ -45,8 +46,6 @@ class CreateService implements HTTPServiceObserver {
   }
 }
 
-abstract interface class CreateServiceObserver {
-  void notifyFailure(String message);
+abstract class CreateServiceObserver extends ServiceObserver {
   void notifySuccess(String code, String pass, String id, String userToken);
-  void notifySent();
 }

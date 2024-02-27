@@ -2,6 +2,7 @@ import 'package:client/model/request_response/error_response.dart';
 import 'package:client/model/request_response/login/login_request.dart';
 import 'package:client/model/request_response/login/login_response.dart';
 import 'package:client/service/http/http_service.dart';
+import 'package:client/service/http/service_observer.dart';
 import 'package:client/service/json/json_encoder.dart';
 
 class LoginService implements HTTPServiceObserver {
@@ -49,9 +50,7 @@ class LoginService implements HTTPServiceObserver {
   }
 }
 
-abstract interface class LoginServiceObserver {
-  void notifyFailure(String message);
+abstract class LoginServiceObserver extends ServiceObserver {
   void notifySuccess(String code, String pass, String id, String userToken);
-  void notifySent();
 }
 
