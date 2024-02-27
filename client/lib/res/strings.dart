@@ -10,6 +10,9 @@ class Strings {
   static const String createGame = 'Create Game';
   static const String codeInput = 'Input Room Name';
   static const String passwordInput = 'Input Room Password';
+  static const String needBothRoomInput = 'Enter both the Room Code and Password.';
+  static const String loginAttempt = 'Attempting to Log In...';
+  static const String createAttempt = 'Attempting to Create Game...';
   static const String fleet = 'Fleet';
   static const String tactic = 'Tactic';
   static const String strategy = 'Strategy';
@@ -30,5 +33,8 @@ class Strings {
   static const String invalidStrategyCard = 'This Strategy Card ID is invalid.';
   static String tokenCount(int count, String type) {
     return 'This player has $count ${type.toLowerCase()} token(s).';
+  }
+  static String successNeedConnect(String code, String id) {
+    return "Success! Connecting to $code ($id)...";
   }
 }
