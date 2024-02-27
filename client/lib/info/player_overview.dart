@@ -82,10 +82,9 @@ class PlayerOverview extends StatelessWidget {
           )
         ),
       ),
-      //TODO: SHIFT INTO STRINGS LIBRARY
-      _PoolCount("Tactic", tacticTokenCount, '${Strings.tacticTokenDesc}\nThis player has $tacticTokenCount tactic token(s).'),
-      _PoolCount("Fleet", fleetTokenCount, '${Strings.fleetTokenDesc}\nThis player has $fleetTokenCount fleet token(s).'),
-      _PoolCount("Strategy", strategyTokenCount, '${Strings.strategyTokenDesc}\nThis player has $strategyTokenCount strategy token(s).')
+      _PoolCount(Strings.tactic, tacticTokenCount, '${Strings.tacticTokenDesc}\n${Strings.tokenCount(tacticTokenCount, Strings.tactic)}'),
+      _PoolCount(Strings.fleet, fleetTokenCount, '${Strings.fleetTokenDesc}\n${Strings.tokenCount(fleetTokenCount, Strings.fleet)}'),
+      _PoolCount(Strings.strategy, strategyTokenCount, '${Strings.strategyTokenDesc}\n${Strings.tokenCount(strategyTokenCount, Strings.strategy)}')
     ];
     List<Widget> toReturn = [];
 

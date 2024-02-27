@@ -1,6 +1,7 @@
 import 'package:client/create_join/create_join_presenter.dart';
 import 'package:client/info/info_panel.dart';
-import 'package:client/outlined_letters.dart';
+import 'package:client/res/outlined_letters.dart';
+import 'package:client/res/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -44,7 +45,7 @@ class _CreateAndJoinPageState extends State<CreateAndJoinPage> implements Create
             shaderCallback: (bounds) => titleGradiant.createShader(
               Rect.fromLTWH(0, 0, bounds.width, bounds.height),
             ),
-            child: const Text('TWILIGHT IMPERIUM',
+            child: const Text(Strings.appTitle,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 100.0,
@@ -58,7 +59,7 @@ class _CreateAndJoinPageState extends State<CreateAndJoinPage> implements Create
             shaderCallback: (bounds) => titleGradiant.createShader(
               Rect.fromLTWH(0, 0, bounds.width, bounds.height),
             ),
-            child: const Text('Pax Magnifica, Bellum Gloriosum',
+            child: const Text(Strings.tagLine,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 50.0,
@@ -117,7 +118,7 @@ class _CreateAndJoinPageState extends State<CreateAndJoinPage> implements Create
       )
     );
     return [
-      const OutlinedLetters(content: 'Input Room Name'),
+      const OutlinedLetters(content: Strings.codeInput),
       SizedBox(
         width: 300,
         height: 70,
@@ -134,7 +135,7 @@ class _CreateAndJoinPageState extends State<CreateAndJoinPage> implements Create
           decoration: inputDecoration,
         ),
       ),
-      const OutlinedLetters(content: 'Input Room Password'),
+      const OutlinedLetters(content: Strings.passwordInput),
       SizedBox(
         width: 300,
         height: 70,
@@ -165,7 +166,7 @@ class _CreateAndJoinPageState extends State<CreateAndJoinPage> implements Create
           overlayColor: MaterialStateProperty.all(Colors.white24),
           backgroundColor: MaterialStateProperty.all(Colors.amber)
         ),
-        child: const Text('Join Game',
+        child: const Text(Strings.joinGame,
           style: TextStyle(color: Colors.black),
         )
       ),
@@ -177,7 +178,7 @@ class _CreateAndJoinPageState extends State<CreateAndJoinPage> implements Create
           overlayColor: MaterialStateProperty.all(Colors.white24),
           backgroundColor: MaterialStateProperty.all(Colors.amber)
         ),
-        child: const Text('Create Game',
+        child: const Text(Strings.createGame,
           style: TextStyle(color: Colors.black),
         )
       )
