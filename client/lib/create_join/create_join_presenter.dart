@@ -1,6 +1,6 @@
-import 'package:client/service/http/create_service.dart';
-import 'package:client/service/http/game_state_service.dart';
-import 'package:client/service/http/login_service.dart';
+import 'package:client/service/messaging/create_service.dart';
+import 'package:client/service/messaging/game_state_service.dart';
+import 'package:client/service/messaging/login_service.dart';
 
 class CreateAndJoinPagePresenter {
 

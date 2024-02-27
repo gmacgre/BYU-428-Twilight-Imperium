@@ -1,5 +1,5 @@
 import 'package:client/service/http/http_service.dart';
-import 'package:client/service/http/service_observer.dart';
+import 'package:client/service/messaging/service_observer.dart';
 
 class GameStateService implements HTTPServiceObserver {
   late final HTTPService _service;
