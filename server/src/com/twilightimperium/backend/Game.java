@@ -1,36 +1,30 @@
 package com.twilightimperium.backend;
 
 import java.util.List;
+import java.util.Map;
 
-import com.twilightimperium.backend.model.Player;
-import com.twilightimperium.backend.model.Move;
-import com.twilightimperium.backend.model.Map;
+import com.twilightimperium.backend.model.game.GameState;
 
 
 public class Game {
-    private List<Player> players;
-    private Map gameMap;
-    private List<Move> moveHistory;
+    private GameState state;
+    private Map<String,Integer> tokens;
+    int currentPlayer; //stores the next player # to hand out. The first player is 0, the second is 1 etc.
 
-    public Game createGame() {
-        // Code to create a new game
+    String getGameState(){
+        //encode state as json
+        return null;
     }
 
-    public void joinGame(Player player) {
-        // Code to add a player to the game
+    public Game(){
+        currentPlayer = 0;
     }
 
-    public List<Game> listUserGames(User user) {
-        // Code to list all games a user is part of
+    public void addPlayer(String token) {
+        tokens.put(token, currentPlayer);
+        currentPlayer++;
     }
 
-    public boolean verifyMove(Move move) {
-        // Code to verify the validity of a move
-    }
-
-    public void broadcastMove(Move move) {
-        // Code to broadcast move to all clients
-    }
 
     // Other methods
 }
