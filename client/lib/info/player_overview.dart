@@ -64,22 +64,25 @@ class PlayerOverview extends StatelessWidget {
         cardWidth: 30.0,
         cardHeight: 50.0,
       ),
-      DecoratedBox(
-        decoration: BoxDecoration(
-          color: Colors.amberAccent,
-          border: Border.all(
-            color: Colors.black,
-            width: 2.0
+      HoverTip(
+        message: Strings.publicObjectiveDesc,
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            color: Colors.amberAccent,
+            border: Border.all(
+              color: Colors.black,
+              width: 2.0
+              )
+          ),
+          
+          //Agendas Scored    
+          child: SizedBox(
+            width: 30.0,
+            height: 50.0,
+            child: Center(
+              child: OutlinedLetters(content: '$objScoredCount')
             )
-        ),
-        
-        //Agendas Scored    
-        child: SizedBox(
-          width: 30.0,
-          height: 50.0,
-          child: Center(
-            child: OutlinedLetters(content: '$objScoredCount')
-          )
+          ),
         ),
       ),
       _PoolCount(Strings.tactic, tacticTokenCount, '${Strings.tacticTokenDesc}\n${Strings.tokenCount(tacticTokenCount, Strings.tactic)}'),

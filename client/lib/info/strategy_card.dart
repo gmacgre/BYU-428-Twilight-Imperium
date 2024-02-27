@@ -46,7 +46,7 @@ class StrategyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HoverTip(
-      message: '${Strings.strategyCardDescription}\n${_getCardDesc(strategyCardId)}',
+      message: '${Strings.strategyCardDesc}\n${_getCardDesc(strategyCardId)}',
       child: CustomPaint(
         size: Size(cardWidth, cardHeight),
         painter: _StrategyCardPainter(_getCardColor(strategyCardId)),

@@ -19,7 +19,8 @@ class Strings {
   static const String tacticTokenDesc = 'Tactic tokens are used to activate systems in the Action Phase.\nThis allows for movement, combat, and production of units.';
   static const String fleetTokenDesc = 'Fleet tokens determine the max size of a player\'s fleet in any system.';
   static const String strategyTokenDesc = 'Strategy tokens are used to play the secondary ability of another\nplayer\'s strategy card when said player uses it.';
-  static const String strategyCardDescription = 'Strategy cards determine initiative order, and can be played as an action.\nThe action played differs by strategy card.';
+  static const String strategyCardDesc = 'Strategy cards determine initiative order, and can be played as an action.\nThe action played differs by strategy card.';
+  static const String publicObjectiveDesc = 'Public Objectives are objectives that any player can score\nin the Status Phase, or a singular player can score when they play\nthe Imperial Strategy Card. They have values of 1 or 2 points.';
   static const List<String> strategyCardPowerDescription = [
     'Leadership:\nPrimary Ability:\n- Gain 3 Command Tokens.\n- Spend any amount of influence to gain 1 command token\n  for every 3 influence spent.\nSecondary Ability:\n- Spend any amount of influence to gain 1 command token\n  for every 3 influence spent.',
     'Diplomacy:\nPrimary Ability:\n- Choose 1 system other than the Mecatol Rex system\n  that contains a planet you control;\n  each other player places a command token\n  from their reinforcements in the chosen system.\n- Ready up to 2 exhausted planets you control.\nSecondary Ability:\n- Spend 1 token from your strategy pool\n  to ready up to 2 exhausted planets you control.',
@@ -31,6 +32,8 @@ class Strings {
     'Imperial:\nPrimary Ability:\n- Immediately score 1 public objective if you fulfill its requirements.\n- Gain 1 victory point if you control Mecatol Rex;\n  otherwise, draw 1 secret objective.\nSecondary Ability:\n-  Spend 1 token from your strategy pool to draw 1 secret objective.',
   ];
   static const String invalidStrategyCard = 'This Strategy Card ID is invalid.';
+  static const String untakenStrategyCards = 'Untaken Strategy Cards:';
+  static const String publicObjectives = 'Public Objectives:';
   static String tokenCount(int count, String type) {
     return 'This player has $count ${type.toLowerCase()} token(s).';
   }

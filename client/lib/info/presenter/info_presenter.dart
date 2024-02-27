@@ -42,4 +42,6 @@ abstract class InfoPresenter {
   bool _validIndex(int idx) {
     return !(idx < 0 || idx > getNumPlayers() - 1);
   }
+
+  
 }
