@@ -16,6 +16,8 @@ class _CreateAndJoinPageState extends State<CreateAndJoinPage> implements Create
 
   late CreateAndJoinPagePresenter _presenter;
 
+  bool buttonsActive = true;
+
   @override
   void initState() {
     super.initState();
@@ -28,79 +30,83 @@ class _CreateAndJoinPageState extends State<CreateAndJoinPage> implements Create
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('images/background.jpg'),
-          fit: BoxFit.cover
-        )
-      ),
-      child: Column(
-        children: [
-          //Used to ensure the background is 100% of the screen
-          const SizedBox(width: double.infinity),
-          //Title
-          ShaderMask(
-            blendMode: BlendMode.srcIn,
-            shaderCallback: (bounds) => titleGradiant.createShader(
-              Rect.fromLTWH(0, 0, bounds.width, bounds.height),
-            ),
-            child: const Text(Strings.appTitle,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 100.0,
-                fontFamily: 'Ambroise Firmin'
-              ),
-            ),
+    return Scaffold(
+      body: SafeArea(
+        child: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('images/background.jpg'),
+              fit: BoxFit.cover
+            )
           ),
-          //Subtitle
-          ShaderMask(
-            blendMode: BlendMode.srcIn,
-            shaderCallback: (bounds) => titleGradiant.createShader(
-              Rect.fromLTWH(0, 0, bounds.width, bounds.height),
-            ),
-            child: const Text(Strings.tagLine,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 50.0,
-                fontFamily: 'Handel Gothic D'
-              ),
-            ),
-          ), 
-          //Input Boxes
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: DecoratedBox(
-              decoration: const BoxDecoration(
-                color: Colors.white30,
-                borderRadius: BorderRadius.all(Radius.circular(10))
-              ),
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(10.0, 8.0, 10.0, 8.0),
-                child: Column(
-                  children: _buildInputColumn()
+          child: Column(
+            children: [
+              //Used to ensure the background is 100% of the screen
+              const SizedBox(width: double.infinity),
+              //Title
+              ShaderMask(
+                blendMode: BlendMode.srcIn,
+                shaderCallback: (bounds) => titleGradiant.createShader(
+                  Rect.fromLTWH(0, 0, bounds.width, bounds.height),
+                ),
+                child: const Text(Strings.appTitle,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 100.0,
+                    fontFamily: 'Ambroise Firmin'
+                  ),
                 ),
               ),
-            ),
-          ),
-          //Selection Buttons
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: DecoratedBox(
-              decoration: const BoxDecoration(
-                color: Colors.black54,
-                borderRadius: BorderRadius.all(Radius.circular(10))
-              ),
-              child: SizedBox(
-                width: 300,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: _buildButtonRow(),
+              //Subtitle
+              ShaderMask(
+                blendMode: BlendMode.srcIn,
+                shaderCallback: (bounds) => titleGradiant.createShader(
+                  Rect.fromLTWH(0, 0, bounds.width, bounds.height),
+                ),
+                child: const Text(Strings.tagLine,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 50.0,
+                    fontFamily: 'Handel Gothic D'
+                  ),
+                ),
+              ), 
+              //Input Boxes
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: DecoratedBox(
+                  decoration: const BoxDecoration(
+                    color: Colors.white30,
+                    borderRadius: BorderRadius.all(Radius.circular(10))
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(10.0, 8.0, 10.0, 8.0),
+                    child: Column(
+                      children: _buildInputColumn()
+                    ),
+                  ),
                 ),
               ),
-            ),
-          )
-        ],
+              //Selection Buttons
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: DecoratedBox(
+                  decoration: const BoxDecoration(
+                    color: Colors.black54,
+                    borderRadius: BorderRadius.all(Radius.circular(10))
+                  ),
+                  child: SizedBox(
+                    width: 300,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: _buildButtonRow(),
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -159,24 +165,24 @@ class _CreateAndJoinPageState extends State<CreateAndJoinPage> implements Create
   List<Widget> _buildButtonRow() {
     List<Widget> protoReturn = [
       TextButton(
-        onPressed: () {
+        onPressed: buttonsActive ? () {
           _presenter.joinGame();
-        },
-        style: ButtonStyle(
-          overlayColor: MaterialStateProperty.all(Colors.white24),
-          backgroundColor: MaterialStateProperty.all(Colors.amber)
+        } : null,
+        style: TextButton.styleFrom(
+          backgroundColor: Colors.amber,
+          disabledBackgroundColor: Colors.grey         
         ),
         child: const Text(Strings.joinGame,
           style: TextStyle(color: Colors.black),
         )
       ),
       TextButton(
-        onPressed: () {
+        onPressed: buttonsActive ? () {
           _presenter.createGame();
-        },
-        style: ButtonStyle(
-          overlayColor: MaterialStateProperty.all(Colors.white24),
-          backgroundColor: MaterialStateProperty.all(Colors.amber)
+        } : null,
+        style: TextButton.styleFrom(
+          backgroundColor: Colors.amber,
+          disabledBackgroundColor: Colors.grey         
         ),
         child: const Text(Strings.createGame,
           style: TextStyle(color: Colors.black),
@@ -197,9 +203,23 @@ class _CreateAndJoinPageState extends State<CreateAndJoinPage> implements Create
 
   @override
   void swapToBoard() {
-    Navigator.push(
-      context, 
-      MaterialPageRoute(builder: (context) => const InfoPanel())
+    Navigator.of(context).pushNamed('/game');
+  }
+
+  @override
+  void postToast(String msg) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(msg),
+        duration: const Duration(milliseconds: 1500),
+      )
     );
+  }
+
+  @override
+  void setButtonState(bool state) {
+    setState(() {
+      buttonsActive = state;
+    });
   }
 }
