@@ -1,4 +1,6 @@
-import 'package:client/outlined_letters.dart';
+import 'package:client/res/hover_tip.dart';
+import 'package:client/res/outlined_letters.dart';
+import 'package:client/res/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:client/info/strategy_card.dart';
 
@@ -80,9 +82,10 @@ class PlayerOverview extends StatelessWidget {
           )
         ),
       ),
-      _PoolCount("Tactic", tacticTokenCount),
-      _PoolCount("Fleet", fleetTokenCount),
-      _PoolCount("Strategy", strategyTokenCount)
+      //TODO: SHIFT INTO STRINGS LIBRARY
+      _PoolCount("Tactic", tacticTokenCount, '${Strings.tacticTokenDesc}\nThis player has $tacticTokenCount tactic token(s).'),
+      _PoolCount("Fleet", fleetTokenCount, '${Strings.fleetTokenDesc}\nThis player has $fleetTokenCount fleet token(s).'),
+      _PoolCount("Strategy", strategyTokenCount, '${Strings.strategyTokenDesc}\nThis player has $strategyTokenCount strategy token(s).')
     ];
     List<Widget> toReturn = [];
 
@@ -98,29 +101,33 @@ class PlayerOverview extends StatelessWidget {
 }
 
 class _PoolCount extends StatelessWidget {
-  const _PoolCount(this.desc, this.count);
+  const _PoolCount(this.title, this.count, this.desc);
 
   final String desc;
   final int count;
+  final String title;
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        OutlinedLetters(content: desc),
-        CustomPaint(
-          size: const Size(35.0, 35.0),
-          painter: _TrianglePainter(),
-          child: SizedBox(
-            width: 35.0,
-            height: 35.0,
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(35.0 * 0.40, 35.0 * 0.10, 0.0, 0.0),
-              child: OutlinedLetters(content: '$count')
+    return HoverTip(
+      message: desc,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          OutlinedLetters(content: title),
+          CustomPaint(
+            size: const Size(35.0, 35.0),
+            painter: _TrianglePainter(),
+            child: SizedBox(
+              width: 35.0,
+              height: 35.0,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(35.0 * 0.40, 35.0 * 0.10, 0.0, 0.0),
+                child: OutlinedLetters(content: '$count')
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
