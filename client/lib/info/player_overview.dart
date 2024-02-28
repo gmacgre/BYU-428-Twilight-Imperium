@@ -1,4 +1,7 @@
-import 'package:client/outlined_letters.dart';
+import 'package:client/info/objective_view.dart';
+import 'package:client/res/hover_tip.dart';
+import 'package:client/res/outlined_letters.dart';
+import 'package:client/res/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:client/info/strategy_card.dart';
 
@@ -10,7 +13,7 @@ class PlayerOverview extends StatelessWidget {
     this.tacticTokenCount = -1,
     this.fleetTokenCount = -1,
     this.strategyTokenCount = -1,
-    this.objScoredCount = -1,
+    this.victoryPoints = -1,
     this.playerColor = 6
   });
 
@@ -19,7 +22,7 @@ class PlayerOverview extends StatelessWidget {
   final int tacticTokenCount;
   final int fleetTokenCount;
   final int strategyTokenCount;
-  final int objScoredCount;
+  final int victoryPoints;
   final int playerColor;
   final List<Color> background = [
     Colors.red,
@@ -62,27 +65,15 @@ class PlayerOverview extends StatelessWidget {
         cardWidth: 30.0,
         cardHeight: 50.0,
       ),
-      DecoratedBox(
-        decoration: BoxDecoration(
-          color: Colors.amberAccent,
-          border: Border.all(
-            color: Colors.black,
-            width: 2.0
-            )
-        ),
-        
-        //Agendas Scored    
-        child: SizedBox(
-          width: 30.0,
-          height: 50.0,
-          child: Center(
-            child: OutlinedLetters(content: '$objScoredCount')
-          )
-        ),
+      HoverTip(
+        message: Strings.victoryPoints,
+        child: ObjectiveView(
+         child: OutlinedLetters(content: '$victoryPoints') 
+        )
       ),
-      _PoolCount("Tactic", tacticTokenCount),
-      _PoolCount("Fleet", fleetTokenCount),
-      _PoolCount("Strategy", strategyTokenCount)
+      _PoolCount(Strings.tactic, tacticTokenCount, '${Strings.tacticTokenDesc}\n${Strings.tokenCount(tacticTokenCount, Strings.tactic)}'),
+      _PoolCount(Strings.fleet, fleetTokenCount, '${Strings.fleetTokenDesc}\n${Strings.tokenCount(fleetTokenCount, Strings.fleet)}'),
+      _PoolCount(Strings.strategy, strategyTokenCount, '${Strings.strategyTokenDesc}\n${Strings.tokenCount(strategyTokenCount, Strings.strategy)}')
     ];
     List<Widget> toReturn = [];
 
@@ -98,29 +89,33 @@ class PlayerOverview extends StatelessWidget {
 }
 
 class _PoolCount extends StatelessWidget {
-  const _PoolCount(this.desc, this.count);
+  const _PoolCount(this.title, this.count, this.desc);
 
   final String desc;
   final int count;
+  final String title;
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        OutlinedLetters(content: desc),
-        CustomPaint(
-          size: const Size(35.0, 35.0),
-          painter: _TrianglePainter(),
-          child: SizedBox(
-            width: 35.0,
-            height: 35.0,
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(35.0 * 0.40, 35.0 * 0.10, 0.0, 0.0),
-              child: OutlinedLetters(content: '$count')
+    return HoverTip(
+      message: desc,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          OutlinedLetters(content: title),
+          CustomPaint(
+            size: const Size(35.0, 35.0),
+            painter: _TrianglePainter(),
+            child: SizedBox(
+              width: 35.0,
+              height: 35.0,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(35.0 * 0.40, 35.0 * 0.10, 0.0, 0.0),
+                child: OutlinedLetters(content: '$count')
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

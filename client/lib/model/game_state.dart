@@ -1,13 +1,19 @@
+import 'package:client/model/objective.dart';
 import 'package:client/model/player.dart';
 
 class GameState {
   final List<Player> _players = [
-    Player("sol", 1, 2, 3, 2, 1),
-    Player("jol_nar", 4, 5, 6, 0, 2),
-    Player("saar", 7, 8, 9, 9, 3),
-    Player("winnu", 9, 9, 9, 1, 4),
-    Player("nekro", 7, 1, 4, 9, 5),
+    Player("sol", 1, 2, 3, 2, 3),
+    Player("jol_nar", 4, 5, 6, 0, 4),
+    Player("saar", 7, 8, 9, 9, 5),
+    Player("winnu", 9, 9, 9, 1, 8),
+    Player("nekro", 7, 1, 4, 9, 7),
     Player("letnev", 5, 5, 5, 1, 6)
+  ];
+
+  final List<Objective> _publicObjectives = [
+    Objective(1, {2,5,1,0}, 1),
+    Objective(2, {3,1,0}, 1),
   ];
 
   int getNumPlayers() {
@@ -21,8 +27,11 @@ class GameState {
     return _players[idx];
   }
 
-  int getObjScoredCount(int idx) {
-    //TODO: MAKE THIS ACTUALLY LOOK FOR SCORED AGENDAS
-    return -2;
+  List<Objective> getPublicObjectives() {
+    return _publicObjectives;
+  }
+
+  int getVictoryPoints(int idx) {
+    return _players[idx].getVictoryPoints();
   }
 }

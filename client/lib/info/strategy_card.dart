@@ -1,4 +1,6 @@
-import 'package:client/outlined_letters.dart';
+import 'package:client/res/hover_tip.dart';
+import 'package:client/res/outlined_letters.dart';
+import 'package:client/res/strings.dart';
 import 'package:flutter/material.dart';
 
 /*
@@ -43,21 +45,23 @@ class StrategyCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomPaint(
-      size: Size(cardWidth, cardHeight),
-      painter: _StrategyCardPainter(_getCardColor(strategyCardId)),
-      child: SizedBox(
-        width: cardWidth,
-        height: cardHeight,
-        child: Padding(
-          padding: EdgeInsets.fromLTRB(cardWidth * 0.30, cardHeight * 0.30, 0.0, 0.0),
-          child: OutlinedLetters(content: '$strategyCardId')
+    return HoverTip(
+      message: _getCardDesc(strategyCardId),
+      child: CustomPaint(
+        size: Size(cardWidth, cardHeight),
+        painter: _StrategyCardPainter(_getCardColor(strategyCardId)),
+        child: SizedBox(
+          width: cardWidth,
+          height: cardHeight,
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(cardWidth * 0.30, cardHeight * 0.30, 0.0, 0.0),
+            child: OutlinedLetters(content: '$strategyCardId')
+          )
         )
-      )
+      ),
     );
   }
 
-  //TODO: Should this move somewhere else?
   Color _getCardColor(int id) {
     const List<Color> cardColors = [
       Colors.red,
@@ -71,6 +75,11 @@ class StrategyCard extends StatelessWidget {
     ];
     if(id - 1 < 0 || id - 1 > 7) return Colors.black;
     return cardColors[id-1];
+  }
+
+  String _getCardDesc(int id) {
+    if(id < 0 || id > 8) return Strings.invalidStrategyCard;
+    return Strings.strategyCardPowerDescription[id];
   }
 }
 

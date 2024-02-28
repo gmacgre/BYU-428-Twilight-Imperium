@@ -1,3 +1,4 @@
+import 'package:client/res/strings.dart';
 import 'package:client/service/messaging/create_service.dart';
 import 'package:client/service/messaging/game_state_service.dart';
 import 'package:client/service/messaging/login_service.dart';
@@ -38,7 +39,7 @@ class CreateAndJoinPagePresenter {
 
   bool _noInput() {
     if(_pass == "" || _text == "") {
-      _view.postToast("Enter both the Room Code and Password.");
+      _view.postToast(Strings.needBothRoomInput);
       return true;
     }
     return false;
@@ -46,7 +47,7 @@ class CreateAndJoinPagePresenter {
 
   //The following are methods that private classes can call after returning from HTTP calls
   void _getGameState(String code, String id, String userToken) {
-    _view.postToast("Success! Connecting to $code ($id)...");
+    _view.postToast(Strings.successNeedConnect(code, id));
     _gameStateService.getGameState(id, userToken);
   }
 
@@ -80,7 +81,7 @@ class _LoginServiceObserver implements LoginServiceObserver {
 
   @override
   void notifySent() {
-    _presenter._notifyView("Attempting to Log In...");
+    _presenter._notifyView(Strings.loginAttempt);
   }
 }
 
@@ -99,7 +100,7 @@ class _CreateServiceObserver implements CreateServiceObserver {
 
   @override
   void notifySent() {
-    _presenter._notifyView("Attempting to Create Game...");
+    _presenter._notifyView(Strings.createAttempt);
   }
 }
 

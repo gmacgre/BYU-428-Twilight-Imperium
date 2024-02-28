@@ -1,4 +1,5 @@
 import 'package:client/model/game_state.dart';
+import 'package:client/model/objective.dart';
 
 abstract class InfoPresenter {
   //TODO: WILL EVENTUALLY BE REPLACED WITH GETTING THIS FROM THE MODEL
@@ -34,12 +35,16 @@ abstract class InfoPresenter {
     return -1;
   }
 
-  int getObjScoredCount(int idx) {
-    if(_validIndex(idx)) return _model.getObjScoredCount(idx);
+  int getVictoryPoints(int idx) {
+    if(_validIndex(idx)) return _model.getVictoryPoints(idx);
     return -1;
   }
 
   bool _validIndex(int idx) {
     return !(idx < 0 || idx > getNumPlayers() - 1);
+  }
+
+  List<Objective> getPublicObjectives() {
+    return _model.getPublicObjectives();
   }
 }

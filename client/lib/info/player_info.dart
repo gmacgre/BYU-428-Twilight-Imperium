@@ -30,7 +30,7 @@ class _PlayerInfoState extends State<PlayerInfo> {
       fleetTokenCount: _presenter.getFleetPool(widget.playerIndex),
       strategyTokenCount: _presenter.getStrategyPool(widget.playerIndex),
       icon: _presenter.getIcon(widget.playerIndex),
-      objScoredCount: _presenter.getObjScoredCount(widget.playerIndex),
+      victoryPoints: _presenter.getVictoryPoints(widget.playerIndex),
       playerColor: widget.playerIndex, 
     );
   }
