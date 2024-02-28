@@ -3,11 +3,11 @@ import 'package:client/model/player.dart';
 
 class GameState {
   final List<Player> _players = [
-    Player("sol", 1, 2, 3, 2, 1),
-    Player("jol_nar", 4, 5, 6, 0, 2),
-    Player("saar", 7, 8, 9, 9, 3),
-    Player("winnu", 9, 9, 9, 1, 4),
-    Player("nekro", 7, 1, 4, 9, 5),
+    Player("sol", 1, 2, 3, 2, 3),
+    Player("jol_nar", 4, 5, 6, 0, 4),
+    Player("saar", 7, 8, 9, 9, 5),
+    Player("winnu", 9, 9, 9, 1, 8),
+    Player("nekro", 7, 1, 4, 9, 7),
     Player("letnev", 5, 5, 5, 1, 6)
   ];
 
@@ -43,5 +43,9 @@ class GameState {
       }
     }
     return toReturn;
+  }
+
+  List<Objective> getPublicObjectives() {
+    return _publicObjectives;
   }
 }

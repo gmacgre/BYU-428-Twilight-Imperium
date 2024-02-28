@@ -1,4 +1,5 @@
 import 'package:client/model/game_state.dart';
+import 'package:client/model/objective.dart';
 
 abstract class InfoPresenter {
   //TODO: WILL EVENTUALLY BE REPLACED WITH GETTING THIS FROM THE MODEL
@@ -43,5 +44,7 @@ abstract class InfoPresenter {
     return !(idx < 0 || idx > getNumPlayers() - 1);
   }
 
-  
+  List<Objective> getPublicObjectives() {
+    return _model.getPublicObjectives();
+  }
 }

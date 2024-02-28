@@ -1,3 +1,4 @@
+import 'package:client/info/objective_view.dart';
 import 'package:client/res/hover_tip.dart';
 import 'package:client/res/outlined_letters.dart';
 import 'package:client/res/strings.dart';
@@ -66,24 +67,9 @@ class PlayerOverview extends StatelessWidget {
       ),
       HoverTip(
         message: Strings.publicObjectiveDesc,
-        child: DecoratedBox(
-          decoration: BoxDecoration(
-            color: Colors.amberAccent,
-            border: Border.all(
-              color: Colors.black,
-              width: 2.0
-              )
-          ),
-          
-          //Agendas Scored    
-          child: SizedBox(
-            width: 30.0,
-            height: 50.0,
-            child: Center(
-              child: OutlinedLetters(content: '$objScoredCount')
-            )
-          ),
-        ),
+        child: ObjectiveView(
+         child: OutlinedLetters(content: '$objScoredCount') 
+        )
       ),
       _PoolCount(Strings.tactic, tacticTokenCount, '${Strings.tacticTokenDesc}\n${Strings.tokenCount(tacticTokenCount, Strings.tactic)}'),
       _PoolCount(Strings.fleet, fleetTokenCount, '${Strings.fleetTokenDesc}\n${Strings.tokenCount(fleetTokenCount, Strings.fleet)}'),

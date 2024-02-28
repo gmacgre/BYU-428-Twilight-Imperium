@@ -22,6 +22,7 @@ class Strings {
   static const String strategyCardDesc = 'Strategy cards determine initiative order, and can be played as an action.\nThe action played differs by strategy card.';
   static const String publicObjectiveDesc = 'Public Objectives are objectives that any player can score\nin the Status Phase, or a singular player can score when they play\nthe Imperial Strategy Card. They have values of 1 or 2 points.';
   static const List<String> strategyCardPowerDescription = [
+    'This player has yet to select a Strategy Card.',
     'Leadership:\nPrimary Ability:\n- Gain 3 Command Tokens.\n- Spend any amount of influence to gain 1 command token\n  for every 3 influence spent.\nSecondary Ability:\n- Spend any amount of influence to gain 1 command token\n  for every 3 influence spent.',
     'Diplomacy:\nPrimary Ability:\n- Choose 1 system other than the Mecatol Rex system\n  that contains a planet you control;\n  each other player places a command token\n  from their reinforcements in the chosen system.\n- Ready up to 2 exhausted planets you control.\nSecondary Ability:\n- Spend 1 token from your strategy pool\n  to ready up to 2 exhausted planets you control.',
     'Politics:\nPrimary Ability:\n- Choose a player other than the speaker;\n  That player gains the speaker token.\n- Draw 2 action cards.\n- Look at the top 2 cards of the agenda deck;\n  Place each card on the top or bottom of the deck in any order.\nSecondary Ability:\n- Spend 1 token from your strategy pool to draw 2 action cards.',

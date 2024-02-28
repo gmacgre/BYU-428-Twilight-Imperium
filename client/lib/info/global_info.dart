@@ -103,26 +103,30 @@ class _GlobalInfoState extends State<GlobalInfo> {
       ),
     ];
     List<int> untaken = _presenter.getUntakenStrategyCards();
-    for(int i = 0; i < untaken.length; i++) {
+    for(int id in untaken) {
       toReturn.add(
         Padding(
-          padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+          padding: const EdgeInsets.all(4.0),
           child: StrategyCard(
+            strategyCardId: id,
             cardHeight: 50.0,
             cardWidth: 30.0,
-            strategyCardId: untaken[i],
           ),
         )
       );
     }
+
     return toReturn;
   }
 
   List<Widget> _getPublicObjectives() {
     List<Widget> toReturn = [
-      const OutlinedLetters(content: Strings.publicObjectives)
+      const Padding(
+        padding: EdgeInsets.all(8.0),
+        child: OutlinedLetters(content: Strings.publicObjectives),
+      )
     ];
-    
+
     return toReturn;
   }
 }

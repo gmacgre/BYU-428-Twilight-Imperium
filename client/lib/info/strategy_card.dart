@@ -78,8 +78,8 @@ class StrategyCard extends StatelessWidget {
   }
 
   String _getCardDesc(int id) {
-    if(id - 1 < 0 || id - 1 > 7) return Strings.invalidStrategyCard;
-    return Strings.strategyCardPowerDescription[id-1];
+    if(id < 0 || id > 8) return Strings.invalidStrategyCard;
+    return Strings.strategyCardPowerDescription[id];
   }
 }
 
