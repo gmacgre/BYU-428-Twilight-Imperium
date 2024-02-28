@@ -27,17 +27,11 @@ class GameState {
     return _players[idx];
   }
 
-  int getObjScoredCount(int idx) {
-    int toReturn = 0;
-    for(int i = 0; i < _publicObjectives.length; i++) {
-      if(_publicObjectives[i].hasCompleted(idx)) {
-        toReturn++;
-      }
-    }
-    return toReturn;
-  }
-
   List<Objective> getPublicObjectives() {
     return _publicObjectives;
+  }
+
+  int getVictoryPoints(int idx) {
+    return _players[idx].getVictoryPoints();
   }
 }

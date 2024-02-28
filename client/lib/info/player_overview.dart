@@ -13,7 +13,7 @@ class PlayerOverview extends StatelessWidget {
     this.tacticTokenCount = -1,
     this.fleetTokenCount = -1,
     this.strategyTokenCount = -1,
-    this.objScoredCount = -1,
+    this.victoryPoints = -1,
     this.playerColor = 6
   });
 
@@ -22,7 +22,7 @@ class PlayerOverview extends StatelessWidget {
   final int tacticTokenCount;
   final int fleetTokenCount;
   final int strategyTokenCount;
-  final int objScoredCount;
+  final int victoryPoints;
   final int playerColor;
   final List<Color> background = [
     Colors.red,
@@ -66,9 +66,9 @@ class PlayerOverview extends StatelessWidget {
         cardHeight: 50.0,
       ),
       HoverTip(
-        message: Strings.publicObjectiveDesc,
+        message: Strings.victoryPoints,
         child: ObjectiveView(
-         child: OutlinedLetters(content: '$objScoredCount') 
+         child: OutlinedLetters(content: '$victoryPoints') 
         )
       ),
       _PoolCount(Strings.tactic, tacticTokenCount, '${Strings.tacticTokenDesc}\n${Strings.tokenCount(tacticTokenCount, Strings.tactic)}'),

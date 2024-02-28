@@ -50,7 +50,7 @@ class _GlobalInfoState extends State<GlobalInfo> {
             tacticTokenCount: _presenter.getTacticPool(i),
             fleetTokenCount: _presenter.getFleetPool(i),
             strategyTokenCount: _presenter.getStrategyPool(i),
-            objScoredCount: _presenter.getObjScoredCount(i),
+            victoryPoints: _presenter.getVictoryPoints(i),
             playerColor: i,
           )
         )

@@ -35,8 +35,8 @@ abstract class InfoPresenter {
     return -1;
   }
 
-  int getObjScoredCount(int idx) {
-    if(_validIndex(idx)) return _model.getObjScoredCount(idx);
+  int getVictoryPoints(int idx) {
+    if(_validIndex(idx)) return _model.getVictoryPoints(idx);
     return -1;
   }
 

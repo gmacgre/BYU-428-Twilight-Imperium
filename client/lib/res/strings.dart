@@ -41,4 +41,6 @@ class Strings {
   static String successNeedConnect(String code, String id) {
     return "Success! Connecting to $code ($id)...";
   }
+
+  static String victoryPoints = 'Victory Points';
 }
