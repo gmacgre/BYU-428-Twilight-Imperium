@@ -25,10 +25,10 @@ class ObjectiveView extends StatelessWidget {
       
       //Agendas Scored    
       child: SizedBox(
-        width: 30.0,
+        width: 35.0,
         height: 50.0,
         child: Center(
-          child: (child == null) ? Image.asset(imageLocation, fit: BoxFit.fitWidth) : child
+          child: (child == null) ? SizedBox(height: 25.0, width: 25.0, child: Image.asset(imageLocation, fit: BoxFit.contain)) : child
         )
       ),
     );

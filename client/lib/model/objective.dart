@@ -15,5 +15,7 @@ class Objective {
   int getId() {
     return _id;
   }
-
+  int numPlayersCompleted() {
+    return _completed.length;
+  }
 }

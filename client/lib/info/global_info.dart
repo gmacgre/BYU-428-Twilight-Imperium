@@ -1,6 +1,8 @@
+import 'package:client/info/objective_view.dart';
 import 'package:client/info/presenter/global_info_presenter.dart';
 import 'package:client/info/player_overview.dart';
 import 'package:client/info/strategy_card.dart';
+import 'package:client/model/objective.dart';
 import 'package:client/res/outlined_letters.dart';
 import 'package:client/res/strings.dart';
 import 'package:flutter/material.dart';
@@ -64,7 +66,7 @@ class _GlobalInfoState extends State<GlobalInfo> {
     //Untaken Strategy Cards
     toReturn.add(
       Padding(
-        padding: const EdgeInsets.fromLTRB(8.0, 10.0, 8.0, 10.0),
+        padding: const EdgeInsets.fromLTRB(8.0, 10.0, 8.0, 5.0),
         child: DecoratedBox(
           decoration: const BoxDecoration(color: Colors.black54),
           child: Row(
@@ -76,11 +78,14 @@ class _GlobalInfoState extends State<GlobalInfo> {
 
     toReturn.add(
       Padding(
-        padding: const EdgeInsets.fromLTRB(8.0, 10.0, 8.0, 10.0),
+        padding: const EdgeInsets.fromLTRB(8.0, 5.0, 8.0, 5.0),
         child: DecoratedBox(
-          decoration: const BoxDecoration(color: Colors.blueAccent),
-          child: Row(
-            children: _getPublicObjectives(),
+          decoration: const BoxDecoration(color: Colors.green),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: _getPublicObjectives(),
+            ),
           ),
         ),
       )
@@ -120,12 +125,57 @@ class _GlobalInfoState extends State<GlobalInfo> {
   }
 
   List<Widget> _getPublicObjectives() {
+
+    //Title for section
     List<Widget> toReturn = [
       const Padding(
         padding: EdgeInsets.all(8.0),
         child: OutlinedLetters(content: Strings.publicObjectives),
       )
     ];
+
+    List<Objective> publicObjectives = _presenter.getPublicObjectives();
+    List<Widget> toInsert = [];
+
+    for(int i = 0; i < 10; i++) {
+      int value = (i < 5) ? 1 : 2;
+      if(i < publicObjectives.length) {
+        toInsert.add(
+          Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: ObjectiveView(
+              value: publicObjectives[i].getValue(),
+              child: OutlinedLetters(content: '${publicObjectives[i].numPlayersCompleted()}'),
+            ),
+          )
+        );
+      }
+      else {
+        toInsert.add(
+          Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: ObjectiveView(
+              value: value,
+            ),
+          )
+        );
+      }      
+    }
+
+    int split = toInsert.length ~/ 2;
+    
+    toReturn.add(
+      Column(
+        children: [
+          Row(
+            children: toInsert.sublist(0, split),
+          ),
+          Row(
+            children: toInsert.sublist(split, toInsert.length),
+          )
+        ]
+      )
+    );
 
     return toReturn;
   }
