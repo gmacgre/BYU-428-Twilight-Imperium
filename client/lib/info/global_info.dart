@@ -3,6 +3,7 @@ import 'package:client/info/presenter/global_info_presenter.dart';
 import 'package:client/info/player_overview.dart';
 import 'package:client/info/strategy_card.dart';
 import 'package:client/model/objective.dart';
+import 'package:client/res/hover_tip.dart';
 import 'package:client/res/outlined_letters.dart';
 import 'package:client/res/strings.dart';
 import 'package:flutter/material.dart';
@@ -26,8 +27,11 @@ class _GlobalInfoState extends State<GlobalInfo> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: _buildChildren(),
+    return DecoratedBox(
+      decoration: const BoxDecoration(color: Colors.blueGrey),
+      child: ListView(
+        children: _buildChildren(),
+      ),
     );
   }
 
@@ -78,9 +82,9 @@ class _GlobalInfoState extends State<GlobalInfo> {
 
     toReturn.add(
       Padding(
-        padding: const EdgeInsets.fromLTRB(8.0, 5.0, 8.0, 5.0),
+        padding: const EdgeInsets.fromLTRB(8.0, 5.0, 8.0, 10.0),
         child: DecoratedBox(
-          decoration: const BoxDecoration(color: Colors.green),
+          decoration: const BoxDecoration(color: Colors.black54),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
@@ -102,8 +106,11 @@ class _GlobalInfoState extends State<GlobalInfo> {
       ),
       const Padding(
         padding: EdgeInsets.all(8.0),
-        child: OutlinedLetters(
-          content: Strings.untakenStrategyCards
+        child: HoverTip(
+          message: Strings.strategyCardDesc,
+          child: OutlinedLetters(
+            content: Strings.untakenStrategyCards
+          ),
         ),
       ),
     ];
@@ -130,7 +137,10 @@ class _GlobalInfoState extends State<GlobalInfo> {
     List<Widget> toReturn = [
       const Padding(
         padding: EdgeInsets.all(8.0),
-        child: OutlinedLetters(content: Strings.publicObjectives),
+        child: HoverTip(
+          message: Strings.publicObjectiveDesc,
+          child: OutlinedLetters(content: Strings.publicObjectives)
+        ),
       )
     ];
 
