@@ -22,25 +22,9 @@ class MyApp extends StatelessWidget {
         '/': (context) => const CreateAndJoinPage(),
         '/login': (context) => const CreateAndJoinPage(),
         '/game': (context) => const InfoPanel(),
+        '/board': (context) => const BoardGrid(),
       },
     );
   }
 }
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: SafeArea(child: Center(child: CreateAndJoinPage())),
-    );
-  }
-}
