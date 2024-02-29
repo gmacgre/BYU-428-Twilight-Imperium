@@ -2,6 +2,7 @@ package com.twilightimperium.backend;
 
 import java.util.*;
 
+import com.google.gson.Gson;
 import com.twilightimperium.backend.model.game.BoardState;
 import com.twilightimperium.backend.model.game.GameState;
 import com.twilightimperium.backend.model.game.Location;
@@ -14,15 +15,25 @@ public class Game {
     private static final int MOVE = 1;
     private GameState state;
     private Map<String,Integer> tokens;
-    int playerNum; //stores the next player # to hand out. The first player is 0, the second is 1 etc.
-    Location activeSystem;
-    int activePlayer;
-    int maxPlayers;
-    int nextCommand; //This stores what the game is waiting on. Does it expect an activate system or move command etc.
+    private Map<Integer, String> playerNumToToken;
+    private int playerNum; //stores the next player # to hand out. The first player is 0, the second is 1 etc.
+    private Location activeSystem;
+    private int activePlayer;
+    private int maxPlayers;
+    private int nextCommand; //This stores what the game is waiting on. Does it expect an activate system or move command etc.
 
     public String jsonGameState(){
         //encode state as json
-        return null;
+        Gson gson = new Gson();
+        return gson.toJson(state);
+    }
+
+    public int getActivePlayer(){
+        return activePlayer;
+    }
+
+    public int getPlayerNum(){
+        return playerNum;
     }
     
     public GameState getGameState(){
@@ -33,6 +44,7 @@ public class Game {
         nextCommand = 0; // we start for now by expecting an activate System command
         playerNum = 0;
         tokens = new HashMap<String, Integer>();
+        playerNumToToken = new HashMap<>();
         state = new GameState(maxPlayers);
         activePlayer = 0; //assume that the creator of the game goes first;
         maxPlayers = 6;
@@ -43,10 +55,15 @@ public class Game {
     public void addPlayer(String token) {
         if(playerNum < maxPlayers){
             tokens.put(token, playerNum);
+            playerNumToToken.put(playerNum,token);
             playerNum++;
         } else {
             throw new RuntimeException();
         }
+    }
+
+    public String requestToken(int playerNum){
+        return playerNumToToken.get(playerNum);
     }
 
     public boolean activateSystem(int x, int y, String token){

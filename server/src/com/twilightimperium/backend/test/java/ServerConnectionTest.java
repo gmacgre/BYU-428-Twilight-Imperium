@@ -2,9 +2,13 @@ package com.twilightimperium.backend.test.java;
 
 
 
+
+import org.junit.jupiter.api.Test;
+
 import com.twilightimperium.backend.Client;
 import com.twilightimperium.backend.Server;
-import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -12,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class ServerConnectionTest {
 
     @Test
-    public void testServerConnection() {
+    public void testServerConnection() throws IOException {
         // Start server
         Server server = new Server();
         server.startServer();
