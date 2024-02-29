@@ -1,33 +1,32 @@
 package com.twilightimperium.backend.model.game;
 
 public class Ship {
-    int x;
-    int y;
+    Location coords;
     String shipClass;
 
-    public Ship(){
-        x = 0;
-        y = 0;
-        shipClass = "undefined";
-    }
-    public Ship(int x, int y){
-
+    public Location getCoords() {
+        return coords;
     }
 
     public int getX() {
-        return this.x;
+        return this.coords.x;
     }
 
     public void setX(int x) {
-        this.x = x;
+        this.coords.x = x;
     }
 
     public int getY() {
-        return this.y;
+        return this.coords.y;
     }
 
     public void setY(int y) {
-        this.y = y;
+        this.coords.y = y;
+    }
+
+    public Ship(int x, int y, String cl){
+        this.coords = new Location(x,y);
+        this.shipClass = cl;
     }
 
     public String getShipClass() {

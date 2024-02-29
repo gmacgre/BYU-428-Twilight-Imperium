@@ -1,4 +1,4 @@
-package com.twilightimperium.backend.test;
+package com.twilightimperium.backend.test.java;
 
 
 

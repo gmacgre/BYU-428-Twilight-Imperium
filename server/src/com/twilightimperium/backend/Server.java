@@ -6,6 +6,10 @@ import com.sun.net.httpserver.HttpServer;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * The Server class is responsible for setting up and starting a simple HTTP server
@@ -13,6 +17,14 @@ import java.net.InetSocketAddress;
  */
 public class Server {
     private HttpServer server;
+    private List<Game> ongoingGames;
+    private Map<String,Integer> token;
+
+    public Server() {
+
+        ongoingGames = new ArrayList<Game>();
+        token = new HashMap<>();
+    }
 
     public void startServer() {
         try {
@@ -40,6 +52,7 @@ public class Server {
             os.close();
         }
     }
+
 
     // Other methods
 }
