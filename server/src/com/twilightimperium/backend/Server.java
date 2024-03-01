@@ -9,7 +9,7 @@ import java.util.*;
 
 /**
  * The Server class is responsible for setting up and starting a simple HTTP server
- * that listens for requests on port 8000.
+ * that listens for requests on port PORT
  */
 public class Server {
     private HttpServer server;
@@ -18,13 +18,15 @@ public class Server {
     private Map<String, Integer> gameIdToIndex;
     private Map<String, String> gamePassword;
 
+    private static final int PORT = 8080;
+
     public Server() throws IOException {
         ongoingGames = new ArrayList<>();
         tokenToGameIndex  = new HashMap<>();
         gameIdToIndex = new HashMap<>();
         gamePassword = new HashMap<>();
 
-        server = HttpServer.create(new InetSocketAddress(8000), 0);
+        server = HttpServer.create(new InetSocketAddress(PORT), 0);
         server.createContext("/login", new LoginHandler(this));
         server.createContext("/create", new CreateGameHandler(this));
         server.createContext("/gameState",new GameStateHandler(this));
@@ -35,7 +37,7 @@ public class Server {
 
     public void startServer() {
         server.start();
-        System.out.println("Server started on port 8000");
+        System.out.println(String.format("Server started on port %d",PORT));
     }
 
     public synchronized String addNewGame(Game game, String gameId, String password) throws Exception{

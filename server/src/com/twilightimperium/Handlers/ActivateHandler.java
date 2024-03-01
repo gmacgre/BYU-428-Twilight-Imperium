@@ -9,6 +9,7 @@ import com.sun.net.httpserver.*;
 import com.twilightimperium.backend.Game;
 import com.twilightimperium.backend.Server;
 import com.twilightimperium.backend.model.RequestResponse.ActivateRequest;
+import com.twilightimperium.backend.model.RequestResponse.ErrorResponse;
 
 public class ActivateHandler implements HttpHandler{
     private final Server server;
@@ -19,9 +20,8 @@ public class ActivateHandler implements HttpHandler{
 
     public void handle(HttpExchange exchange) throws IOException {
         Gson gson = new Gson();
-        System.out.println("Handling Activate");
         if (!"POST".equals(exchange.getRequestMethod())) {
-            sendResponse(exchange, "Bad Request Method", 501);
+            sendResponse(exchange, gson.toJson(new ErrorResponse("Bad Request Method")), 501);
             return;
         } else {
             Headers header = exchange.getRequestHeaders();
@@ -31,13 +31,13 @@ public class ActivateHandler implements HttpHandler{
             int y = request.getCoords().y;
             Game game = server.getGameByToken(token);
             if(game == null){
-                sendResponse(exchange, "Bad token", 405);
+                sendResponse(exchange, gson.toJson(new ErrorResponse("Bad token")), 405);
                 return;
             }
             if (game.activateSystem(x, y, token)){
-                sendResponse(exchange, "Success",200);
+                sendResponse(exchange, "",200);
             } else {
-                sendResponse(exchange, "System already active",405);
+                sendResponse(exchange, gson.toJson(new ErrorResponse("System already active")),405);
             }
         }
 

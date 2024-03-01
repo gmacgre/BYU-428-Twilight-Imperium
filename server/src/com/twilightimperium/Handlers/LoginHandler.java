@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.twilightimperium.backend.Server;
+import com.twilightimperium.backend.model.RequestResponse.ErrorResponse;
 import com.twilightimperium.backend.model.RequestResponse.LoginRequest;
 import com.twilightimperium.backend.model.RequestResponse.LoginResponse;
 
@@ -28,11 +29,11 @@ public class LoginHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         // Only process POST requests
+        Gson gson = new Gson();
         if (!"POST".equals(exchange.getRequestMethod())) {
-            sendResponse(exchange, "Method Not Allowed", 405);
+            sendResponse(exchange, gson.toJson(new ErrorResponse("Bad Request Method")), 405);
             return;
         }
-        Gson gson = new Gson();
         try {
             // Here I would parse through JSON file when we have things implemented
             String requestBody = new String(exchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8);
@@ -48,10 +49,10 @@ public class LoginHandler implements HttpHandler {
                 sendResponse(exchange, jsonResponse, 200);
             } else {
                 // Authentication failed
-                sendResponse(exchange, "Bad Input", 401);
+                sendResponse(exchange, gson.toJson(new ErrorResponse("Bad Input")), 401);
             }
         } catch (Exception e) {
-            sendResponse(exchange, "Internal Server Error", 500);
+            sendResponse(exchange, gson.toJson(new ErrorResponse("Internal Server Error")), 500);
             e.printStackTrace();
         }
     }
