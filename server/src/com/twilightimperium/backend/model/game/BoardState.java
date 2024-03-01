@@ -16,6 +16,17 @@ public class BoardState {
                 map[j][i] = new Tile();
             }
         }
+        map[3][0].getPlanets().add(new Planet("Jord",4,2));
+        map[3][0].getShips().add(new Ship(0,3,"carrier"));
+        map[3][0].getShips().add(new Ship(0,3,"carrier"));
+        map[3][0].getShips().add(new Ship(0,3,"destroyer"));
+        for(int i = 0; i < 3; i++){
+        map[3][0].getShips().add(new Ship(0,3,"fighter"));
+        }
+        for(int i = 0; i < 5; i++){
+            map[3][0].getShips().add(new Ship(0,3,"infantry"));
+        }
+        map[3][0].getShips().add(new Ship(0,3,"space_dock"));
     }
     public Tile getTile(int x, int y){
         return map[y][x];

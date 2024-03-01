@@ -25,8 +25,9 @@ public class CreateGameHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        // Only process POST requests
         Gson gson = new Gson();
+
+        // Only process POST requests
         if (!"POST".equals(exchange.getRequestMethod())) {
             sendResponse(exchange, "Game Already Exists", 405);
             return;
@@ -40,6 +41,7 @@ public class CreateGameHandler implements HttpHandler {
 
             Game newGame = new Game();
             String token = server.addNewGame(newGame, roomCode, roomPass); // Add game to list and get a token
+            newGame.addPlayer(token);
             Integer gameIndex = server.getGameIndexByToken(token); // Retrieve the game index by token
             CreateResponse response = new CreateResponse(token);
             String jsonResponse = gson.toJson(response);

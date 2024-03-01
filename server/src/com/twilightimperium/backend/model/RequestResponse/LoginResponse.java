@@ -9,6 +9,16 @@ public class LoginResponse {
         this.playerTurn = playerTurn;
     }
 
+    public String getToken() {
+        return this.token;
+    }
+
+
+    public int getPlayerTurn() {
+        return this.playerTurn;
+    }
+
+
     
     
 }

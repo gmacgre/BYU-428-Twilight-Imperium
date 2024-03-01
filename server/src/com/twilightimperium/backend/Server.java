@@ -29,6 +29,7 @@ public class Server {
         server.createContext("/create", new CreateGameHandler(this));
         server.createContext("/gameState",new GameStateHandler(this));
         server.createContext("/activate",new ActivateHandler(this));
+        server.createContext("/move",new MoveHandler(this));
         server.setExecutor(null);
     }
 
@@ -69,12 +70,12 @@ public class Server {
             //This checks if the game exists
             return null;
         }
-        if(!(gamePassword.get(gameCode) == password)){
+        if(!(gamePassword.get(gameCode).equals(password))){
             //This authenticates the password
             //once again, eventually we will need to salt and hash for security
             return null;
         }
-        Game game = ongoingGames.get(getGameIndexByToken(gameCode));
+        Game game = ongoingGames.get(gameIdToIndex.get(gameCode));
         String token;
         if(game.getPlayerNum() <= playerNum){
             //This player doesn't exist, generate a new token

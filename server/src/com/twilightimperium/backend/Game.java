@@ -41,7 +41,7 @@ public class Game {
     }
 
     public Game(){
-        nextCommand = 0; // we start for now by expecting an activate System command
+        nextCommand = ACTION; // we start for now by expecting an activate System command
         playerNum = 0;
         tokens = new HashMap<String, Integer>();
         playerNumToToken = new HashMap<>();
@@ -68,8 +68,12 @@ public class Game {
 
     public boolean activateSystem(int x, int y, String token){
         //first we get the player number from the token.
+        
         if(nextCommand == ACTION){
-            int player = tokens.get(token);
+            Integer player = tokens.get(token);
+            if (player == null){
+                return false;
+            }
             boolean success = placeTokenSystem(x, y, player);
             if (success){
                 nextCommand = MOVE;

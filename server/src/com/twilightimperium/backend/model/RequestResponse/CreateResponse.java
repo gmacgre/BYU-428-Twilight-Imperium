@@ -6,5 +6,10 @@ public class CreateResponse {
     public CreateResponse(String token){
         this.token = token;
     }
+
+    public String getToken() {
+        return this.token;
+    }
+
     
 }

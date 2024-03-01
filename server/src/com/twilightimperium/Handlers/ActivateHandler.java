@@ -19,6 +19,7 @@ public class ActivateHandler implements HttpHandler{
 
     public void handle(HttpExchange exchange) throws IOException {
         Gson gson = new Gson();
+        System.out.println("Handling Activate");
         if (!"POST".equals(exchange.getRequestMethod())) {
             sendResponse(exchange, "Bad Request Method", 501);
             return;
@@ -31,9 +32,10 @@ public class ActivateHandler implements HttpHandler{
             Game game = server.getGameByToken(token);
             if(game == null){
                 sendResponse(exchange, "Bad token", 405);
+                return;
             }
             if (game.activateSystem(x, y, token)){
-                sendResponse(exchange, "Sucess",200);
+                sendResponse(exchange, "Success",200);
             } else {
                 sendResponse(exchange, "System already active",405);
             }
@@ -50,6 +52,8 @@ public class ActivateHandler implements HttpHandler{
      * @param statusCode The HTTP status code.
      */
     private void sendResponse(HttpExchange exchange, String responseBody, int statusCode) throws IOException {
+        System.out.println("Sending response");
+        System.out.println(String.format("Sending response with status %d and body %s",statusCode, responseBody));
         exchange.getResponseHeaders().set("Content-Type", "application/json");
         exchange.sendResponseHeaders(statusCode, responseBody.getBytes(StandardCharsets.UTF_8).length);
         OutputStream os = exchange.getResponseBody();

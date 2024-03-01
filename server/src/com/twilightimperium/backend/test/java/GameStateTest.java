@@ -10,6 +10,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.*;
 
 public class GameStateTest {
+
+    @Test
+    public void activateSystemTest(){
+        Game game = new Game();
+        game.addPlayer("testToken");
+        game.activateSystem(2,3,"testToken");
+        assertEquals(true,game.getGameState().getMap().getTile(2,3).getTokens().contains(0));
+    }
+
     @Test
     public void moveShipsTest(){
         Game game = new Game();
@@ -29,4 +38,6 @@ public class GameStateTest {
         assertEquals(3,systemShips.get(0).getCoords().y);
         assertEquals(0,game.getGameState().getMap().getTile(3,3).getShips().size());
     }
+
+    
 }

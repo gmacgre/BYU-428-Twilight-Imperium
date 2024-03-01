@@ -13,7 +13,7 @@ public class CreateRequest {
         return this.roomPassword;
     }
 
-    CreateRequest(String code, String password){
+    public CreateRequest(String code, String password){
         roomCode = code;
         roomPassword = password;
     }
