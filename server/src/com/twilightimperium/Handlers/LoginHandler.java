@@ -11,7 +11,6 @@ import com.twilightimperium.backend.model.RequestResponse.LoginResponse;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.UUID;
 
 /**
  * Handles login requests to the /login endpoint.
@@ -19,8 +18,6 @@ import java.util.UUID;
 public class LoginHandler implements HttpHandler {
     private final Server server;
     //Fake user to test login
-    private final String DEMO_USERNAME = "demoUser";
-    private final String DEMO_PASSWORD = "demoPass";
 
     public LoginHandler(Server server) {
         this.server = server;
@@ -41,10 +38,11 @@ public class LoginHandler implements HttpHandler {
             
             // Simulated authentication check
             String token = server.login(request.getRoomCode(), request.getRoomPass(),request.getPlayerNum());
+            int playerId = server.getGameByToken(token).getPlayerTurn(token);
 
             if (token != null) {
                 // Respond with the generated token
-                LoginResponse response = new LoginResponse(token, 0);
+                LoginResponse response = new LoginResponse(token, playerId);
                 String jsonResponse = gson.toJson(response);
                 sendResponse(exchange, jsonResponse, 200);
             } else {

@@ -42,9 +42,7 @@ public class CreateGameHandler implements HttpHandler {
 
             Game newGame = new Game();
             String token = server.addNewGame(newGame, roomCode, roomPass); // Add game to list and get a token
-            newGame.addPlayer(token);
-            Integer gameIndex = server.getGameIndexByToken(token); // Retrieve the game index by token
-            CreateResponse response = new CreateResponse(token,0);
+            newGame.addPlayer(token);            CreateResponse response = new CreateResponse(token,0);
             String jsonResponse = gson.toJson(response);
 
             // Respond with the token.

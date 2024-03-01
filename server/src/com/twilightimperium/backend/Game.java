@@ -7,7 +7,6 @@ import com.twilightimperium.backend.model.game.BoardState;
 import com.twilightimperium.backend.model.game.GameState;
 import com.twilightimperium.backend.model.game.Location;
 import com.twilightimperium.backend.model.game.Ship;
-import com.twilightimperium.backend.model.game.Tile;
 
 
 public class Game {
@@ -22,6 +21,10 @@ public class Game {
     private int maxPlayers;
     private int nextCommand; //This stores what the game is waiting on. Does it expect an activate system or move command etc.
 
+
+    public int getPlayerTurn(String token){
+        return tokens.get(token);
+    }
     public String jsonGameState(){
         //encode state as json
         Gson gson = new Gson();
