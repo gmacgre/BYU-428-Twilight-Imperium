@@ -1,41 +1,30 @@
 import 'package:client/board/board_space.dart';
-import 'package:client/board/presenter/board_grid_presenter.dart';
-import 'package:client/model/board_grid_model.dart';
+import 'package:client/model/board_state.dart';
+import 'package:client/model/system_state.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hexagon/hexagon.dart';
 
-class BoardGrid extends StatefulWidget {
-  ///The `BoardGrid` view renders 37 `BoardSpace` widgets in the hexagon shape.
-  ///
-
+class BoardGrid extends ConsumerStatefulWidget {
   const BoardGrid({super.key});
 
+  final int _depth = 3;
+
   @override
-  State<BoardGrid> createState() => _BoardGridState();
+  ConsumerState<BoardGrid> createState() => _BoardGridState();
 }
 
-class _BoardGridState extends State<BoardGrid> implements BoardGridView {
-  late BoardGridPresenter _presenter;
-  late int _depth;
-
-  late BoardGridModel _boardState;
-
-  @override
-  initState() {
-    super.initState();
-    _presenter = BoardGridPresenter(this);
-  }
-
-  @override
+class _BoardGridState extends ConsumerState<BoardGrid> {
+@override
   Widget build(BuildContext context) {
+    List<List<SystemState>> state = ref.watch(boardStateProvider);
     return HexagonGrid.flat(
-      depth: _depth,
+      depth: widget._depth,
       padding: EdgeInsets.zero,
-      //The grid will just pick whichever one is smaller so it keeps a consistent ratio
       buildTile: (coordinates) => HexagonWidgetBuilder(
         padding: 2.0,
         cornerRadius: 0,
-        color: const Color.fromARGB(255, 0, 0, 70),
+        color: const Color.fromARGB(255, 0, 0, 100),
       ),
       buildChild: (coordinates) {
         //Adding the _depth is necessary to force everything to be a positive value.
@@ -44,21 +33,13 @@ class _BoardGridState extends State<BoardGrid> implements BoardGridView {
         //To translate from model to view, subtract _depth to coordinates
         //To transalte from view to model, add _depth from coordinates
         return BoardSpace(
-            initialModel: _boardState.spaces[(coordinates.q + _depth)]
-                [(coordinates.r + _depth)]);
+          col: coordinates.q + widget._depth,
+          row: coordinates.r + widget._depth,
+          systemState: state[(coordinates.q + widget._depth)][(coordinates.r + widget._depth)],
+        );
+
+        //Text("${coordinates.q} ${coordinates.r}");
       },
     );
-  }
-
-  @override
-  void onBind(int depth) {
-    _depth = depth;
-  }
-
-  @override
-  void setBoardState(BoardGridModel model) {
-    setState(() {
-      _boardState = model;
-    });
   }
 }
