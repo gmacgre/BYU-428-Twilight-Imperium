@@ -10,7 +10,7 @@ class LoginRequest {
     return switch (json) {
       {
         'roomCode': String roomCode,
-        'roomPassword': String roomPassword,
+        'roomPass': String roomPassword,
       } =>
         LoginRequest(
           roomCode: roomCode,
@@ -22,6 +22,6 @@ class LoginRequest {
 
   Map<String, dynamic> toJson() => {
     'roomCode': roomCode,
-    'roomPassword': roomPassword,
+    'roomPass': roomPassword,
   };
 }

@@ -1,7 +1,7 @@
 import 'package:http/http.dart' as http;
 
 class HTTPService {
-  final String _serverDomain = 'http://localhost:8080';
+  final String _serverDomain = 'http://localhost:8000';
   final HTTPServiceObserver _observer;
   HTTPService(this._observer);
 

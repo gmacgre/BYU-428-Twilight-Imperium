@@ -26,6 +26,7 @@ class LoginService implements HTTPServiceObserver {
   @override
   void processFailure(int errorCode, String body) {
     try {
+      print(body);
       ErrorResponse res = JSONEncoder.decodeErrorResponse(body);
       _observer.notifyFailure("$errorCode: ${res.message}");
     } on FormatException  catch (e){
@@ -37,6 +38,7 @@ class LoginService implements HTTPServiceObserver {
   @override
   void processSuccess(String body) {
     try {
+      print(body);
       LoginResponse res = JSONEncoder.decodeLoginResponse(body);
       _observer.notifySuccess(res.roomCode, res.roomPassword, res.gameId, res.userToken);
     } on FormatException catch (e) {
