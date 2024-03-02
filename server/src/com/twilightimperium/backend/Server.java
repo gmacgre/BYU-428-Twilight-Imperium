@@ -18,7 +18,7 @@ public class Server {
     private Map<String, Integer> gameIdToIndex;
     private Map<String, String> gamePassword;
 
-    private static final int PORT = 8080;
+    public static final int PORT = 8080;
 
     public Server() throws IOException {
         ongoingGames = new ArrayList<>();
@@ -38,6 +38,10 @@ public class Server {
     public void startServer() {
         server.start();
         System.out.println(String.format("Server started on port %d",PORT));
+    }
+
+    public void stop(){
+        server.stop(1);
     }
 
     public synchronized String addNewGame(Game game, String gameId, String password) throws Exception{
@@ -84,6 +88,7 @@ public class Server {
             //TODO currently just assigns them to the next slot regardless of what number they sent
             token = UUID.randomUUID().toString();
             game.addPlayer(token);
+            tokenToGameIndex.put(token, gameIdToIndex.get(gameCode));
         } else {
             token = game.requestToken(playerNum);
             if (token == null){

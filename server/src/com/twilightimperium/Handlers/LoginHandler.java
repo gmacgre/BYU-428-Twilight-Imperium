@@ -38,9 +38,10 @@ public class LoginHandler implements HttpHandler {
             
             // Simulated authentication check
             String token = server.login(request.getRoomCode(), request.getRoomPass(),request.getPlayerNum());
-            int playerId = server.getGameByToken(token).getPlayerTurn(token);
+            
 
             if (token != null) {
+                int playerId = server.getGameByToken(token).getPlayerTurn(token);
                 // Respond with the generated token
                 LoginResponse response = new LoginResponse(token, playerId);
                 String jsonResponse = gson.toJson(response);

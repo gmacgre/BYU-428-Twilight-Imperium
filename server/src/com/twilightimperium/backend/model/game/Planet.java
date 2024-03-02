@@ -11,6 +11,10 @@ public class Planet {
         this.influence = influence;
     }
 
+    public Planet clone(){
+        return new Planet(new String(name),Integer.valueOf(resource),Integer.valueOf(influence));
+    }
+
     public String getName() {
         return this.name;
     }

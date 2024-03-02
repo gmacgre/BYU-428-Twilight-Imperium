@@ -74,6 +74,10 @@ public class ComprehensiveServerTest {
         ActivateRequest aRequest3 = new ActivateRequest(new Location(1,3));
         int aresponse3 = getHttpStatus("POST","token",myToken,gson.toJson(aRequest3),"activate");
         assertEquals(405,aresponse3);
+
+
+
+        server.stop();
     }
 
     @Test
@@ -97,7 +101,7 @@ public class ComprehensiveServerTest {
 
     private int getHttpStatus(String method, String headerKey, String headerVal, String body, String endpoint){
         try{
-            URL url = new URI("http://localhost:8000/" + endpoint).toURL();
+            URL url = new URI(String.format("http://localhost:%d/",Server.PORT) + endpoint).toURL();
             // Open a connection to the URL
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
 
@@ -130,7 +134,7 @@ public class ComprehensiveServerTest {
 
     private String sendRequest(String method, String headerKey, String headerVal, String body, String endpoint){
         try{
-            URL url = new URI("http://localhost:8000/" + endpoint).toURL();
+            URL url = new URI("http://localhost:8080/" + endpoint).toURL();
             // Open a connection to the URL
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
 

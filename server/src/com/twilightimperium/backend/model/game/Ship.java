@@ -4,6 +4,10 @@ public class Ship {
     Location coords;
     String shipClass;
 
+    public Ship clone(){
+        return new Ship(Integer.valueOf(coords.x),Integer.valueOf(coords.y),new String(shipClass));
+    }
+
     public Location getCoords() {
         return coords;
     }

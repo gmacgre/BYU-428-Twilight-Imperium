@@ -31,6 +31,16 @@ public class Game {
         return gson.toJson(state);
     }
 
+    private void nextTurn(){
+        //in the future, this will handle initiative.
+        //for now, it just goes in order of join.
+        if(activePlayer < playerNum-1){
+            activePlayer++;
+        } else {
+            activePlayer = 0;
+        }
+    }
+
     public int getActivePlayer(){
         return activePlayer;
     }
@@ -109,7 +119,6 @@ public class Game {
     }
 
     private boolean moveShips(List<Ship> ships){
-        //The clone function currently DOES NOT work. It's fine though, because validateMove doesn't work either
         BoardState oldMap = state.getMap().clone();
         for(Ship currentShip : ships){
             if(!validateMove(currentShip, activeSystem)){

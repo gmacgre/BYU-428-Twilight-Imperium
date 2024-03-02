@@ -21,6 +21,14 @@ public class Tile {
     public Tile clone(){
         //INCOMPLETE, maybe use a JSON library to more easily copy all of the sub objects?
         Tile copyTile = new Tile();
+        copyTile.setAnomaly(new String(anomaly));
+        for (Planet i : planets){
+            copyTile.getPlanets().add(i.clone());
+        }
+        for (Ship i : ships){
+            copyTile.getShips().add(i.clone());
+        }
+
         return copyTile;
     }
 
