@@ -3,10 +3,15 @@ package com.twilightimperium.backend;
 import java.util.*;
 
 import com.google.gson.Gson;
+import com.twilightimperium.backend.data.SystemModel;
+import com.twilightimperium.backend.data.SystemModel.Anomaly;
 import com.twilightimperium.backend.model.game.BoardState;
 import com.twilightimperium.backend.model.game.GameState;
 import com.twilightimperium.backend.model.game.Location;
+import com.twilightimperium.backend.model.game.Player;
 import com.twilightimperium.backend.model.game.Ship;
+
+import com.twilightimperium.backend.data.SystemData;;
 
 
 public class Game {
@@ -70,6 +75,7 @@ public class Game {
             tokens.put(token, playerNum);
             playerNumToToken.put(playerNum,token);
             playerNum++;
+            state.getPlayers().add(new Player());
         } else {
             throw new RuntimeException();
         }
@@ -158,8 +164,8 @@ public class Game {
         if (visited[current.y][current.x] >= remaining){
             return false;
         }
-        String anomaly = board.getTile(current.x,current.y).getAnomaly();
-        if(anomaly == null || anomaly.equals("planet")){
+        SystemModel system = SystemData.systemList.get(board.getTile(current.x,current.y).getSystem());
+        if(system.getAnomalies().size() < 1){
             Location newCoords = new Location(current.x+1,current.y-1);
             if(validateMoveHelper(newCoords, goal, remaining-1, visited, board)){
                 return true;
