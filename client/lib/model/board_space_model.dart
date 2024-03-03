@@ -1,6 +1,7 @@
 // ignore_for_file: unused_field
 
 import 'package:client/data/system_data.dart';
+import 'package:client/model/system_state.dart';
 
 class BoardSpaceModel {
   BoardSpaceModel(
@@ -13,4 +14,5 @@ class BoardSpaceModel {
   final int _r;
 
   final SystemModel system;
+  SystemState? state;
 }
