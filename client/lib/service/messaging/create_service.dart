@@ -34,7 +34,7 @@ class CreateService implements HTTPServiceObserver {
   void processSuccess(String body) {
     try {
       CreateResponse res = JSONEncoder.decodeCreateResponse(body);
-      _observer.notifySuccess(res.roomCode, res.roomPassword, res.gameId, res.userToken);
+      _observer.notifySuccess(res.playerTurn, res.userToken);
     } on FormatException catch (e) {
       _observer.notifyFailure('Error Processing /create: ${e.message}');
     }
@@ -47,5 +47,5 @@ class CreateService implements HTTPServiceObserver {
 }
 
 abstract class CreateServiceObserver extends ServiceObserver {
-  void notifySuccess(String code, String pass, String id, String userToken);
+  void notifySuccess(int id, String userToken);
 }

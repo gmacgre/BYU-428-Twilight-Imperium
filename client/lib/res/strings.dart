@@ -38,8 +38,8 @@ class Strings {
   static String tokenCount(int count, String type) {
     return 'This player has $count ${type.toLowerCase()} token(s).';
   }
-  static String successNeedConnect(String code, String id) {
-    return "Success! Connecting to $code ($id)...";
+  static String successNeedConnect(int id) {
+    return "Success! Connecting to Game (Player $id)...";
   }
 
   static String victoryPoints = 'Victory Points';

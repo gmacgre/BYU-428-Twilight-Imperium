@@ -9,11 +9,11 @@ class GameStateService implements HTTPServiceObserver {
     _service = HTTPService(this);
   }
 
-  void getGameState(String gameId, String userToken) {
+  void getGameState(String userToken) {
     Map<String, String> headers = {
-      'userToken': userToken
+      'token': userToken
     };
-    _service.getRequest('/gameState/$gameId', headers);
+    _service.getRequest('/gameState', headers);
   }
 
   @override

@@ -1,28 +1,20 @@
 class LoginResponse {
-  final String roomCode;
-  final String roomPassword;
-  final String gameId;
+  final int playerTurn;
   final String userToken;
 
   LoginResponse({
-    this.roomCode = "",
-    this.roomPassword = "",
-    this.gameId = "",
+    this.playerTurn = -1,
     this.userToken = "",
   });
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) {
     return switch (json) {
       {
-        'roomCode': String roomCode,
-        'roomPassword': String roomPassword,
-        'gameId': String gameId,
-        'userToken': String userToken,
+        'playerTurn': int playerTurn,
+        'token': String userToken,
       } =>
         LoginResponse(
-          roomCode: roomCode,
-          roomPassword: roomPassword,
-          gameId: gameId,
+          playerTurn: playerTurn,
           userToken: userToken
         ),
       _ => throw const FormatException('Failed to load LoginResponse.'),
@@ -30,9 +22,7 @@ class LoginResponse {
   }
 
   Map<String, dynamic> toJson() => {
-    'roomCode': roomCode,
-    'roomPassword': roomPassword,
-    'gameId': gameId,
-    'userToken': userToken,
+    'playerTurn': playerTurn,
+    'token': userToken,
   };
 }

@@ -41,6 +41,7 @@ class HTTPService {
 
   //If the HTTP Request was successful, the body of the response is sent to the observer. In case of failure, the Status Code and the body are sent. 
   void _determineResult(http.Response res) {
+    print(res.body);
     if(res.statusCode != 200) {
       _observer.processFailure(res.statusCode, res.body);
     }

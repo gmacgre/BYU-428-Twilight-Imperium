@@ -46,9 +46,9 @@ class CreateAndJoinPagePresenter {
   } 
 
   //The following are methods that private classes can call after returning from HTTP calls
-  void _getGameState(String code, String id, String userToken) {
-    _view.postToast(Strings.successNeedConnect(code, id));
-    _gameStateService.getGameState(id, userToken);
+  void _getGameState(int turn, String userToken) {
+    _view.postToast(Strings.successNeedConnect(turn));
+    _gameStateService.getGameState(userToken);
   }
 
   void _failedConnection(String msg) {
@@ -70,8 +70,8 @@ class _LoginServiceObserver implements LoginServiceObserver {
   final CreateAndJoinPagePresenter _presenter;
   _LoginServiceObserver(this._presenter);
   @override
-  void notifySuccess(String code, String pass, String id, String userToken) {
-    _presenter._getGameState(code, id, userToken);
+  void notifySuccess(int turn, String userToken) {
+    _presenter._getGameState(turn, userToken);
   }
 
   @override
@@ -89,8 +89,8 @@ class _CreateServiceObserver implements CreateServiceObserver {
   final CreateAndJoinPagePresenter _presenter;
   _CreateServiceObserver(this._presenter);
   @override
-  void notifySuccess(String code, String pass, String id, String userToken) {
-    _presenter._getGameState(code, id, userToken);
+  void notifySuccess(int id, String userToken) {
+    _presenter._getGameState(id, userToken);
   }
 
   @override
