@@ -13,10 +13,11 @@ class LoginService implements HTTPServiceObserver {
     _httpService = HTTPService(this);
   }
 
-  sendLoginRequest(String roomCode, String roomPassword) {
+  sendLoginRequest(String roomCode, String roomPassword, int playerNum) {
     LoginRequest request = LoginRequest(
       roomCode: roomCode,
-      roomPassword: roomPassword
+      roomPassword: roomPassword,
+      playerTurn: playerNum
     );
     String body = JSONEncoder.encode(request);
     _httpService.postRequest('/login', {}, body);

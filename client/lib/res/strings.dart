@@ -10,7 +10,8 @@ class Strings {
   static const String createGame = 'Create Game';
   static const String codeInput = 'Input Room Name';
   static const String passwordInput = 'Input Room Password';
-  static const String needBothRoomInput = 'Enter both the Room Code and Password.';
+  static const String playerNumberInput = 'Input Seat Number';
+  static const String needBothRoomInput = 'Enter both the Room Code and Password, and a Player Seat Number.';
   static const String loginAttempt = 'Attempting to Log In...';
   static const String createAttempt = 'Attempting to Create Game...';
   static const String fleet = 'Fleet';

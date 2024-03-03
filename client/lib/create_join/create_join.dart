@@ -15,6 +15,8 @@ class _CreateAndJoinPageState extends State<CreateAndJoinPage> implements Create
 
   late CreateAndJoinPagePresenter _presenter;
 
+  int seatNum = -1;
+
   bool buttonsActive = true;
 
   @override
@@ -158,6 +160,48 @@ class _CreateAndJoinPageState extends State<CreateAndJoinPage> implements Create
           decoration: inputDecoration,
         ),
       ),
+      const OutlinedLetters(content: Strings.playerNumberInput),
+      DropdownButton(
+        items: const [
+          DropdownMenuItem<int>(
+            value: -1,
+            child: Text('Seat Number')
+          ),
+          DropdownMenuItem<int>(
+            value: 1,
+            child: Text('1'),
+          ),
+          DropdownMenuItem<int>(
+            value: 2,
+            child: Text('2'),
+          ),
+          DropdownMenuItem<int>(
+            value: 3,
+            child: Text('3'),
+          ),
+          DropdownMenuItem<int>(
+            value: 4,
+            child: Text('4'),
+          ),
+          DropdownMenuItem<int>(
+            value: 5,
+            child: Text('5'),
+          ),
+          DropdownMenuItem<int>(
+            value: 6,
+            child: Text('6'),
+          ),
+        ], 
+        onChanged: (onChanged) {
+          if(onChanged == null) return;
+          _presenter.changeSeatNumber(onChanged);
+          setState(() { seatNum = onChanged; });
+        },
+        hint: const Text('Select Seat'),
+        style: const TextStyle(color: Colors.amberAccent),
+        value: seatNum,
+        dropdownColor: Colors.grey,
+      )
     ];
   }
 

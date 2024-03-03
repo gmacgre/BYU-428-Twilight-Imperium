@@ -13,6 +13,7 @@ class CreateAndJoinPagePresenter {
 
   String _text = "";
   String _pass = "";
+  int _playerNumber = -1;
   final CreateAndJoinPageView _view;
   late final LoginService _loginService;
   late final CreateService _createService;
@@ -24,11 +25,15 @@ class CreateAndJoinPagePresenter {
   void savePassword(String text) {
     _pass = text;
   }
+  void changeSeatNumber(int newNum) {
+    _playerNumber = newNum;
+  }
 
   void joinGame() {
     if(_noInput()) return;
     _view.setButtonState(false);
-    _loginService.sendLoginRequest(_text, _pass);
+    print(_playerNumber);
+    _loginService.sendLoginRequest(_text, _pass, _playerNumber);
   }
 
   void createGame() {
@@ -38,7 +43,7 @@ class CreateAndJoinPagePresenter {
   }
 
   bool _noInput() {
-    if(_pass == "" || _text == "") {
+    if(_pass == "" || _text == "" || _playerNumber == -1) {
       _view.postToast(Strings.needBothRoomInput);
       return true;
     }
