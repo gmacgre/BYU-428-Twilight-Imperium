@@ -1,3 +1,4 @@
+import 'package:client/data/system_data.dart';
 import 'package:client/model/board_space_model.dart';
 
 class BoardGridModel {
@@ -7,11 +8,16 @@ class BoardGridModel {
     for (int i = 0; i < (_depth * 2) + 1; i++) {
       var row = List<BoardSpaceModel>.empty(growable: true);
       for (int j = 0; j < (_depth * 2) + 1; j++) {
-        row.add(BoardSpaceModel(i, j, board[i][j])); //TODO: DEAL WITH THIS
+        row.add(BoardSpaceModel(i, j, demo)); //TODO: DEAL WITH THIS
       }
       _spaces.add(row);
     }
   }
+
+  final SystemModel demo = SystemModel(
+
+  );
+  
   late List<List<BoardSpaceModel>> _spaces;
   final int _depth;
 
