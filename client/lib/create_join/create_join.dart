@@ -200,7 +200,7 @@ class _CreateAndJoinPageState extends State<CreateAndJoinPage> implements Create
         hint: const Text('Select Seat'),
         style: const TextStyle(color: Colors.amberAccent),
         value: seatNum,
-        dropdownColor: Colors.grey,
+        dropdownColor: Colors.black54,
       )
     ];
   }

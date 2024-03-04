@@ -32,7 +32,6 @@ class CreateAndJoinPagePresenter {
   void joinGame() {
     if(_noInput()) return;
     _view.setButtonState(false);
-    print(_playerNumber);
     _loginService.sendLoginRequest(_text, _pass, _playerNumber);
   }
 

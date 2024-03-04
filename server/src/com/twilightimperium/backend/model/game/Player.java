@@ -3,7 +3,7 @@ package com.twilightimperium.backend.model.game;
 public class Player {
     private String race;
     private Integer strategyCardId;
-    private boolean strategyExhaused; //stores if a  player has used their strategy
+    private boolean strategyExhausted; //stores if a  player has used their strategy
     private int tactic;
     private int fleet;
     private int strategyPool;
@@ -33,16 +33,16 @@ public class Player {
         this.strategyCardId = strategyCardId;
     }
 
-    public boolean isStrategyExhaused() {
-        return this.strategyExhaused;
+    public boolean isStrategyExhausted() {
+        return this.strategyExhausted;
     }
 
     public boolean getStrategyExhaused() {
-        return this.strategyExhaused;
+        return this.strategyExhausted;
     }
 
-    public void setStrategyExhaused(boolean strategyExhaused) {
-        this.strategyExhaused = strategyExhaused;
+    public void setStrategyExhausted(boolean strategyExhaused) {
+        this.strategyExhausted = strategyExhaused;
     }
 
     public int getTactic() {

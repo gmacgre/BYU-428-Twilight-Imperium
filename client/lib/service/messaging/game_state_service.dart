@@ -1,4 +1,7 @@
+import 'package:client/model/request_response/error_response.dart';
+import 'package:client/model/request_response/gameState/game_state_response.dart';
 import 'package:client/service/http/http_service.dart';
+import 'package:client/service/json/json_encoder.dart';
 import 'package:client/service/messaging/service_observer.dart';
 
 class GameStateService implements HTTPServiceObserver {
@@ -18,14 +21,22 @@ class GameStateService implements HTTPServiceObserver {
 
   @override
   void processSuccess(String body) {
-    //TODO: Process the response
-    //Port all info into the Datacache
-    _observer.notifySuccess();
+    try {
+      GameStateResponse res = JSONEncoder.decodeGameStateResponse(body);
+      _observer.notifySuccess();
+    } on FormatException  catch (e){
+      _observer.notifyFailure('Error Processing Successful /gameState: ${e.message}');
+    }
   }
 
   @override
   void processFailure(int errorCode, String body) {
-    _observer.notifyFailure('Error getting game state - $errorCode: $body');
+    try {
+      ErrorResponse res = JSONEncoder.decodeErrorResponse(body);
+      _observer.notifyFailure("$errorCode: ${res.message}");
+    } on FormatException  catch (e){
+      _observer.notifyFailure('Error Processing /gameState: ${e.message}');
+    }
   }
 
   @override

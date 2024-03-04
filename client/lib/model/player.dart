@@ -65,7 +65,7 @@ class Player {
           passed,
           0
         ),
-      _ => throw const FormatException('Failed to load LoginResponse.'),
+      _ => throw const FormatException('Failed to load Player.'),
     };
   }
 
