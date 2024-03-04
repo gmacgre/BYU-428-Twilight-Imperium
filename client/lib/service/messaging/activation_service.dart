@@ -17,7 +17,7 @@ class ActivationService implements HTTPServiceObserver {
   void sendActivationRequest(int x, int y) {
     Map<String, String> headers = { 'token': DataCache.instance.userToken };
     ActivateRequest req = ActivateRequest(x, y);
-    _httpService.postRequest('/', headers, JSONEncoder.encode(req));
+    _httpService.postRequest('/activate', headers, JSONEncoder.encode(req));
     _observer.notifySent();
   }
 
