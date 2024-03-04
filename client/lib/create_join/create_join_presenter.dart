@@ -1,4 +1,4 @@
-import 'package:client/res/strings.dart';
+import 'package:client/data/strings.dart';
 import 'package:client/service/messaging/create_service.dart';
 import 'package:client/service/messaging/game_state_service.dart';
 import 'package:client/service/messaging/login_service.dart';

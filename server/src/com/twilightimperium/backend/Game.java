@@ -4,14 +4,13 @@ import java.util.*;
 
 import com.google.gson.Gson;
 import com.twilightimperium.backend.data.SystemModel;
-import com.twilightimperium.backend.data.SystemModel.Anomaly;
 import com.twilightimperium.backend.model.game.BoardState;
 import com.twilightimperium.backend.model.game.GameState;
 import com.twilightimperium.backend.model.game.Location;
 import com.twilightimperium.backend.model.game.Player;
 import com.twilightimperium.backend.model.game.Ship;
 
-import com.twilightimperium.backend.data.SystemData;;
+import com.twilightimperium.backend.data.SystemData;
 
 
 public class Game {
@@ -36,15 +35,15 @@ public class Game {
         return gson.toJson(state);
     }
 
-    private void nextTurn(){
-        //in the future, this will handle initiative.
-        //for now, it just goes in order of join.
-        if(activePlayer < playerNum-1){
-            activePlayer++;
-        } else {
-            activePlayer = 0;
-        }
-    }
+    // private void nextTurn(){
+    //     //in the future, this will handle initiative.
+    //     //for now, it just goes in order of join.
+    //     if(activePlayer < playerNum-1){
+    //         activePlayer++;
+    //     } else {
+    //         activePlayer = 0;
+    //     }
+    // }
 
     public int getActivePlayer(){
         return activePlayer;

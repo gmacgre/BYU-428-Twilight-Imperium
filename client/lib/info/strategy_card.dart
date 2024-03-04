@@ -1,6 +1,6 @@
 import 'package:client/res/hover_tip.dart';
 import 'package:client/res/outlined_letters.dart';
-import 'package:client/res/strings.dart';
+import 'package:client/data/strings.dart';
 import 'package:flutter/material.dart';
 
 /*

@@ -1,6 +1,6 @@
 import 'package:client/create_join/create_join_presenter.dart';
 import 'package:client/res/outlined_letters.dart';
-import 'package:client/res/strings.dart';
+import 'package:client/data/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
