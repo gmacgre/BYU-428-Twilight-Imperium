@@ -7,30 +7,40 @@ import java.util.Set;
 
 public class Tile {
     Set<Integer> tokens; //contains the player numbers of players who have activated this system
-    List<Planet> planets;
     List<Ship> ships;
-    String anomaly;
+    String system;
 
     public Tile(){
         tokens = new HashSet<>();
-        planets = new ArrayList<>();
+        system = "Empty";
         ships = new ArrayList<>();
-        anomaly = null;
+    }
+
+    public Tile(String system){
+        this.system = system;
+    }
+
+    public String getSystem(){
+        return system;
+    }
+
+    public void setSystem(String system){
+        this.system = system;
     }
 
     public Tile clone(){
         //INCOMPLETE, maybe use a JSON library to more easily copy all of the sub objects?
         Tile copyTile = new Tile();
+        copyTile.setSystem(new String(system));
+        for (Ship i : ships){
+            copyTile.getShips().add(i.clone());
+        }
+        for (Integer i : tokens){
+            copyTile.getTokens().add(Integer.valueOf(i));
+        }
         return copyTile;
     }
 
-    public String getAnomaly() {
-        return this.anomaly;
-    }
-
-    public void setAnomaly(String anomaly) {
-        this.anomaly = anomaly;
-    }
 
     public Set<Integer> getTokens() {
         return this.tokens;
@@ -38,14 +48,6 @@ public class Tile {
 
     public void setTokens(Set<Integer> tokens) {
         this.tokens = tokens;
-    }
-
-    public List<Planet> getPlanets() {
-        return this.planets;
-    }
-
-    public void setPlanets(List<Planet> planets) {
-        this.planets = planets;
     }
 
     public List<Ship> getShips() {

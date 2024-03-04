@@ -2,11 +2,11 @@ package com.twilightimperium.backend.model.RequestResponse;
 
 public class LoginResponse {
     private final String token;
-    private final int playerTurn;
+    private final int turnId;
 
     public LoginResponse(String token, int playerTurn) {
         this.token = token;
-        this.playerTurn = playerTurn;
+        this.turnId = playerTurn;
     }
 
     public String getToken() {
@@ -15,7 +15,7 @@ public class LoginResponse {
 
 
     public int getPlayerTurn() {
-        return this.playerTurn;
+        return this.turnId;
     }
 
 

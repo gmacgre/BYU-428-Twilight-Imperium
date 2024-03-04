@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.sun.net.httpserver.*;
 import com.twilightimperium.backend.Game;
 import com.twilightimperium.backend.Server;
+import com.twilightimperium.backend.model.RequestResponse.ErrorResponse;
 import com.twilightimperium.backend.model.RequestResponse.MoveRequest;
 import com.twilightimperium.backend.model.game.Ship;
 
@@ -21,7 +22,7 @@ public class MoveHandler implements HttpHandler{
     public void handle(HttpExchange exchange) throws IOException {
         Gson gson = new Gson();
         if (!"POST".equals(exchange.getRequestMethod())) {
-            sendResponse(exchange, "Bad Request Method", 501);
+            sendResponse(exchange, gson.toJson(new ErrorResponse("Bad Request Method")), 501);
             return;
         } else {
             Headers header = exchange.getRequestHeaders();
@@ -31,12 +32,12 @@ public class MoveHandler implements HttpHandler{
 
             Game game = server.getGameByToken(token);
             if(game == null){
-                sendResponse(exchange, "Bad token", 405);
+                sendResponse(exchange, gson.toJson(new ErrorResponse("Bad Token")), 405);
             }
             if (game.move(ships)){
-                sendResponse(exchange, "Sucess",200);
+                sendResponse(exchange, "",200);
             } else {
-                sendResponse(exchange, "Invalid move command",405);
+                sendResponse(exchange, gson.toJson(new ErrorResponse("Invalid Move Command")),405);
             }
         }
 

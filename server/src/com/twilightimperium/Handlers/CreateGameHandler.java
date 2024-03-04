@@ -7,6 +7,7 @@ import com.twilightimperium.backend.Game;
 import com.twilightimperium.backend.Server;
 import com.twilightimperium.backend.model.RequestResponse.CreateRequest;
 import com.twilightimperium.backend.model.RequestResponse.CreateResponse;
+import com.twilightimperium.backend.model.RequestResponse.ErrorResponse;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,7 +30,7 @@ public class CreateGameHandler implements HttpHandler {
 
         // Only process POST requests
         if (!"POST".equals(exchange.getRequestMethod())) {
-            sendResponse(exchange, "Game Already Exists", 405);
+            sendResponse(exchange, gson.toJson(new ErrorResponse("Game Already Exists")), 405);
             return;
         }
         try {
@@ -41,15 +42,13 @@ public class CreateGameHandler implements HttpHandler {
 
             Game newGame = new Game();
             String token = server.addNewGame(newGame, roomCode, roomPass); // Add game to list and get a token
-            newGame.addPlayer(token);
-            Integer gameIndex = server.getGameIndexByToken(token); // Retrieve the game index by token
-            CreateResponse response = new CreateResponse(token, 0);
+            newGame.addPlayer(token);            CreateResponse response = new CreateResponse(token,0, 0);
             String jsonResponse = gson.toJson(response);
 
             // Respond with the token.
             sendResponse(exchange, jsonResponse, 200);
         } catch (Exception e) {
-            sendResponse(exchange, "Game Already Exists", 405);
+            sendResponse(exchange, gson.toJson(new ErrorResponse("Game already Exists")), 405);
             e.printStackTrace();
         }
     }

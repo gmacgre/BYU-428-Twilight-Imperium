@@ -3,11 +3,15 @@ package com.twilightimperium.backend;
 import java.util.*;
 
 import com.google.gson.Gson;
+import com.twilightimperium.backend.data.SystemModel;
+import com.twilightimperium.backend.data.SystemModel.Anomaly;
 import com.twilightimperium.backend.model.game.BoardState;
 import com.twilightimperium.backend.model.game.GameState;
 import com.twilightimperium.backend.model.game.Location;
+import com.twilightimperium.backend.model.game.Player;
 import com.twilightimperium.backend.model.game.Ship;
-import com.twilightimperium.backend.model.game.Tile;
+
+import com.twilightimperium.backend.data.SystemData;;
 
 
 public class Game {
@@ -22,10 +26,24 @@ public class Game {
     private int maxPlayers;
     private int nextCommand; //This stores what the game is waiting on. Does it expect an activate system or move command etc.
 
+
+    public int getPlayerTurn(String token){
+        return tokens.get(token);
+    }
     public String jsonGameState(){
         //encode state as json
         Gson gson = new Gson();
         return gson.toJson(state);
+    }
+
+    private void nextTurn(){
+        //in the future, this will handle initiative.
+        //for now, it just goes in order of join.
+        if(activePlayer < playerNum-1){
+            activePlayer++;
+        } else {
+            activePlayer = 0;
+        }
     }
 
     public int getActivePlayer(){
@@ -57,6 +75,7 @@ public class Game {
             tokens.put(token, playerNum);
             playerNumToToken.put(playerNum,token);
             playerNum++;
+            state.getPlayers().add(new Player());
         } else {
             throw new RuntimeException();
         }
@@ -106,7 +125,6 @@ public class Game {
     }
 
     private boolean moveShips(List<Ship> ships){
-        //The clone function currently DOES NOT work. It's fine though, because validateMove doesn't work either
         BoardState oldMap = state.getMap().clone();
         for(Ship currentShip : ships){
             if(!validateMove(currentShip, activeSystem)){
@@ -146,8 +164,8 @@ public class Game {
         if (visited[current.y][current.x] >= remaining){
             return false;
         }
-        String anomaly = board.getTile(current.x,current.y).getAnomaly();
-        if(anomaly == null || anomaly.equals("planet")){
+        SystemModel system = SystemData.systemList.get(board.getTile(current.x,current.y).getSystem());
+        if(system.getAnomalies().size() < 1){
             Location newCoords = new Location(current.x+1,current.y-1);
             if(validateMoveHelper(newCoords, goal, remaining-1, visited, board)){
                 return true;

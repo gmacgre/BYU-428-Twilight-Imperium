@@ -16,7 +16,7 @@ public class BoardState {
                 map[j][i] = new Tile();
             }
         }
-        map[3][0].getPlanets().add(new Planet("Jord",4,2));
+        map[3][0].setSystem("Jord");
         map[3][0].getShips().add(new Ship(0,3,"carrier"));
         map[3][0].getShips().add(new Ship(0,3,"carrier"));
         map[3][0].getShips().add(new Ship(0,3,"destroyer"));

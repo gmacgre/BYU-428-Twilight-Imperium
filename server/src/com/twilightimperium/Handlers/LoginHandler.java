@@ -4,13 +4,13 @@ import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.twilightimperium.backend.Server;
+import com.twilightimperium.backend.model.RequestResponse.ErrorResponse;
 import com.twilightimperium.backend.model.RequestResponse.LoginRequest;
 import com.twilightimperium.backend.model.RequestResponse.LoginResponse;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.UUID;
 
 /**
  * Handles login requests to the /login endpoint.
@@ -18,8 +18,6 @@ import java.util.UUID;
 public class LoginHandler implements HttpHandler {
     private final Server server;
     //Fake user to test login
-    private final String DEMO_USERNAME = "demoUser";
-    private final String DEMO_PASSWORD = "demoPass";
 
     public LoginHandler(Server server) {
         this.server = server;
@@ -28,11 +26,11 @@ public class LoginHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         // Only process POST requests
+        Gson gson = new Gson();
         if (!"POST".equals(exchange.getRequestMethod())) {
-            sendResponse(exchange, "Method Not Allowed", 405);
+            sendResponse(exchange, gson.toJson(new ErrorResponse("Bad Request Method")), 405);
             return;
         }
-        Gson gson = new Gson();
         try {
             // Here I would parse through JSON file when we have things implemented
             String requestBody = new String(exchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8);
@@ -40,18 +38,20 @@ public class LoginHandler implements HttpHandler {
             
             // Simulated authentication check
             String token = server.login(request.getRoomCode(), request.getRoomPass(),request.getPlayerNum());
+            
 
             if (token != null) {
+                int playerId = server.getGameByToken(token).getPlayerTurn(token);
                 // Respond with the generated token
-                LoginResponse response = new LoginResponse(token, 0);
+                LoginResponse response = new LoginResponse(token, playerId);
                 String jsonResponse = gson.toJson(response);
                 sendResponse(exchange, jsonResponse, 200);
             } else {
                 // Authentication failed
-                sendResponse(exchange, "Bad Input", 401);
+                sendResponse(exchange, gson.toJson(new ErrorResponse("Bad Input")), 401);
             }
         } catch (Exception e) {
-            sendResponse(exchange, "Internal Server Error", 500);
+            sendResponse(exchange, gson.toJson(new ErrorResponse("Internal Server Error")), 500);
             e.printStackTrace();
         }
     }
