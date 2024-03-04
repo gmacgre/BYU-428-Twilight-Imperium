@@ -1,7 +1,7 @@
 import 'package:http/http.dart' as http;
 
 class HTTPService {
-  final String _serverDomain = 'http://localhost:8000';
+  final String _serverDomain = 'http://localhost:8080';
   final HTTPServiceObserver _observer;
   HTTPService(this._observer);
 
@@ -41,7 +41,6 @@ class HTTPService {
 
   //If the HTTP Request was successful, the body of the response is sent to the observer. In case of failure, the Status Code and the body are sent. 
   void _determineResult(http.Response res) {
-    print(res.body);
     if(res.statusCode != 200) {
       _observer.processFailure(res.statusCode, res.body);
     }

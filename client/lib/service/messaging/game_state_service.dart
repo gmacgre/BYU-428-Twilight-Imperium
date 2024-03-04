@@ -19,6 +19,7 @@ class GameStateService implements HTTPServiceObserver {
   @override
   void processSuccess(String body) {
     //TODO: Process the response
+    //Port all info into the Datacache
     _observer.notifySuccess();
   }
 

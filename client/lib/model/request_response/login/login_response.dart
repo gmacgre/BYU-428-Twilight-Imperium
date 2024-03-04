@@ -10,7 +10,7 @@ class LoginResponse {
   factory LoginResponse.fromJson(Map<String, dynamic> json) {
     return switch (json) {
       {
-        'playerTurn': int playerTurn,
+        'turnId': int playerTurn,
         'token': String userToken,
       } =>
         LoginResponse(
