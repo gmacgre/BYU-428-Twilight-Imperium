@@ -1,6 +1,4 @@
 import 'package:client/board/board_space.dart';
-import 'package:client/board/presenter/board_grid_presenter.dart';
-import 'package:client/model/board_grid_model.dart';
 import 'package:client/model/board_state.dart';
 import 'package:client/model/system_state.dart';
 import 'package:flutter/widgets.dart';
