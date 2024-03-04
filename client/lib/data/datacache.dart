@@ -1,9 +1,22 @@
 import 'package:client/data/system_data.dart';
+import 'package:client/model/objective.dart';
+import 'package:client/model/player.dart';
 import 'package:client/model/system_state.dart';
 
 class DataCache{
   DataCache._();
   static final DataCache instance = DataCache._();
+
+  String userToken = '';
+
+  List<Player> players = [
+    Player('jol_nar', false, 5, 5, 5, 3, false, 1),
+    Player('jol_nar', false, 5, 5, 5, 3, false, 1),
+    Player('jol_nar', false, 5, 5, 5, 3, false, 1),
+    Player('jol_nar', false, 5, 5, 5, 3, false, 1),
+  ];
+
+  List<Objective> publicObjectives = [];
 
   List<List<SystemState>> boardState= [
   //Column 1

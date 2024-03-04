@@ -10,7 +10,8 @@ class Strings {
   static const String createGame = 'Create Game';
   static const String codeInput = 'Input Room Name';
   static const String passwordInput = 'Input Room Password';
-  static const String needBothRoomInput = 'Enter both the Room Code and Password.';
+  static const String playerNumberInput = 'Input Seat Number';
+  static const String needBothRoomInput = 'Enter both the Room Code and Password, and a Player Seat Number.';
   static const String loginAttempt = 'Attempting to Log In...';
   static const String createAttempt = 'Attempting to Create Game...';
   static const String fleet = 'Fleet';
@@ -38,9 +39,12 @@ class Strings {
   static String tokenCount(int count, String type) {
     return 'This player has $count ${type.toLowerCase()} token(s).';
   }
-  static String successNeedConnect(String code, String id) {
-    return "Success! Connecting to $code ($id)...";
+  static String successNeedConnect(int id) {
+    return "Success! Connecting to Game (Player $id)...";
   }
 
   static String victoryPoints = 'Victory Points';
+
+
+  static String noSelectedRace = 'Not chosen';
 }

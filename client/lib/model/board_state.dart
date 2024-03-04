@@ -1,6 +1,7 @@
 import 'package:client/data/datacache.dart';
 import 'package:client/model/ship_model.dart';
 import 'package:client/model/system_state.dart';
+import 'package:client/service/messaging/activation_service.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'board_state.g.dart';
@@ -9,6 +10,7 @@ part 'board_state.g.dart';
 class BoardState extends _$BoardState {
   int? _col;
   int? _row;
+  final ActivationService _activateService = ActivationService(_ActivateServiceObserver());
 
   @override
   List<List<SystemState>> build() {
@@ -45,6 +47,8 @@ class BoardState extends _$BoardState {
     var system = state[col][row];
     system.activated = true;
     print('activated $col, $row');
+    _activateService.sendActivationRequest(col, row);
+    
     updateSystem(system, col, row);
   }
 
@@ -63,4 +67,22 @@ class BoardState extends _$BoardState {
     return _row;
   }
 
+}
+
+class _ActivateServiceObserver implements ActivationServiceObserver {
+  @override
+  void notifySent() {
+    // TODO: implement notifySent
+    print('activation sent');
+  }
+  @override
+  void notifySuccess() {
+    // TODO: implement notifySuccess
+    print('activation successful');
+  }
+  @override
+  void notifyFailure(String message) {
+    // TODO: implement notifyFailure
+    print('activation failed');
+  }
 }

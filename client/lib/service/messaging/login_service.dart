@@ -1,3 +1,4 @@
+import 'package:client/data/datacache.dart';
 import 'package:client/model/request_response/error_response.dart';
 import 'package:client/model/request_response/login/login_request.dart';
 import 'package:client/model/request_response/login/login_response.dart';
@@ -13,10 +14,11 @@ class LoginService implements HTTPServiceObserver {
     _httpService = HTTPService(this);
   }
 
-  sendLoginRequest(String roomCode, String roomPassword) {
+  sendLoginRequest(String roomCode, String roomPassword, int playerNum) {
     LoginRequest request = LoginRequest(
       roomCode: roomCode,
-      roomPassword: roomPassword
+      roomPassword: roomPassword,
+      playerTurn: playerNum
     );
     String body = JSONEncoder.encode(request);
     _httpService.postRequest('/login', {}, body);
@@ -38,7 +40,8 @@ class LoginService implements HTTPServiceObserver {
   void processSuccess(String body) {
     try {
       LoginResponse res = JSONEncoder.decodeLoginResponse(body);
-      _observer.notifySuccess(res.roomCode, res.roomPassword, res.gameId, res.userToken);
+      DataCache.instance.userToken = res.userToken;
+      _observer.notifySuccess(res.playerTurn, res.userToken);
     } on FormatException catch (e) {
       _observer.notifyFailure('Error Processing /login: ${e.message}');
     }
@@ -51,6 +54,6 @@ class LoginService implements HTTPServiceObserver {
 }
 
 abstract class LoginServiceObserver extends ServiceObserver {
-  void notifySuccess(String code, String pass, String id, String userToken);
+  void notifySuccess(int turn, String userToken);
 }
 

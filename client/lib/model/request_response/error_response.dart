@@ -12,7 +12,7 @@ class ErrorResponse {
         ErrorResponse(
           message: message
         ),
-      _ => throw const FormatException('Failed to load LoginResponse.'),
+      _ => throw const FormatException('Failed to load ErrorResponse.'),
     };
   }
 }
