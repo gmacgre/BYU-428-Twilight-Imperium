@@ -19,8 +19,6 @@ class BoardGrid extends ConsumerStatefulWidget {
 class _BoardGridState extends ConsumerState<BoardGrid> {
 @override
   Widget build(BuildContext context) {
-    BoardGridPresenter presenter = BoardGridPresenter(_BoardGridView());
-    presenter.startLoop();
     List<List<SystemState>> state = ref.watch(boardStateProvider);
     return HexagonGrid.flat(
       depth: widget._depth,
@@ -48,13 +46,3 @@ class _BoardGridState extends ConsumerState<BoardGrid> {
   }
 }
 
-class _BoardGridView implements BoardGridView {
-  @override
-  void onBind(int depth) {
-    // TODO: implement onBind
-  }
-  @override
-  void setBoardState(BoardGridModel model) {
-    // TODO: implement setBoardState
-  }
-}
