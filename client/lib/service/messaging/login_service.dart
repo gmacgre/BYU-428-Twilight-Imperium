@@ -1,3 +1,4 @@
+import 'package:client/data/datacache.dart';
 import 'package:client/model/request_response/error_response.dart';
 import 'package:client/model/request_response/login/login_request.dart';
 import 'package:client/model/request_response/login/login_response.dart';
@@ -39,6 +40,7 @@ class LoginService implements HTTPServiceObserver {
   void processSuccess(String body) {
     try {
       LoginResponse res = JSONEncoder.decodeLoginResponse(body);
+      DataCache.instance.userToken = res.userToken;
       _observer.notifySuccess(res.playerTurn, res.userToken);
     } on FormatException catch (e) {
       _observer.notifyFailure('Error Processing /login: ${e.message}');

@@ -7,7 +7,7 @@ class DataCache{
   DataCache._();
   static final DataCache instance = DataCache._();
 
-
+  String userToken = '';
 
   List<Player> players = [
     Player('jol_nar', false, 5, 5, 5, 3, false, 1),

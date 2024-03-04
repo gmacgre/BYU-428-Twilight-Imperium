@@ -11,7 +11,6 @@ class BoardGridPresenter {
   final BoardGridView _view;
 
   void startLoop() async {
-    int i = 0;
     while(true) {
       await Future.delayed(const Duration(seconds: 2));
     }
