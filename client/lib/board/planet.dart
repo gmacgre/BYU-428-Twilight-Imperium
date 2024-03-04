@@ -1,9 +1,6 @@
-import 'dart:html';
-
 import 'package:client/data/planet_data.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/gestures/events.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/services.dart';
 
 class Planet extends StatefulWidget {
   const Planet({

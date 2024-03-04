@@ -20,9 +20,9 @@ class _SystemState extends ConsumerState<System> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(
         10.0,
+        20.0,
         10.0,
-        10.0,
-        10.0,
+        20.0,
       ),
       child: switch (systemSize) {
         3 => threePlanetSystem(),
