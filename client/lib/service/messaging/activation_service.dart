@@ -1,5 +1,5 @@
 import 'package:client/data/datacache.dart';
-import 'package:client/model/request_response/activate/Activate_request.dart';
+import 'package:client/model/request_response/activate/activate_request.dart';
 import 'package:client/service/http/http_service.dart';
 import 'package:client/service/json/json_encoder.dart';
 import 'package:client/service/messaging/service_observer.dart';
