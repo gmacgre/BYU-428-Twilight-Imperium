@@ -1,0 +1,358 @@
+{
+    "world": {},
+    "map": {
+        "map": [
+            [
+                {
+                    "tokens": [],
+                    "planets": [],
+                    "ships": []
+                },
+                {
+                    "tokens": [],
+                    "planets": [],
+                    "ships": []
+                },
+                {
+                    "tokens": [],
+                    "planets": [],
+                    "ships": []
+                },
+                {
+                    "tokens": [],
+                    "planets": [],
+                    "ships": []
+                },
+                {
+                    "tokens": [],
+                    "planets": [],
+                    "ships": []
+                },
+                {
+                    "tokens": [],
+                    "planets": [],
+                    "ships": []
+                },
+                {
+                    "tokens": [],
+                    "planets": [],
+                    "ships": []
+                }
+            ],
+            [
+                {
+                    "tokens": [],
+                    "planets": [],
+                    "ships": []
+                },
+                {
+                    "tokens": [],
+                    "planets": [],
+                    "ships": []
+                },
+                {
+                    "tokens": [],
+                    "planets": [],
+                    "ships": []
+                },
+                {
+                    "tokens": [],
+                    "planets": [],
+                    "ships": []
+                },
+                {
+                    "tokens": [],
+                    "planets": [],
+                    "ships": []
+                },
+                {
+                    "tokens": [],
+                    "planets": [],
+                    "ships": []
+                },
+                {
+                    "tokens": [],
+                    "planets": [],
+                    "ships": []
+                }
+            ],
+            [
+                {
+                    "tokens": [],
+                    "planets": [],
+                    "ships": []
+                },
+                {
+                    "tokens": [],
+                    "planets": [],
+                    "ships": []
+                },
+                {
+                    "tokens": [],
+                    "planets": [],
+                    "ships": []
+                },
+                {
+                    "tokens": [],
+                    "planets": [],
+                    "ships": []
+                },
+                {
+                    "tokens": [],
+                    "planets": [],
+                    "ships": []
+                },
+                {
+                    "tokens": [],
+                    "planets": [],
+                    "ships": []
+                },
+                {
+                    "tokens": [],
+                    "planets": [],
+                    "ships": []
+                }
+            ],
+            [
+                {
+                    "tokens": [],
+                    "planets": [
+                        {
+                            "name": "Jord",
+                            "resource": 4,
+                            "influence": 2
+                        }
+                    ],
+                    "ships": [
+                        {
+                            "coords": {
+                                "x": 0,
+                                "y": 3
+                            },
+                            "shipClass": "carrier"
+                        },
+                        {
+                            "coords": {
+                                "x": 0,
+                                "y": 3
+                            },
+                            "shipClass": "carrier"
+                        },
+                        {
+                            "coords": {
+                                "x": 0,
+                                "y": 3
+                            },
+                            "shipClass": "destroyer"
+                        },
+                        {
+                            "coords": {
+                                "x": 0,
+                                "y": 3
+                            },
+                            "shipClass": "fighter"
+                        },
+                        {
+                            "coords": {
+                                "x": 0,
+                                "y": 3
+                            },
+                            "shipClass": "fighter"
+                        },
+                        {
+                            "coords": {
+                                "x": 0,
+                                "y": 3
+                            },
+                            "shipClass": "fighter"
+                        },
+                        {
+                            "coords": {
+                                "x": 0,
+                                "y": 3
+                            },
+                            "shipClass": "infantry"
+                        },
+                        {
+                            "coords": {
+                                "x": 0,
+                                "y": 3
+                            },
+                            "shipClass": "infantry"
+                        },
+                        {
+                            "coords": {
+                                "x": 0,
+                                "y": 3
+                            },
+                            "shipClass": "infantry"
+                        },
+                        {
+                            "coords": {
+                                "x": 0,
+                                "y": 3
+                            },
+                            "shipClass": "infantry"
+                        },
+                        {
+                            "coords": {
+                                "x": 0,
+                                "y": 3
+                            },
+                            "shipClass": "infantry"
+                        },
+                        {
+                            "coords": {
+                                "x": 0,
+                                "y": 3
+                            },
+                            "shipClass": "space_dock"
+                        }
+                    ]
+                },
+                {
+                    "tokens": [],
+                    "planets": [],
+                    "ships": []
+                },
+                {
+                    "tokens": [],
+                    "planets": [],
+                    "ships": []
+                },
+                {
+                    "tokens": [],
+                    "planets": [],
+                    "ships": []
+                },
+                {
+                    "tokens": [],
+                    "planets": [],
+                    "ships": []
+                },
+                {
+                    "tokens": [],
+                    "planets": [],
+                    "ships": []
+                },
+                {
+                    "tokens": [],
+                    "planets": [],
+                    "ships": []
+                }
+            ],
+            [
+                {
+                    "tokens": [],
+                    "planets": [],
+                    "ships": []
+                },
+                {
+                    "tokens": [],
+                    "planets": [],
+                    "ships": []
+                },
+                {
+                    "tokens": [],
+                    "planets": [],
+                    "ships": []
+                },
+                {
+                    "tokens": [],
+                    "planets": [],
+                    "ships": []
+                },
+                {
+                    "tokens": [],
+                    "planets": [],
+                    "ships": []
+                },
+                {
+                    "tokens": [],
+                    "planets": [],
+                    "ships": []
+                },
+                {
+                    "tokens": [],
+                    "planets": [],
+                    "ships": []
+                }
+            ],
+            [
+                {
+                    "tokens": [],
+                    "planets": [],
+                    "ships": []
+                },
+                {
+                    "tokens": [],
+                    "planets": [],
+                    "ships": []
+                },
+                {
+                    "tokens": [],
+                    "planets": [],
+                    "ships": []
+                },
+                {
+                    "tokens": [],
+                    "planets": [],
+                    "ships": []
+                },
+                {
+                    "tokens": [],
+                    "planets": [],
+                    "ships": []
+                },
+                {
+                    "tokens": [],
+                    "planets": [],
+                    "ships": []
+                },
+                {
+                    "tokens": [],
+                    "planets": [],
+                    "ships": []
+                }
+            ],
+            [
+                {
+                    "tokens": [],
+                    "planets": [],
+                    "ships": []
+                },
+                {
+                    "tokens": [],
+                    "planets": [],
+                    "ships": []
+                },
+                {
+                    "tokens": [],
+                    "planets": [],
+                    "ships": []
+                },
+                {
+                    "tokens": [],
+                    "planets": [],
+                    "ships": []
+                },
+                {
+                    "tokens": [],
+                    "planets": [],
+                    "ships": []
+                },
+                {
+                    "tokens": [],
+                    "planets": [],
+                    "ships": []
+                },
+                {
+                    "tokens": [],
+                    "planets": [],
+                    "ships": []
+                }
+            ]
+        ]
+    },
+    "players": []
+}
