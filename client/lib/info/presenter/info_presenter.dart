@@ -1,4 +1,5 @@
 import 'package:client/data/datacache.dart';
+import 'package:client/data/strings.dart';
 import 'package:client/model/objective.dart';
 abstract class InfoPresenter {
   
@@ -11,6 +12,7 @@ abstract class InfoPresenter {
   String getIcon(int iconIdx) {
     if(iconIdx == getNumPlayers()) return 'icons/color/general/agenda.png';
     if(!_validIndex(iconIdx)) return 'icons/color/general/codex.png';
+    if(_cache.players[iconIdx].getName() == Strings.noSelectedRace) return 'icons/color/general/agenda.png';
     return 'icons/color/race/${_cache.players[iconIdx].getName()}.png';
   }
 

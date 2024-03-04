@@ -44,4 +44,7 @@ class Strings {
   }
 
   static String victoryPoints = 'Victory Points';
+
+
+  static String noSelectedRace = 'Not chosen';
 }

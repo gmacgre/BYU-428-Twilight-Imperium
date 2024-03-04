@@ -66,7 +66,7 @@ class SystemContentRow {
 }
 
 class SystemContent {
-  final List<String> tokens;
+  final List<int> tokens;
   final String systemName;
   final List<ResponseShipModel> ships;
 
@@ -84,7 +84,7 @@ class SystemContent {
         'ships': List<dynamic> ships
       } =>
         SystemContent(
-          tokens: List<String>.from(tokens),
+          tokens: List<int>.from(tokens),
           systemName: system,
           ships: List<ResponseShipModel>.from(ships.map((ship) => ResponseShipModel.fromJson(ship)))
         ),

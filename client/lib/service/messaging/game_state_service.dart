@@ -1,3 +1,4 @@
+import 'package:client/data/datacache.dart';
 import 'package:client/model/request_response/error_response.dart';
 import 'package:client/model/request_response/gameState/game_state_response.dart';
 import 'package:client/service/http/http_service.dart';
@@ -23,6 +24,9 @@ class GameStateService implements HTTPServiceObserver {
   void processSuccess(String body) {
     try {
       GameStateResponse res = JSONEncoder.decodeGameStateResponse(body);
+      DataCache cache = DataCache.instance;
+      cache.players = res.players;
+      
       _observer.notifySuccess();
     } on FormatException  catch (e){
       _observer.notifyFailure('Error Processing Successful /gameState: ${e.message}');
