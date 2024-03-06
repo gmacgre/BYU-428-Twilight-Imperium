@@ -8,7 +8,7 @@ import 'package:client/info/strategy_card.dart';
 class PlayerOverview extends StatelessWidget {
   PlayerOverview({
     super.key,
-    this.icon = "",
+    this.race = "",
     this.strategyCardId = -1,
     this.tacticTokenCount = -1,
     this.fleetTokenCount = -1,
@@ -17,7 +17,7 @@ class PlayerOverview extends StatelessWidget {
     this.playerColor = 6
   });
 
-  final String icon;
+  final String race;
   final int strategyCardId;
   final int tacticTokenCount;
   final int fleetTokenCount;
@@ -57,7 +57,7 @@ class PlayerOverview extends StatelessWidget {
         child: SizedBox(
           height: 60,
           width: 60,
-          child: Image.asset(icon, fit: BoxFit.fitWidth)
+          child: Image.asset(_getIcon(race), fit: BoxFit.fitWidth)
           ),
       ),
       StrategyCard(
@@ -85,6 +85,11 @@ class PlayerOverview extends StatelessWidget {
     }
     
     return toReturn;
+  }
+
+  String _getIcon(String race) {
+    if(race == Strings.noSelectedRace) return 'icons/color/general/agenda.png';
+    return 'icons/color/race/$race.png';
   }
 }
 

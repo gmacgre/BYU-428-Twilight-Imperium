@@ -1,29 +1,22 @@
 import 'package:client/info/objective_view.dart';
-import 'package:client/info/presenter/global_info_presenter.dart';
 import 'package:client/info/player_overview.dart';
 import 'package:client/info/strategy_card.dart';
 import 'package:client/model/objective.dart';
+import 'package:client/model/player.dart';
 import 'package:client/res/hover_tip.dart';
 import 'package:client/res/outlined_letters.dart';
 import 'package:client/data/strings.dart';
 import 'package:flutter/material.dart';
 
-class GlobalInfo extends StatefulWidget {
-  const GlobalInfo({super.key});
+class GlobalInfo extends StatelessWidget {
+  final List<Player> players;
+  final List<Objective> publicObjectives;
 
-  @override
-  State<GlobalInfo> createState() => _GlobalInfoState();
-}
-
-class _GlobalInfoState extends State<GlobalInfo> {
-
-  late GlobalInfoPresenter _presenter;
-
-  @override
-  void initState() {
-    super.initState();
-    _presenter = GlobalInfoPresenter();
-  }
+  const GlobalInfo({
+    super.key,
+    required this.players,
+    required this.publicObjectives
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -40,17 +33,17 @@ class _GlobalInfoState extends State<GlobalInfo> {
     //One non-player info Widget
     List<Widget> toReturn = [];
 
-    for(int i = 0; i < _presenter.getNumPlayers(); i++) {
+    for(int i = 0; i < players.length; i++) {
       toReturn.add(
         Padding(
           padding: const EdgeInsets.fromLTRB(8.0, 10.0, 8.0, 10.0),
           child: PlayerOverview(
-            icon: _presenter.getIcon(i),
-            strategyCardId: _presenter.getStrategyCard(i),
-            tacticTokenCount: _presenter.getTacticPool(i),
-            fleetTokenCount: _presenter.getFleetPool(i),
-            strategyTokenCount: _presenter.getStrategyPool(i),
-            victoryPoints: _presenter.getVictoryPoints(i),
+            race: players[i].getName(),
+            strategyCardId: players[i].getStrategyCard(),
+            tacticTokenCount: players[i].getTacticPool(),
+            fleetTokenCount: players[i].getFleetPool(),
+            strategyTokenCount: players[i].getStrategyPool(),
+            victoryPoints: players[i].getVictoryPoints(),
             playerColor: i,
           )
         )
@@ -88,7 +81,7 @@ class _GlobalInfoState extends State<GlobalInfo> {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
-              children: _getPublicObjectives(),
+              children: _buildPublicObjectives(),
             ),
           ),
         ),
@@ -114,7 +107,7 @@ class _GlobalInfoState extends State<GlobalInfo> {
         ),
       ),
     ];
-    List<int> untaken = _presenter.getUntakenStrategyCards();
+    List<int> untaken = _getUntakenStrategyCards(players);
     for(int id in untaken) {
       toReturn.add(
         Padding(
@@ -131,7 +124,7 @@ class _GlobalInfoState extends State<GlobalInfo> {
     return toReturn;
   }
 
-  List<Widget> _getPublicObjectives() {
+  List<Widget> _buildPublicObjectives() {
 
     //Title for section
     List<Widget> toReturn = [
@@ -144,7 +137,6 @@ class _GlobalInfoState extends State<GlobalInfo> {
       )
     ];
 
-    List<Objective> publicObjectives = _presenter.getPublicObjectives();
     List<Widget> toInsert = [];
 
     for(int i = 0; i < 10; i++) {
@@ -188,6 +180,14 @@ class _GlobalInfoState extends State<GlobalInfo> {
     );
 
     return toReturn;
+  }
+
+  List<int> _getUntakenStrategyCards(List<Player> players) {
+    Set<int> cards = { 1, 2, 3, 4, 5, 6, 7, 8 };
+    for(Player p in players) {
+      cards.remove(p.getStrategyCard());
+    }
+    return cards.toList();
   }
 }
 
