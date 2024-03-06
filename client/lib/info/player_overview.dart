@@ -88,8 +88,8 @@ class PlayerOverview extends StatelessWidget {
   }
 
   String _getIcon(String race) {
-    if(race == Strings.noSelectedRace) return 'icons/color/general/agenda.png';
-    return 'icons/color/race/$race.png';
+    if(race == Strings.noSelectedRace) return Strings.agendaIcon;
+    return Strings.raceIcon(race);
   }
 }
 

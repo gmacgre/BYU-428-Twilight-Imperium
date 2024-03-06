@@ -76,10 +76,10 @@ class InfoPanel extends ConsumerWidget {
   }
 
   String _getIcon(int iconIdx, List<Player> players) {
-    if(iconIdx == players.length) return 'icons/color/general/agenda.png';
-    if(!_validIndex(iconIdx, players.length)) return 'icons/color/general/codex.png';
-    if(players[iconIdx].getName() == Strings.noSelectedRace) return 'icons/color/general/agenda.png';
-    return 'icons/color/race/${players[iconIdx].getName()}.png';
+    if(iconIdx == players.length) return Strings.agendaIcon;
+    if(!_validIndex(iconIdx, players.length)) return Strings.codexIcon;
+    if(players[iconIdx].getName() == Strings.noSelectedRace) return Strings.agendaIcon;
+    return Strings.raceIcon(players[iconIdx].getName());
   }
 
   bool _validIndex(int idx, int length) {
