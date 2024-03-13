@@ -2,6 +2,7 @@ package com.twilightimperium.backend;
 
 import com.sun.net.httpserver.HttpServer;
 import com.twilightimperium.Handlers.*;
+import com.twilightimperium.backend.model.RequestResponse.Update;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -18,6 +19,8 @@ public class Server {
     private Map<String, Integer> gameIdToIndex;
     private Map<String, String> gamePassword;
 
+    
+
     public static final int PORT = 8080;
 
     public Server() throws IOException {
@@ -32,6 +35,7 @@ public class Server {
         server.createContext("/gameState",new GameStateHandler(this));
         server.createContext("/activate",new ActivateHandler(this));
         server.createContext("/move",new MoveHandler(this));
+        server.createContext("/update",new UpdateHandler(this));
         server.setExecutor(null);
     }
 
@@ -99,6 +103,26 @@ public class Server {
         }
         return token;
     }
+
+    public List<Pair<Integer,Update>> getUpdateList(String token){
+        return ongoingGames.get(tokenToGameIndex.get(token)).getUpdateList();
+    }
+
+    public Integer getPlayerUpdate(String token){
+        return ongoingGames.get(tokenToGameIndex.get(token)).getPlayerUpdate(token);
+    }
+
+    public void updatePlayer(String token){
+        ongoingGames.get(tokenToGameIndex.get(token)).updatePlayer(token);
+    }
+
+    public void addUpdate(String token, Update update){
+        ongoingGames.get(tokenToGameIndex.get(token)).addUpdate(update);
+    }
+
+    /*public boolean checkUpToDate(String token){
+        return ongoingGames.get(tokenToGameIndex.get(token)).isToDate(token);
+    }*/
 
     // Other server methods...
 }

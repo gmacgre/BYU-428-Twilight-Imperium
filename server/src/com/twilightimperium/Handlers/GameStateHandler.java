@@ -29,6 +29,7 @@ public class GameStateHandler implements HttpHandler{
             if (game == null){
                 sendResponse(exchange, gson.toJson(new ErrorResponse("Bad Token")), 405);
             }
+            server.updatePlayer(token);
             sendResponse(exchange, game.jsonGameState(),200);
         }
 

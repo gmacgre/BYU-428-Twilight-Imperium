@@ -4,6 +4,7 @@ import java.util.*;
 
 import com.google.gson.Gson;
 import com.twilightimperium.backend.data.SystemModel;
+import com.twilightimperium.backend.model.RequestResponse.Update;
 import com.twilightimperium.backend.model.game.BoardState;
 import com.twilightimperium.backend.model.game.GameState;
 import com.twilightimperium.backend.model.game.Location;
@@ -25,6 +26,8 @@ public class Game {
     private int maxPlayers;
     private int nextCommand; //This stores what the game is waiting on. Does it expect an activate system or move command etc.
 
+    private Map<String, Integer> tokenToUpdate;
+    private List<Pair<Integer,Update>> updates;
 
     public int getPlayerTurn(String token){
         return tokens.get(token);
@@ -57,6 +60,56 @@ public class Game {
         return state;
     }
 
+    public List<Pair<Integer,Update>> getUpdateList(){
+        return updates;
+    }
+
+    public void addUpdate(Update update){
+        int newIndex;
+        if(updates.size() < 1){
+            newIndex = 0;
+        } else {
+            newIndex = updates.getLast().first() + 1;
+        }
+        updates.addLast(new Pair<Integer,Update>(newIndex,update));
+    }
+
+    public Integer getPlayerUpdate(String token){
+        if(!tokenToUpdate.containsKey(token)){
+            return -1; //Since the first update is 0, this will get all updates
+        }
+        return tokenToUpdate.get(token);
+    }
+
+    public boolean isToDate(String token){
+        if(updates.size() == 0){
+            return true;
+        }
+        if(!tokenToUpdate.containsKey(token)){
+            return false;
+        }
+        return tokenToUpdate.get(token) == updates.getLast().first();
+    }
+
+    public void updatePlayer(String token){
+        tokenToUpdate.put(token,updates.getLast().first());
+        if (tokenToUpdate.containsValue(-1)){
+            return;
+        }
+        List<Pair<Integer,Update>> newUpdates = new LinkedList<>(updates);
+        //Now we check for updates we no longer need to keep track of
+        //we loop through the updates from oldest to newest deleting all that don't have
+        //a token referencing it until we hit the first update referenced by at least one token
+        for(Pair<Integer,Update> i : updates){
+            if (!tokenToUpdate.containsValue(i.first())){
+                newUpdates.removeFirst();
+            } else {
+                break;
+            }
+        }
+        updates = newUpdates;
+    }
+
     public Game(){
         nextCommand = ACTION; // we start for now by expecting an activate System command
         playerNum = 0;
@@ -66,6 +119,9 @@ public class Game {
         activePlayer = 0; //assume that the creator of the game goes first;
         maxPlayers = 6;
         activeSystem = new Location(-1,-1);
+
+        tokenToUpdate = new HashMap<>();
+        updates = new LinkedList<>();
     }
 
 
@@ -73,6 +129,7 @@ public class Game {
         if(playerNum < maxPlayers){
             tokens.put(token, playerNum);
             playerNumToToken.put(playerNum,token);
+            tokenToUpdate.put(token,-1); //This means they haven't gotten any updates
             playerNum++;
             state.getPlayers().add(new Player());
         } else {
@@ -85,9 +142,9 @@ public class Game {
     }
 
     public boolean activateSystem(int x, int y, String token){
-        //first we get the player number from the token.
-        
+
         if(nextCommand == ACTION){
+            //first we get the player number from the token.
             Integer player = tokens.get(token);
             if (player == null){
                 return false;
