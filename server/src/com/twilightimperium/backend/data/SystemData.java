@@ -5,9 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.twilightimperium.backend.data.PlanetData;
-import com.twilightimperium.backend.data.PlanetModel;
-
 
 public class SystemData {
 

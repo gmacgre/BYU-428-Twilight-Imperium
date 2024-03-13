@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:client/model/request_response/create/create_response.dart';
 import 'package:client/model/request_response/error_response.dart';
+import 'package:client/model/request_response/gameState/game_state_response.dart';
 import 'package:client/model/request_response/login/login_response.dart';
 
 class JSONEncoder {
@@ -22,6 +23,10 @@ class JSONEncoder {
 
   static ErrorResponse decodeErrorResponse(String toDecode) {
     return ErrorResponse.fromJson(jsonDecode(toDecode) as Map<String, dynamic>);
+  }
+
+  static GameStateResponse decodeGameStateResponse(String toDecode) {
+    return GameStateResponse.fromJson(jsonDecode(toDecode) as Map<String, dynamic>);
   }
  
 }

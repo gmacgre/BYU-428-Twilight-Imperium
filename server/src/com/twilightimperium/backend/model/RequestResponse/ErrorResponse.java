@@ -8,5 +8,8 @@ public class ErrorResponse {
         this.message = message;
     }
 
+    public String getMesssage() {
+        return message;
+    }
     
 }
