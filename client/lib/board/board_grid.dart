@@ -1,4 +1,5 @@
 import 'package:client/board/board_space.dart';
+import 'package:client/board/coordinate.dart';
 import 'package:client/model/board_state.dart';
 import 'package:client/model/system_state.dart';
 import 'package:flutter/widgets.dart';
@@ -15,9 +16,12 @@ class BoardGrid extends ConsumerStatefulWidget {
 }
 
 class _BoardGridState extends ConsumerState<BoardGrid> {
-@override
+  @override
   Widget build(BuildContext context) {
-    List<List<SystemState>> state = ref.watch(boardStateProvider);
+    List<List<SystemState>> systems =
+        ref.watch(boardStateProvider).systemStates;
+    Coordinate? activeCoordinate =
+        ref.watch(boardStateProvider).activeCoordinate;
     return HexagonGrid.flat(
       depth: widget._depth,
       padding: EdgeInsets.zero,
@@ -33,9 +37,14 @@ class _BoardGridState extends ConsumerState<BoardGrid> {
         //To translate from model to view, subtract _depth to coordinates
         //To transalte from view to model, add _depth from coordinates
         return BoardSpace(
-          col: coordinates.q + widget._depth,
-          row: coordinates.r + widget._depth,
-          systemState: state[(coordinates.q + widget._depth)][(coordinates.r + widget._depth)],
+          coordinate: Coordinate(
+            coordinates.q + widget._depth,
+            coordinates.r + widget._depth,
+          ),
+          systemState: systems[(coordinates.q + widget._depth)]
+              [(coordinates.r + widget._depth)],
+          activated: (activeCoordinate?.q == coordinates.q + widget._depth &&
+              activeCoordinate?.r == coordinates.r + widget._depth),
         );
 
         //Text("${coordinates.q} ${coordinates.r}");
@@ -43,4 +52,3 @@ class _BoardGridState extends ConsumerState<BoardGrid> {
     );
   }
 }
-
