@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true),
       routes: {
-        '/': (context) => const CreateAndJoinPage(),
+        '/': (context) => const GamePage(),
         '/login': (context) => const CreateAndJoinPage(),
         '/board': (context) => const BoardGrid(),
         '/game': (context) => const GamePage(),

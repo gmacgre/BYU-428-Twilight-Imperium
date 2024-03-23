@@ -30,6 +30,7 @@ class BoardState extends _$BoardState {
   /// This is used to move ships from one system to another.
   /// The move for each ship should have already been validated.
   void moveShips({required Coordinate from, required List<ShipModel> ships}) {
+    print('Moving ships from $from to ${state.activeCoordinate}');
     if (ships.isEmpty) {
       return;
     }

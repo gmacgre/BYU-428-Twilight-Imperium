@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class BoardSpace extends ConsumerWidget {
+class BoardSpace extends ConsumerStatefulWidget {
   const BoardSpace(
       {super.key,
       required this.systemState,
@@ -18,19 +18,24 @@ class BoardSpace extends ConsumerWidget {
   final bool activated;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<BoardSpace> createState() => _BoardSpaceState();
+}
+
+class _BoardSpaceState extends ConsumerState<BoardSpace> {
+@override
+  Widget build(BuildContext context) {
     Color overlay = const Color.fromARGB(0, 0, 0, 0);
     bool existsActivatedSystem =
         ref.watch(boardStateProvider).activeCoordinate != null;
-    if (activated) {
+    if (widget.activated) {
       overlay = const Color.fromARGB(155, 255, 100, 55);
     }
     return Stack(
       children: [
         GestureDetector(
           onDoubleTap: !existsActivatedSystem
-              ? () => activateSystem(ref)
-              : () => selectShips(ref),
+              ? () => activateSystem()
+              : () => selectShips(),
           child: Container(
             decoration: BoxDecoration(
               shape: BoxShape.circle,
@@ -38,19 +43,20 @@ class BoardSpace extends ConsumerWidget {
             ),
           ),
         ),
-        System(systemState.systemModel),
-        AirSpace(ships: systemState.airSpace),
+        System(widget.systemState.systemModel),
+        AirSpace(ships: widget.systemState.airSpace),
       ],
     );
   }
 
-  activateSystem(ref) {
-    ref.read(boardStateProvider.notifier).activateSystem(coordinate);
+  activateSystem() {
+    ref.read(boardStateProvider.notifier).activateSystem(widget.coordinate);
   }
 
-  selectShips(ref) {
-    debugPrint("${systemState.airSpace.length} ships selected.");
+  selectShips() {
+    debugPrint("${widget.systemState.airSpace.length} ships selected.");
     //TODO: Create popup to select ships to move
-    ref.read(boardStateProvider.notifier).moveShips(coordinate, [...systemState.airSpace]);
+
+    ref.read(boardStateProvider.notifier).moveShips(from: widget.coordinate, ships: [...widget.systemState.airSpace]);
   }
 }
