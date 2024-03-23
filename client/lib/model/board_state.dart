@@ -103,18 +103,15 @@ class _ActivateServiceObserver implements ActivationServiceObserver {
   @override
   void notifySent() {
     // TODO: implement notifySent
-    print('activation sent');
   }
 
   @override
   void notifySuccess() {
     // TODO: implement notifySuccess
-    print('activation successful');
   }
 
   @override
   void notifyFailure(String message) {
     // TODO: implement notifyFailure
-    print('activation failed');
   }
 }

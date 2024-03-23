@@ -1,29 +1,20 @@
+import 'package:client/data/datacache.dart';
+import 'package:client/data/strings.dart';
 import 'package:client/info/global_info.dart';
 import 'package:client/info/player_info.dart';
+import 'package:client/model/player.dart';
+import 'package:client/model/player_state.dart';
 import 'package:flutter/material.dart';
-import "package:client/info/presenter/info_panel_presenter.dart";
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class InfoPanel extends StatefulWidget {
+class InfoPanel extends ConsumerWidget {
   const InfoPanel({super.key});
 
   @override
-  State<InfoPanel> createState() => _InfoPanelState();
-}
-
-class _InfoPanelState extends State<InfoPanel> {
-
-  late InfoPanelPresenter _presenter;
-
-  @override
-  void initState() {
-    super.initState();
-    _presenter = InfoPanelPresenter();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    List<Player> players = ref.watch(playerStateProvider);
     return DefaultTabController(
-      length: _presenter.getNumPlayers() + 1,
+      length: players.length + 1,
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(50),
@@ -34,12 +25,12 @@ class _InfoPanelState extends State<InfoPanel> {
               //If we want a focus or splash color, change this line below here
               overlayColor: MaterialStateProperty.all<Color>(Colors.transparent),
               indicatorColor: Colors.black,
-              tabs: _buildTabs()
+              tabs: _buildTabs(players)
             ),
           ),
         ),
         body: TabBarView(
-          children: _buildChildren(),
+          children: _buildChildren(players),
         ),
       )
     );
@@ -48,13 +39,13 @@ class _InfoPanelState extends State<InfoPanel> {
   //A function that returns a list of IconButton Widgets.
   //This dynamically builds the number of tabs in the InfoPanel to have numPlayers + 1 Icons that can be selected as tabs.
   //When a tab is selected, selectIcon is called
-  List<Widget> _buildTabs() {
+  List<Widget> _buildTabs(List<Player> players) {
     List<Widget> toReturn = [];
-    for(int i = 0; i < _presenter.getNumPlayers() + 1; i++) {
+    for(int i = 0; i < players.length + 1; i++) {
       toReturn.add(
         Tab(
           icon: Image(
-            image: AssetImage(_presenter.getIcon(i)),
+            image: AssetImage(_getIcon(i, players)),
             height: 40,
             width: 40,
           )
@@ -64,17 +55,34 @@ class _InfoPanelState extends State<InfoPanel> {
     return toReturn;
   }
 
-  List<Widget> _buildChildren() {
+  List<Widget> _buildChildren(List<Player> players) {
     List<Widget> toReturn = [];
-    for(int i = 0; i < _presenter.getNumPlayers() + 1; i++) {
+    for(int i = 0; i < players.length + 1; i++) {
       toReturn.add(
         //Player widgets and Global Info Wigdets called and made here
         Center(
-          child: _presenter.isPlayer(i) ? PlayerInfo(playerIndex: i) : const GlobalInfo()
+          child: _isPlayer(i, players.length) ? 
+            PlayerInfo(player: players[i], index: i) : 
+            GlobalInfo(players: players, publicObjectives: DataCache.instance.publicObjectives)
         )
       );
     }
     return toReturn;
   }
 
+  bool _isPlayer(int idx, int length) {
+    if(idx < length && idx >= 0) return true;
+    return false;
+  }
+
+  String _getIcon(int iconIdx, List<Player> players) {
+    if(iconIdx == players.length) return Strings.agendaIcon;
+    if(!_validIndex(iconIdx, players.length)) return Strings.codexIcon;
+    if(players[iconIdx].getName() == Strings.noSelectedRace) return Strings.agendaIcon;
+    return Strings.raceIcon(players[iconIdx].getName());
+  }
+
+  bool _validIndex(int idx, int length) {
+    return !(idx < 0 || idx > length - 1);
+  }
 }
