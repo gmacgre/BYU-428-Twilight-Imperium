@@ -3,17 +3,24 @@ package com.twilightimperium.Handlers;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.google.gson.Gson;
-import com.sun.net.httpserver.*;
-import com.twilightimperium.backend.Game;
+import com.sun.net.httpserver.Headers;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpHandler;
+import com.twilightimperium.backend.Pair;
 import com.twilightimperium.backend.Server;
 import com.twilightimperium.backend.model.RequestResponse.ErrorResponse;
+import com.twilightimperium.backend.model.RequestResponse.Update;
+import com.twilightimperium.backend.model.RequestResponse.UpdateResponse;
 
-public class GameStateHandler implements HttpHandler{
-    private Server server;
+public class UpdateHandler implements HttpHandler{
+    private final Server server;
 
-    public GameStateHandler(Server server) {
+
+    public UpdateHandler(Server server) {
         this.server = server;
     }
     
@@ -22,19 +29,25 @@ public class GameStateHandler implements HttpHandler{
         if (!"GET".equals(exchange.getRequestMethod())) {
             sendResponse(exchange, gson.toJson(new ErrorResponse("Bad Request Method")), 501);
             return;
-        } else {
-            Headers header = exchange.getRequestHeaders();
-            String token = header.getFirst("token");
-            Game game = server.getGameByToken(token);
-            if (game == null){
-                sendResponse(exchange, gson.toJson(new ErrorResponse("Bad Token")), 405);
-            }
-            server.updatePlayer(token);
-            sendResponse(exchange, game.jsonGameState(),200);
         }
-
+        
+        Headers header = exchange.getRequestHeaders();
+        String token = header.getFirst("token");
+        int oldUpdate = server.getPlayerUpdate(token);
+        List<Pair<Integer,Update>> allUpdates = server.getUpdateList(token);
+        List<Update> updatesToSend = new ArrayList<>();
+        //find the Update the player currently has. Then get all updates after that
+        for(Pair<Integer,Update> i : allUpdates){
+            if(i.first() <= oldUpdate){
+                continue;
+            } else {
+                updatesToSend.addLast(i.second());
+            }
+        }
+        //UpdateResponse response = new UpdateResponse(updatesToSend.toArray(new Update[0]));
+        sendResponse(exchange,gson.toJson(updatesToSend.toArray(new Update[0])),200);
+        
     }
-
 
     /**
      * Sends a HTTP response with the given body and status code.

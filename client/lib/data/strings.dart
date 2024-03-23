@@ -47,4 +47,13 @@ class Strings {
 
 
   static String noSelectedRace = 'Not chosen';
+
+
+
+
+  static String agendaIcon = 'icons/color/general/agenda.png';
+  static String codexIcon = 'icons/color/general/codex.png';
+  static String raceIcon(String race) {
+    return 'icons/color/race/$race.png';
+  }
 }
