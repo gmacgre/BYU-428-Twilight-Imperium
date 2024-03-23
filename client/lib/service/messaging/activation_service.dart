@@ -8,7 +8,7 @@ class ActivationService implements HTTPServiceObserver {
 
   late final HTTPService _httpService;
   late final ActivationServiceObserver _observer;
-  
+
 
   ActivationService(this._observer) {
     _httpService = HTTPService(this);

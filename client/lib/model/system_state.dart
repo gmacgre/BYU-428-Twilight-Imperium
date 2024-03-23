@@ -5,10 +5,13 @@ import 'package:client/model/ship_model.dart';
 
 class SystemState{
 
-  SystemState({this.airSpace = const [], required this.systemModel});
-  List<ShipModel> airSpace;
+  SystemState({airSpace, required this.systemModel}){
+    if(airSpace != null){
+      this.airSpace = airSpace;
+    }
+  }
+  List<ShipModel> airSpace = List.empty(growable: true);
   List<PlanetState>? planets;
   SystemModel systemModel;
   Player? systemOwner;
-  bool activated = false;
 }
