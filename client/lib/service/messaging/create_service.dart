@@ -1,3 +1,4 @@
+import 'package:client/data/datacache.dart';
 import 'package:client/model/request_response/create/create_request.dart';
 import 'package:client/model/request_response/create/create_response.dart';
 import 'package:client/model/request_response/error_response.dart';
@@ -34,6 +35,7 @@ class CreateService implements HTTPServiceObserver {
   void processSuccess(String body) {
     try {
       CreateResponse res = JSONEncoder.decodeCreateResponse(body);
+      DataCache.instance.userToken = res.userToken;
       _observer.notifySuccess(res.playerTurn, res.userToken);
     } on FormatException catch (e) {
       _observer.notifyFailure('Error Processing /create: ${e.message}');
