@@ -1,7 +1,6 @@
 import 'package:client/board/planet.dart';
 import 'package:client/data/system_data.dart';
-import 'package:flutter/src/widgets/basic.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class System extends ConsumerStatefulWidget {

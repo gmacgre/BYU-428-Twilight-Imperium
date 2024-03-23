@@ -1,9 +1,10 @@
 import 'package:client/data/system_data.dart';
 import 'package:client/model/objective.dart';
 import 'package:client/model/player.dart';
+import 'package:client/model/ship_model.dart';
 import 'package:client/model/system_state.dart';
 
-class DataCache{
+class DataCache {
   DataCache._();
   static final DataCache instance = DataCache._();
 
@@ -18,28 +19,39 @@ class DataCache{
 
   List<Objective> publicObjectives = [];
 
-  List<List<SystemState>> boardState= [
-  //Column 1
+  List<List<SystemState>> boardState = [
+    //Column 1
     [
+      SystemState(
+        systemModel: SystemData.systemList['Empty']!,
+      ),
       SystemState(systemModel: SystemData.systemList['Empty']!),
       SystemState(systemModel: SystemData.systemList['Empty']!),
-      SystemState(systemModel: SystemData.systemList['Empty']!),
-      SystemState(systemModel: SystemData.systemList['Abyz']!),
+      SystemState(
+        systemModel: SystemData.systemList['Abyz']!,
+        airSpace: [
+          ShipModel(1, 1, 1, 1, ShipType.fighter),
+        ],
+      ),
       SystemState(systemModel: SystemData.systemList['Arinam']!),
       SystemState(systemModel: SystemData.systemList['Empty']!),
       SystemState(systemModel: SystemData.systemList['Arnor']!),
     ],
-  //Column 2
+    //Column 2
     [
       SystemState(systemModel: SystemData.systemList['Empty']!),
       SystemState(systemModel: SystemData.systemList['Empty']!),
-      SystemState(systemModel: SystemData.systemList['Coorneeq']!),
+      SystemState(systemModel: SystemData.systemList['Coorneeq']!, airSpace: [
+        ShipModel(1, 1, 1, 1, ShipType.fighter),
+        ShipModel(1, 1, 1, 1, ShipType.fighter),
+        ShipModel(1, 1, 1, 1, ShipType.flagship),
+      ]),
       SystemState(systemModel: SystemData.systemList['Empty']!),
       SystemState(systemModel: SystemData.systemList['Lazar']!),
       SystemState(systemModel: SystemData.systemList['Empty']!),
       SystemState(systemModel: SystemData.systemList['Lodor']!),
     ],
-  //Column 3
+    //Column 3
     [
       SystemState(systemModel: SystemData.systemList['Empty']!),
       SystemState(systemModel: SystemData.systemList['Mehar Xull']!),
@@ -49,7 +61,7 @@ class DataCache{
       SystemState(systemModel: SystemData.systemList['Empty']!),
       SystemState(systemModel: SystemData.systemList['Empty']!),
     ],
-  //Column 4
+    //Column 4
     [
       SystemState(systemModel: SystemData.systemList['Hercant']!),
       SystemState(systemModel: SystemData.systemList['Empty']!),
@@ -90,5 +102,4 @@ class DataCache{
       SystemState(systemModel: SystemData.systemList['Empty']!),
     ],
   ];
-
 }
