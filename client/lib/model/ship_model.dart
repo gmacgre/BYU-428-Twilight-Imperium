@@ -1,5 +1,12 @@
+import 'dart:math';
+
 class ShipModel {
-  ShipModel(this.cost, this.combat, this.movement, this.capacity, this.type);
+  ShipModel(this.cost, this.combat, this.movement, this.capacity, this.type) {
+    //Generate a random unique id for the ship
+    id = (DateTime.now().millisecondsSinceEpoch / Random().nextInt(1000))
+        .toString();
+  }
+  late String id;
   final int cost;
   final int combat;
   final int movement;
@@ -15,7 +22,8 @@ class ShipModel {
   }
 
   equals(ShipModel other) {
-    return cost == other.cost &&
+    return id == other.id &&
+        cost == other.cost &&
         combat == other.combat &&
         movement == other.movement &&
         capacity == other.capacity &&
@@ -23,8 +31,12 @@ class ShipModel {
   }
 
   @override
-  int get hashCode => cost.hashCode ^ combat.hashCode ^ movement.hashCode ^ capacity.hashCode ^ type.hashCode;
-
+  int get hashCode =>
+      cost.hashCode ^
+      combat.hashCode ^
+      movement.hashCode ^
+      capacity.hashCode ^
+      type.hashCode;
 }
 
 enum ShipType {

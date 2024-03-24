@@ -17,8 +17,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: Strings.appTitle,
       theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.amber.shade300),
+          ),
+        ),
+      ),
       routes: {
         '/': (context) => const GamePage(),
         '/login': (context) => const CreateAndJoinPage(),
@@ -28,4 +34,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
