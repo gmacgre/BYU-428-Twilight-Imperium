@@ -14,15 +14,8 @@ class GamePage extends StatelessWidget {
           width: width * 0.3,
           child: const InfoPanel(),
         ),
-        Expanded(
-          child: Container(
-            decoration: const BoxDecoration(
-              color: Color.fromARGB(255, 12, 12, 40),
-            ),
-            child: InteractiveViewer(
-              child: const BoardGrid(),
-            ),
-          ),
+        const Expanded(
+          child: BoardGrid(),
         ),
       ],
     );

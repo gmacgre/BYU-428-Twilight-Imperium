@@ -2,6 +2,7 @@
 //Everything in this class should be both const and static, with no private variables.
 
 class Strings {
+  static String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
   //Make class unable to be instantiated, only referenced statically
   Strings._();
   static const String appTitle = 'TWILIGHT IMPERIUM';
@@ -11,17 +12,23 @@ class Strings {
   static const String codeInput = 'Input Room Name';
   static const String passwordInput = 'Input Room Password';
   static const String playerNumberInput = 'Input Seat Number';
-  static const String needBothRoomInput = 'Enter both the Room Code and Password, and a Player Seat Number.';
+  static const String needBothRoomInput =
+      'Enter both the Room Code and Password, and a Player Seat Number.';
   static const String loginAttempt = 'Attempting to Log In...';
   static const String createAttempt = 'Attempting to Create Game...';
   static const String fleet = 'Fleet';
   static const String tactic = 'Tactic';
   static const String strategy = 'Strategy';
-  static const String tacticTokenDesc = 'Tactic tokens are used to activate systems in the Action Phase.\nThis allows for movement, combat, and production of units.';
-  static const String fleetTokenDesc = 'Fleet tokens determine the max size of a player\'s fleet in any system.';
-  static const String strategyTokenDesc = 'Strategy tokens are used to play the secondary ability of another\nplayer\'s strategy card when said player uses it.';
-  static const String strategyCardDesc = 'Strategy cards determine initiative order, and can be played as an action.\nThe action played differs by strategy card.';
-  static const String publicObjectiveDesc = 'Public Objectives are objectives that any player can score\nin the Status Phase, or a singular player can score when they play\nthe Imperial Strategy Card. They have values of 1 or 2 points.';
+  static const String tacticTokenDesc =
+      'Tactic tokens are used to activate systems in the Action Phase.\nThis allows for movement, combat, and production of units.';
+  static const String fleetTokenDesc =
+      'Fleet tokens determine the max size of a player\'s fleet in any system.';
+  static const String strategyTokenDesc =
+      'Strategy tokens are used to play the secondary ability of another\nplayer\'s strategy card when said player uses it.';
+  static const String strategyCardDesc =
+      'Strategy cards determine initiative order, and can be played as an action.\nThe action played differs by strategy card.';
+  static const String publicObjectiveDesc =
+      'Public Objectives are objectives that any player can score\nin the Status Phase, or a singular player can score when they play\nthe Imperial Strategy Card. They have values of 1 or 2 points.';
   static const List<String> strategyCardPowerDescription = [
     'This player has yet to select a Strategy Card.',
     'Leadership:\nPrimary Ability:\n- Gain 3 Command Tokens.\n- Spend any amount of influence to gain 1 command token\n  for every 3 influence spent.\nSecondary Ability:\n- Spend any amount of influence to gain 1 command token\n  for every 3 influence spent.',
@@ -39,17 +46,21 @@ class Strings {
   static String tokenCount(int count, String type) {
     return 'This player has $count ${type.toLowerCase()} token(s).';
   }
+
   static String successNeedConnect(int id) {
     return "Success! Connecting to Game (Player $id)...";
   }
 
   static String victoryPoints = 'Victory Points';
 
-
   static String noSelectedRace = 'Not chosen';
 
-
-
+  static const String selectedShips = 'Selected Ships';
+  static const String selectableShips = 'Selectable Ships';
+  static const String endTurn = 'End Turn';
+  static const String confirm = 'Confirm';
+  static const String cancel = 'Cancel';
+  static const String submit = 'Submit';
 
   static String agendaIcon = 'icons/color/general/agenda.png';
   static String codexIcon = 'icons/color/general/codex.png';
@@ -57,3 +68,4 @@ class Strings {
     return 'icons/color/race/$race.png';
   }
 }
+

@@ -1,4 +1,5 @@
 import 'package:client/board/coordinate.dart';
+import 'package:client/board/ship_selector_provider.dart';
 import 'package:client/data/datacache.dart';
 import 'package:client/model/ship_model.dart';
 import 'package:client/model/system_state.dart';
@@ -84,6 +85,13 @@ class BoardState extends _$BoardState {
       systemStates: state.systemStates,
       activeCoordinate: null,
     );
+  }
+
+  void endTurn() {
+    //This will need to send the end turn request to the server
+    DataCache.instance.boardState = state.systemStates;
+    ref.invalidate(shipSelectorProvider);
+    ref.invalidateSelf();
   }
 }
 
