@@ -67,5 +67,18 @@ class Strings {
   static String raceIcon(String race) {
     return 'icons/color/race/$race.png';
   }
+
+  static String flagship = 'Flagship';
+  static String dreadnaught = 'Dreadnaught';
+  static String cruiser = 'Cruiser';
+  static String destroyer = 'Destroyer';
+  static String carrier = 'Carrier';
+  static String fighter = 'Fighter';
+  static String warsun = 'War Sun';
+  static String pds = 'PDS';
+  static String spacedock = 'Spacedock';
+  static String buildUnitDesc(String type, int cost, int move, int combat, int capacity) {
+    return '$type\nCost: $cost  Move: $move\nCombat: $combat  Capacity: $capacity';
+  }
 }
 
