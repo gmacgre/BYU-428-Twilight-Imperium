@@ -15,14 +15,18 @@ class PlayerInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PlayerOverview(
-      strategyCardId: player.getStrategyCard(),
-      tacticTokenCount: player.getTacticPool(),
-      fleetTokenCount: player.getFleetPool(),
-      strategyTokenCount: player.getStrategyPool(),
-      race: player.getName(),
-      victoryPoints: player.getVictoryPoints(),
-      playerColor: index, 
+    return ListView(
+      children: [
+        PlayerOverview(
+          strategyCardId: player.getStrategyCard(),
+          tacticTokenCount: player.getTacticPool(),
+          fleetTokenCount: player.getFleetPool(),
+          strategyTokenCount: player.getStrategyPool(),
+          race: player.getName(),
+          victoryPoints: player.getVictoryPoints(),
+          playerColor: index, 
+        ),
+      ],
     );
   }
 }

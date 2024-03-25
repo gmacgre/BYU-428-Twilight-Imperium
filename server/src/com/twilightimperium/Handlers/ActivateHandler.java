@@ -5,11 +5,13 @@ import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.sun.net.httpserver.*;
 import com.twilightimperium.backend.Game;
 import com.twilightimperium.backend.Server;
 import com.twilightimperium.backend.model.RequestResponse.ActivateRequest;
 import com.twilightimperium.backend.model.RequestResponse.ErrorResponse;
+import com.twilightimperium.backend.model.RequestResponse.Update;
 
 public class ActivateHandler implements HttpHandler{
     private final Server server;
@@ -34,7 +36,16 @@ public class ActivateHandler implements HttpHandler{
                 sendResponse(exchange, gson.toJson(new ErrorResponse("Bad token")), 405);
                 return;
             }
+            if(!game.isToDate(token)){
+                sendResponse(exchange, gson.toJson(new ErrorResponse("Client not up to date")), 405);
+                return;
+            }
             if (game.activateSystem(x, y, token)){
+                int playerNum = game.getPlayerTurn(token);
+                
+                Update newUpdate = new Update("activate",gson.toJson(request),playerNum);
+                game.addUpdate(newUpdate);
+                server.updatePlayer(token);
                 sendResponse(exchange, "",200);
             } else {
                 sendResponse(exchange, gson.toJson(new ErrorResponse("System already active")),405);
