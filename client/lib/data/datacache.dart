@@ -1,3 +1,4 @@
+import 'package:client/combat/force_makeup.dart';
 import 'package:client/data/system_data.dart';
 import 'package:client/model/objective.dart';
 import 'package:client/model/player.dart';
@@ -102,4 +103,24 @@ class DataCache {
       SystemState(systemModel: SystemData.systemList['Empty']!),
     ],
   ];
+
+
+  ForceMakeup allies = ForceMakeup(
+    flagship: 1,
+    warsun: 1,
+    dreadnaught: 3,
+    cruiser: 2,
+    carrier: 2,
+    destroyer: 3,
+    fighter: 8
+  );
+  ForceMakeup enemies = ForceMakeup(
+    flagship: 0,
+    warsun: 2,
+    dreadnaught: 2,
+    cruiser: 1,
+    carrier: 1,
+    destroyer: 1,
+    fighter: 5
+  );
 }
