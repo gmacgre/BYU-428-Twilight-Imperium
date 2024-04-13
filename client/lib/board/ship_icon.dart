@@ -8,7 +8,7 @@ class ShipIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 20,
+      width: 22,
       height: 15,
       //TODO: Replace this color with the player's color
       color: Colors.white,

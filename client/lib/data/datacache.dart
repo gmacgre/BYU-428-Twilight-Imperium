@@ -10,6 +10,9 @@ class DataCache {
   static final DataCache instance = DataCache._();
 
   String userToken = '';
+  // I don't know how we are currently keeping track of which player is which.
+  // I'm using the seat number they select, which would probably be an index in the players list as well?
+  int userSeatNumber = 0;
 
   List<Player> players = [
     Player('jol_nar', false, 5, 5, 5, 3, false, 1),

@@ -1,5 +1,6 @@
 import 'package:client/board/board_space.dart';
 import 'package:client/board/coordinate.dart';
+import 'package:client/board/production_widget.dart';
 import 'package:client/board/ship_selector_provider.dart';
 import 'package:client/board/ship_selector_widget.dart';
 import 'package:client/data/strings.dart';
@@ -7,6 +8,7 @@ import 'package:client/model/board_state.dart';
 import 'package:client/model/system_state.dart';
 import 'package:client/res/outlined_letters.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hexagon/hexagon.dart';
 
@@ -28,6 +30,8 @@ class _BoardGridState extends ConsumerState<BoardGrid> {
         ref.watch(boardStateProvider).activeCoordinate;
     Coordinate? selectedCoordinate =
         ref.watch(shipSelectorProvider).selectedCoordinate;
+    TurnPhase phase = ref.watch(boardStateProvider).currentPhase;
+    String phaseString = phase.toString().split('.').last.toUpperCase();
     return Row(
       children: [
         Expanded(
@@ -77,12 +81,48 @@ class _BoardGridState extends ConsumerState<BoardGrid> {
                   ),
                 ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        ref.read(boardStateProvider.notifier).endTurn();
-                      },
-                      child: const OutlinedLetters(content: Strings.endTurn),
+                    Container(
+                      height: 32,
+                      width: 140,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(18),
+                        border: Border.all(color: Colors.grey),
+                        color: Colors.grey,
+                      ),
+                      child: Center(
+                        child: DefaultTextStyle(
+                          // This is needed because for some reason there is an underline on the text
+                          // applied by the default style.
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                          ),
+                          child: OutlinedLetters(
+                            content: phaseString,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 32,
+                        width: 140,
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor: phase == TurnPhase.production ||
+                                  phase == TurnPhase.movement
+                              ? MaterialStateProperty.all(Colors.amber.shade300)
+                              : MaterialStateProperty.all(Colors.grey),
+                        ),
+                        onPressed: () {
+                          ref.read(boardStateProvider.notifier).endPhase();
+                        },
+                        child: OutlinedLetters(
+                            content: phase == TurnPhase.production
+                                ? Strings.endTurn
+                                : Strings.nextPhase),
+                      ),
                     ),
                   ],
                 ),
@@ -91,6 +131,7 @@ class _BoardGridState extends ConsumerState<BoardGrid> {
           ),
         ),
         const ShipSelectorWidget(),
+        const ProductionWidget(),
       ],
     );
   }
