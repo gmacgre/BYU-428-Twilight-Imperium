@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       routes: {
-        '/': (context) => const GamePage(),
+        '/': (context) => const CreateAndJoinPage(),
         '/login': (context) => const CreateAndJoinPage(),
         '/board': (context) => const BoardGrid(),
         '/game': (context) => const GamePage(),
