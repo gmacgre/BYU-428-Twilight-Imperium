@@ -83,7 +83,21 @@ class CombatPanel extends StatelessWidget {
           ],
         );
       case CombatState.exitingCombat:
-        return const OutlinedLetters(content: 'Exiting Combat...'); 
+        return Row(
+          children: [
+            const Expanded(
+              flex: 1,
+              child: OutlinedLetters(content: 'ASJDFAEHRGKEJHRKEJHKEJHRJ')
+            ),
+            Expanded(
+              flex: 1,
+              child: TextButton(
+                onPressed: () => { handler.nextPhase() },
+                child: const Text('Move on.')
+              ),
+            )
+          ],
+        );
         
       case CombatState.waiting:
         return const OutlinedLetters(content: 'Waiting...');
@@ -96,4 +110,5 @@ abstract interface class CombatPanelHandler {
   void retreatOrder(bool retreating);
   int getHits();
   void submitHits();
+  void nextPhase();
 }

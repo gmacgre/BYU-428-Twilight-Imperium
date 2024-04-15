@@ -4,6 +4,8 @@ import 'package:client/combat/force_makeup.dart';
 import 'package:client/data/datacache.dart';
 import 'package:client/data/strings.dart';
 import 'package:flutter/material.dart';
+import 'package:client/model/board_state.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 enum CombatState {
   waiting,
@@ -13,7 +15,7 @@ enum CombatState {
   exitingCombat
 }
 
-class CombatPage extends StatefulWidget {
+class CombatPage extends ConsumerStatefulWidget {
   const CombatPage({
     super.key,
     required this.state
@@ -22,10 +24,10 @@ class CombatPage extends StatefulWidget {
   final CombatState state;
 
   @override
-  State<CombatPage> createState() => _CombatPageState();
+  ConsumerState<CombatPage> createState() => _CombatPageState();
 }
 
-class _CombatPageState extends State<CombatPage> {
+class _CombatPageState extends ConsumerState<CombatPage> {
   CombatState state = CombatState.enteringCombat;
   ForceMakeup allies = DataCache.instance.allies;
   ForceMakeup enemies = DataCache.instance.enemies;
@@ -79,6 +81,9 @@ class _CombatPageState extends State<CombatPage> {
   void _retreatOrder(bool retreating) {
     isRetreating = retreating;
     hitsToAllocate = enemies.fire();
+    if(hitsToAllocate > allies.forceSize()) {
+      hitsToAllocate = allies.forceSize();
+    }
     resetSelections();
     _swap(CombatState.assignHits);
   }
@@ -95,6 +100,9 @@ class _CombatPageState extends State<CombatPage> {
       allies.destroyer -= getMinus(Strings.destroyer);
       allies.fighter -= getMinus(Strings.fighter);
       if(isRetreating) {
+        state = CombatState.exitingCombat;
+      }
+      else if (allies.forceSize() == 0 || enemies.forceSize() == 0) {
         state = CombatState.exitingCombat;
       }
       else {
@@ -163,6 +171,10 @@ class _CombatPageState extends State<CombatPage> {
   int _getHits() {
     return hitsToAllocate;
   }
+
+  void _nextPhase() {
+    ref.read(boardStateProvider.notifier).endPhase();
+  }
 }
 
 class _CombatPanelHandler implements CombatPanelHandler {
@@ -189,6 +201,11 @@ class _CombatPanelHandler implements CombatPanelHandler {
   @override
   void swap(CombatState newState) {
     parent._swap(newState);
+  }
+
+  @override
+  void nextPhase() {
+    parent._nextPhase();
   }
 }
 
