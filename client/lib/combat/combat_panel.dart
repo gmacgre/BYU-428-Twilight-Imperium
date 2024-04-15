@@ -35,7 +35,10 @@ class CombatPanel extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            OutlinedLetters(content: '$hitsToAssign hits left to assign.'),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: OutlinedLetters(content: '$hitsToAssign hits left to assign.'),
+            ),
             ElevatedButton(
               style: ButtonStyle(
                 backgroundColor: hitsToAssign == 0

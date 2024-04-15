@@ -34,25 +34,25 @@ class CombatForces extends StatelessWidget {
   }
 
   List<Widget> _getColumn() {
-    Color fill = (selectable) ? Colors.blue : Colors.red;
+    Color fill = (selectable) ? const Color.fromARGB(255, 8, 59, 101) : const Color.fromARGB(255, 94, 25, 20);
     List<Widget> toReturn = [];
     if(forces.flagship + forces.warsun > 0) {
       toReturn = [ ...toReturn, ..._buildFlagshipRow(fill) ];
     }
     if(forces.dreadnaught > 0) {
-      toReturn = [ ...toReturn, ..._buildUnitRow(Strings.dreadnaught, forces.dreadnaught, DreadnaughtIcon(outline: Colors.black, fill: fill, combat: 6, move: 1, capacity: 1, cost: 4, width: 200, height: 100)) ];
+      toReturn = [ ...toReturn, ..._buildUnitRow(Strings.dreadnaught, forces.dreadnaught, DreadnaughtIcon(outline: Colors.grey, fill: fill, combat: 6, move: 1, capacity: 1, cost: 4, width: 200, height: 100)) ];
     }
     if(forces.cruiser > 0) {
-      toReturn = [ ...toReturn, ..._buildUnitRow(Strings.cruiser, forces.cruiser, CruiserIcon(outline: Colors.black, fill: fill, combat: 7, move: 2, capacity: 0, cost: 2, width: 200, height: 100)) ];
+      toReturn = [ ...toReturn, ..._buildUnitRow(Strings.cruiser, forces.cruiser, CruiserIcon(outline: Colors.grey, fill: fill, combat: 7, move: 2, capacity: 0, cost: 2, width: 200, height: 100)) ];
     }
     if(forces.carrier > 0) {
-      toReturn = [ ...toReturn, ..._buildUnitRow(Strings.carrier, forces.carrier, CarrierIcon(outline: Colors.black, fill: fill, combat: 9, move: 1, capacity: 4, cost: 3, width: 200, height: 100)) ];
+      toReturn = [ ...toReturn, ..._buildUnitRow(Strings.carrier, forces.carrier, CarrierIcon(outline: Colors.grey, fill: fill, combat: 9, move: 1, capacity: 4, cost: 3, width: 200, height: 100)) ];
     }
     if(forces.destroyer > 0) {
-      toReturn = [ ...toReturn, ..._buildUnitRow(Strings.destroyer, forces.destroyer, DestroyerIcon(outline: Colors.black, fill: fill, combat: 8, move: 2, capacity: 0, cost: 1, width: 100, height: 50)) ];
+      toReturn = [ ...toReturn, ..._buildUnitRow(Strings.destroyer, forces.destroyer, DestroyerIcon(outline: Colors.grey, fill: fill, combat: 8, move: 2, capacity: 0, cost: 1, width: 100, height: 50)) ];
     }
     if(forces.fighter > 0) {
-      toReturn = [ ...toReturn, ..._buildUnitRow(Strings.fighter, forces.fighter, FighterIcon(outline: Colors.black, fill: fill, combat: 9, move: 0, capacity: 0, cost: 1, width: 50, height: 50)) ];
+      toReturn = [ ...toReturn, ..._buildUnitRow(Strings.fighter, forces.fighter, FighterIcon(outline: Colors.grey, fill: fill, combat: 9, move: 0, capacity: 0, cost: 1, width: 50, height: 50)) ];
     }
     return toReturn.map((e) => Center(child: e)).toList();
   }
@@ -60,15 +60,21 @@ class CombatForces extends StatelessWidget {
   List<Widget> _buildFlagshipRow(Color fill) {
     List<bool> selected = selections[Strings.flagship]!;
     List<Widget> internals = [];
-    Widget flagship = FlagshipIcon(
-      outline: Colors.black, fill: fill, 
-      combat: 7, move: 1, capacity: 2, cost: 8, 
-      width: 200, height: 100
+    Widget flagship = Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: FlagshipIcon(
+        outline: Colors.grey, fill: fill, 
+        combat: 7, move: 1, capacity: 2, cost: 8, 
+        width: 200, height: 100
+      ),
     );
-    Widget warsun = WarSunIcon(
-      outline: Colors.black, fill: fill, 
-      combat: 7, move: 1, capacity: 2, cost: 8, 
-      width: 100, height: 100
+    Widget warsun = Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: WarSunIcon(
+        outline: Colors.grey, fill: fill, 
+        combat: 7, move: 1, capacity: 2, cost: 8, 
+        width: 100, height: 100
+      ),
     );
     for(int i = 0; i < forces.flagship; i++) {
       if(selectable) {
@@ -76,7 +82,9 @@ class CombatForces extends StatelessWidget {
           onTap: () => handler.selectItem(Strings.flagship, i),
           child: selected[i] ? 
             DecoratedBox(
-              decoration: const BoxDecoration(color: Colors.amber),
+              decoration: BoxDecoration(color: Colors.amber.withOpacity(0.5),
+                borderRadius: BorderRadius.circular(12),
+              ),
               child: flagship
             )
             : flagship,
@@ -93,7 +101,9 @@ class CombatForces extends StatelessWidget {
           onTap: () => handler.selectItem(Strings.warsun, i),
           child: selected[i] ? 
             DecoratedBox(
-              decoration: const BoxDecoration(color: Colors.amber),
+              decoration: BoxDecoration(color: Colors.amber.withOpacity(0.5),
+                borderRadius: BorderRadius.circular(12),
+              ),
               child: warsun
             )
             : warsun,
@@ -108,6 +118,10 @@ class CombatForces extends StatelessWidget {
   }
 
   List<Widget> _buildUnitRow(String key, int count, Widget internal) {
+    internal = Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: internal,
+    );
     List<bool> selected = selections[key]!;
     
     List<Widget> internals = [];
@@ -117,7 +131,10 @@ class CombatForces extends StatelessWidget {
           onTap: () => handler.selectItem(key, i),
           child: selected[i] ? 
             DecoratedBox(
-              decoration: const BoxDecoration(color: Colors.amber),
+              decoration: BoxDecoration(
+                color: Colors.amber.withOpacity(0.5),
+                borderRadius: BorderRadius.circular(12),
+              ),
               child: internal
             )
             : internal,

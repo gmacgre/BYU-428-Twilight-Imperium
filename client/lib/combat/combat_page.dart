@@ -91,7 +91,8 @@ class _CombatPageState extends ConsumerState<CombatPage> {
 
   void _submitHits() {
     setState(() {
-      
+      int enemyHits = allies.fire();
+      _hitEnemy(enemyHits);
       allies.flagship -= getMinus(Strings.flagship);
       allies.warsun -= getMinus(Strings.warsun);
       allies.dreadnaught -= getMinus(Strings.dreadnaught);
@@ -108,7 +109,52 @@ class _CombatPageState extends ConsumerState<CombatPage> {
       else {
         state = CombatState.declareRetreat;
       }
+      resetSelections();
     });
+  }
+
+  void _hitEnemy(int hits) {
+    print('hitting with $hits');
+    int assigned = 0;
+    while(assigned < hits) {
+      if(enemies.forceSize() == 0) break;
+      if(enemies.fighter > 0) {
+        enemies.fighter--;
+        assigned++;
+        continue;
+      }
+      if(enemies.destroyer > 0) {
+        enemies.destroyer--;
+        assigned++;
+        continue;
+      }
+      if(enemies.cruiser > 0) {
+        enemies.cruiser--;
+        assigned++;
+        continue;
+      }
+      if(enemies.carrier > 0) {
+        enemies.carrier--;
+        assigned++;
+        continue;
+      }
+      if(enemies.dreadnaught > 0) {
+        enemies.dreadnaught--;
+        assigned++;
+        continue;
+      }
+      if(enemies.warsun > 0) {
+        enemies.warsun--;
+        assigned++;
+        continue;
+      }
+      if(enemies.flagship > 0) {
+        enemies.flagship--;
+        assigned++;
+        continue;
+      }
+    
+    }
   }
 
   int getMinus(String key) {

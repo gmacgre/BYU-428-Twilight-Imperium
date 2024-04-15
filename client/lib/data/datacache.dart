@@ -110,12 +110,12 @@ class DataCache {
 
   ForceMakeup allies = ForceMakeup(
     flagship: 1,
-    warsun: 0,
-    dreadnaught: 0,
-    cruiser: 0,
-    carrier: 0,
-    destroyer: 0,
-    fighter: 3
+    warsun: 1,
+    dreadnaught: 3,
+    cruiser: 4,
+    carrier: 2,
+    destroyer: 1,
+    fighter: 7
   );
   ForceMakeup enemies = ForceMakeup(
     flagship: 0,
