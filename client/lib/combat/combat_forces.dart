@@ -24,9 +24,12 @@ class CombatForces extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      scrollDirection: Axis.vertical,
-      children: _getColumn(),
+    return DecoratedBox(
+      decoration: const BoxDecoration(color: Color.fromARGB(255, 12, 12, 40)),
+      child: ListView(
+        scrollDirection: Axis.vertical,
+        children: _getColumn(),
+      ),
     );
   }
 
@@ -55,6 +58,7 @@ class CombatForces extends StatelessWidget {
   }
 
   List<Widget> _buildFlagshipRow(Color fill) {
+    List<bool> selected = selections[Strings.flagship]!;
     List<Widget> internals = [];
     Widget flagship = FlagshipIcon(
       outline: Colors.black, fill: fill, 
@@ -70,18 +74,29 @@ class CombatForces extends StatelessWidget {
       if(selectable) {
         internals.add(GestureDetector(
           onTap: () => handler.selectItem(Strings.flagship, i),
-          child: flagship,
+          child: selected[i] ? 
+            DecoratedBox(
+              decoration: const BoxDecoration(color: Colors.amber),
+              child: flagship
+            )
+            : flagship,
         ));
       }
       else {
         internals.add(flagship);
       }
     }
+    selected = selections[Strings.warsun]!;
     for(int i = 0; i < forces.warsun; i++) {
       if(selectable) {
         internals.add(GestureDetector(
           onTap: () => handler.selectItem(Strings.warsun, i),
-          child: warsun,
+          child: selected[i] ? 
+            DecoratedBox(
+              decoration: const BoxDecoration(color: Colors.amber),
+              child: warsun
+            )
+            : warsun,
         ));
       }
       else {
@@ -93,12 +108,19 @@ class CombatForces extends StatelessWidget {
   }
 
   List<Widget> _buildUnitRow(String key, int count, Widget internal) {
+    List<bool> selected = selections[key]!;
+    
     List<Widget> internals = [];
     for(int i = 0; i < count; i++) {
       if(selectable) {
         internals.add(GestureDetector(
           onTap: () => handler.selectItem(key, i),
-          child: internal,
+          child: selected[i] ? 
+            DecoratedBox(
+              decoration: const BoxDecoration(color: Colors.amber),
+              child: internal
+            )
+            : internal,
         ));
       }
       else {

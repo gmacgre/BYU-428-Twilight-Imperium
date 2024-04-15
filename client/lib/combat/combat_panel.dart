@@ -15,7 +15,10 @@ class CombatPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: const BoxDecoration(color: Colors.blueGrey),
+      decoration: BoxDecoration(
+        color: Colors.blueGrey,
+        border: Border.all(color: Colors.amber, width: 5)
+      ),
       child: SafeArea(
         child: Center(
           child: _getPanel(state),
@@ -29,12 +32,19 @@ class CombatPanel extends StatelessWidget {
       case CombatState.assignHits:
         int hitsToAssign = handler.getHits();
         return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             OutlinedLetters(content: '$hitsToAssign hits left to assign.'),
-            TextButton(
+            ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: hitsToAssign == 0
+                    ? MaterialStateProperty.all(Colors.amber.shade300)
+                    : MaterialStateProperty.all(Colors.grey),
+              ),
               onPressed: (hitsToAssign == 0) ? () => { handler.submitHits() } : null, 
-              child: const Text('Submit Hits')
-            )
+              child: const OutlinedLetters(content: 'Submit Hits'),
+            ),
           ],
         );
         
@@ -84,18 +94,20 @@ class CombatPanel extends StatelessWidget {
         );
       case CombatState.exitingCombat:
         return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Expanded(
-              flex: 1,
-              child: OutlinedLetters(content: 'ASJDFAEHRGKEJHRKEJHKEJHRJ')
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: OutlinedLetters(content: 'Combat Ended.'),
             ),
-            Expanded(
-              flex: 1,
-              child: TextButton(
-                onPressed: () => { handler.nextPhase() },
-                child: const Text('Move on.')
+            ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.amber.shade300)
               ),
-            )
+              onPressed: () => { handler.nextPhase() }, 
+              child: const OutlinedLetters(content: 'Leave Combat Window'),
+            ),
           ],
         );
         
