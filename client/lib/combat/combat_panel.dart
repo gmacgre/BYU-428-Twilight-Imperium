@@ -16,7 +16,7 @@ class CombatPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: Colors.blueGrey,
+        color: const Color.fromARGB(255, 45, 58, 65),
         border: Border.all(color: Colors.amber, width: 5)
       ),
       child: SafeArea(
@@ -53,27 +53,33 @@ class CombatPanel extends StatelessWidget {
         
       case CombatState.declareRetreat:
         return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const OutlinedLetters(content: "Do you want to declare a retreat?"),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Expanded(
-                  flex: 1,
-                  child: TextButton(
-                    onPressed: () => { 
-                      handler.retreatOrder(true),
-                    },
-                    child: const Text('Yes'),
-                  )
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.amber.shade300)
+                    ),
+                    onPressed: () => { handler.retreatOrder(true) }, 
+                    child: const OutlinedLetters(content: 'Yes'),
+                  ),
                 ),
-                Expanded(
-                  flex: 1,
-                  child: TextButton(
-                    onPressed: () => {
-                      handler.retreatOrder(false),
-                    },
-                    child: const Text('No'),
-                  )
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.amber.shade300)
+                    ),
+                    onPressed: () => { handler.retreatOrder(false) }, 
+                    child: const OutlinedLetters(content: 'No'),
+                  ),
                 ),
               ],
             ),
@@ -81,18 +87,20 @@ class CombatPanel extends StatelessWidget {
         );
       case CombatState.enteringCombat:
         return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Expanded(
-              flex: 1,
-              child: OutlinedLetters(content: 'Entering Combat. Click here to move to next phase.')
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: OutlinedLetters(content: 'Entering Combat! General Quarters!'),
             ),
-            Expanded(
-              flex: 1,
-              child: TextButton(
-                onPressed: () => { handler.swap(CombatState.declareRetreat) },
-                child: const Text('Move on')
+            ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.amber.shade300)
               ),
-            )
+              onPressed: () => { handler.swap(CombatState.declareRetreat) }, 
+              child: const OutlinedLetters(content: 'All Hands Man Battle Stations!'),
+            ),
           ],
         );
       case CombatState.exitingCombat:

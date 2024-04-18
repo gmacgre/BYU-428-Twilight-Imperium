@@ -5,7 +5,6 @@ import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.sun.net.httpserver.*;
 import com.twilightimperium.backend.Game;
 import com.twilightimperium.backend.Server;

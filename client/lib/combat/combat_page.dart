@@ -114,7 +114,6 @@ class _CombatPageState extends ConsumerState<CombatPage> {
   }
 
   void _hitEnemy(int hits) {
-    print('hitting with $hits');
     int assigned = 0;
     while(assigned < hits) {
       if(enemies.forceSize() == 0) break;

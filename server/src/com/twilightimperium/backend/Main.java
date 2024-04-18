@@ -1,6 +1,5 @@
 package com.twilightimperium.backend;
 
-import com.twilightimperium.backend.Server;
 import java.io.IOException;
 
 public class Main {

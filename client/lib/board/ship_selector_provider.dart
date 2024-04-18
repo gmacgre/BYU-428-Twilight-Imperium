@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:client/board/coordinate.dart';
 import 'package:client/model/board_state.dart';
 import 'package:client/model/ship_model.dart';
