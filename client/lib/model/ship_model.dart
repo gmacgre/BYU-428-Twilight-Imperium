@@ -40,11 +40,14 @@ class ShipModel {
 }
 
 enum ShipType {
-  carrier,
-  cruiser,
-  destroyer,
-  dreadnought,
-  flagship,
-  fighter,
-  warsun,
+  carrier(label: "Carrier"),
+  cruiser(label: "Cruiser"),
+  destroyer(label: "Destroyer"),
+  dreadnought(label: "Dreadnought"),
+  flagship(label: "Flagship"),
+  fighter(label: "Fighter"),
+  warsun(label: "War Sun");
+
+  final String label;
+  const ShipType({required this.label});
 }

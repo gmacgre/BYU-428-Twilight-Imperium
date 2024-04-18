@@ -2,6 +2,7 @@
 //Everything in this class should be both const and static, with no private variables.
 
 class Strings {
+
   static String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
   //Make class unable to be instantiated, only referenced statically
   Strings._();
@@ -77,8 +78,11 @@ class Strings {
   static String warsun = 'War Sun';
   static String pds = 'PDS';
   static String spacedock = 'Spacedock';
-  static String buildUnitDesc(String type, int cost, int move, int combat, int capacity) {
+  static String buildUnitDesc(
+      String type, int cost, int move, int combat, int capacity) {
     return '$type\nCost: $cost  Move: $move\nCombat: $combat  Capacity: $capacity';
   }
-}
 
+  static const String production = "Production";
+  static const String nextPhase = 'Next Phase';
+}

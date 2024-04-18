@@ -6,5 +6,6 @@ class PlanetState {
 
   Player? planetOwner;
   PlanetModel planet;
+  bool existsSpaceDock = false;
   //TODO: Add ground troops and other units
 }

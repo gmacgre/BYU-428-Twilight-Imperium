@@ -13,17 +13,18 @@ class ShipSelectorWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    bool shipSelectorActive = ref.watch(shipSelectorProvider).isActive;
+    bool shipSelectorActive =
+        ref.watch(boardStateProvider).currentPhase == TurnPhase.movement;
     Coordinate? selectedCoordinate =
         ref.watch(shipSelectorProvider).selectedCoordinate;
     var selectedShipsMap = ref.watch(shipSelectorProvider).selectedShips;
-    if (selectedCoordinate == null) {
-      return const SizedBox.shrink();
+    var selectableShips = [];
+    if (selectedCoordinate != null) {
+      selectableShips = ref
+          .watch(boardStateProvider)
+          .systemStates[selectedCoordinate.q][selectedCoordinate.r]
+          .airSpace;
     }
-    var selectableShips = ref
-        .watch(boardStateProvider)
-        .systemStates[selectedCoordinate.q][selectedCoordinate.r]
-        .airSpace;
     var selectedShips = selectedShipsMap.values.expand((x) => x).toList();
     return Visibility(
       visible: shipSelectorActive,
