@@ -2,7 +2,6 @@ import 'package:client/board/coordinate.dart';
 import 'package:client/board/production_provider.dart';
 import 'package:client/board/ship_selector_provider.dart';
 import 'package:client/data/datacache.dart';
-import 'package:client/model/player.dart';
 import 'package:client/model/ship_model.dart';
 import 'package:client/model/system_state.dart';
 import 'package:client/service/messaging/activation_service.dart';
@@ -96,11 +95,11 @@ class BoardState extends _$BoardState {
           ...toSystem.airSpace,
         ],
       );
-
       state = BoardStateObject(
           systemStates: systems, activeCoordinate: state.activeCoordinate);
     }
     //If someone owns the airspace and it's not the current player, go to combat phase
+    // TODO: Real launch is here for later
     if (state.activeSystemState!.systemOwner != null &&
         DataCache.instance.userSeatNumber !=
             DataCache.instance.players
@@ -112,9 +111,10 @@ class BoardState extends _$BoardState {
     } else {
       //I'm skipping ground invasions for now, if there is no space combat we're going straight to production
       state = BoardStateObject(
+        //TODO : THIS WILL NEED TO BE MODIFIED LATER AS WELL
           systemStates: state.systemStates,
           activeCoordinate: state.activeCoordinate,
-          currentPhase: TurnPhase.production);
+          currentPhase: TurnPhase.combat);
     }
   }
 
@@ -124,10 +124,17 @@ class BoardState extends _$BoardState {
       state = BoardStateObject(
         systemStates: state.systemStates,
         activeCoordinate: state.activeCoordinate,
-        currentPhase: TurnPhase.production,
+        currentPhase: TurnPhase.combat,
       );
       ref.read(shipSelectorProvider.notifier).cancel();
       return;
+    }
+    if (currentPhase == TurnPhase.combat) {
+      state = BoardStateObject(
+        systemStates: state.systemStates,
+        activeCoordinate: state.activeCoordinate,
+        currentPhase: TurnPhase.production
+      );
     }
     if (currentPhase == TurnPhase.production) {
       endTurn();

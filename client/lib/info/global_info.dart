@@ -20,11 +20,8 @@ class GlobalInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(color: Colors.blueGrey),
-      child: ListView(
-        children: _buildChildren(),
-      ),
+    return ListView(
+      children: _buildChildren(),
     );
   }
 

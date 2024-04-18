@@ -61,9 +61,12 @@ class InfoPanel extends ConsumerWidget {
       toReturn.add(
         //Player widgets and Global Info Wigdets called and made here
         Center(
-          child: _isPlayer(i, players.length) ? 
-            PlayerInfo(player: players[i], index: i) : 
-            GlobalInfo(players: players, publicObjectives: DataCache.instance.publicObjectives)
+          child: DecoratedBox(
+            decoration: const BoxDecoration(color: Colors.blueGrey),
+            child: _isPlayer(i, players.length) ? 
+              PlayerInfo(player: players[i], index: i) : 
+              GlobalInfo(players: players, publicObjectives: DataCache.instance.publicObjectives)
+          ),
         )
       );
     }

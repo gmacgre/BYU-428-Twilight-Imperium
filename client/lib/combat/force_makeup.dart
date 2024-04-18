@@ -19,6 +19,10 @@ class ForceMakeup {
     required this.fighter,
   });
 
+  int forceSize() {
+    return flagship + warsun + dreadnaught + cruiser + carrier + destroyer + fighter;
+  }
+
   int fire() {
     int toReturn = 0;
     for(int i = 0; i < flagship * 2; i++) {

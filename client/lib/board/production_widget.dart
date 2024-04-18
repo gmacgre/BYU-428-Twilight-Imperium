@@ -1,6 +1,4 @@
-import 'package:client/board/coordinate.dart';
 import 'package:client/board/production_provider.dart';
-import 'package:client/board/ship_selector_provider.dart';
 import 'package:client/data/strings.dart';
 import 'package:client/model/board_state.dart';
 import 'package:client/model/ship_model.dart';
@@ -52,10 +50,10 @@ class ProductionWidget extends ConsumerWidget {
                         Text(
                           ShipType.values[index].label,
                         ),
-                        SizedBox(width: 10),
-                        Text(
+                        const SizedBox(width: 10),
+                        const Text(
                             'Resource Cost: 1'), // replace with actual resource cost
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         DropdownButton<int>(
                           value: ref
                                   .watch(productionProvider)

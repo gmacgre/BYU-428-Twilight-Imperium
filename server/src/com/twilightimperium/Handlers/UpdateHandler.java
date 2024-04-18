@@ -14,7 +14,6 @@ import com.twilightimperium.backend.Pair;
 import com.twilightimperium.backend.Server;
 import com.twilightimperium.backend.model.RequestResponse.ErrorResponse;
 import com.twilightimperium.backend.model.RequestResponse.Update;
-import com.twilightimperium.backend.model.RequestResponse.UpdateResponse;
 
 public class UpdateHandler implements HttpHandler{
     private final Server server;

@@ -3,12 +3,12 @@ import 'package:client/board/coordinate.dart';
 import 'package:client/board/production_widget.dart';
 import 'package:client/board/ship_selector_provider.dart';
 import 'package:client/board/ship_selector_widget.dart';
+import 'package:client/combat/combat_page.dart';
 import 'package:client/data/strings.dart';
 import 'package:client/model/board_state.dart';
 import 'package:client/model/system_state.dart';
 import 'package:client/res/outlined_letters.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hexagon/hexagon.dart';
 
@@ -31,6 +31,13 @@ class _BoardGridState extends ConsumerState<BoardGrid> {
     Coordinate? selectedCoordinate =
         ref.watch(shipSelectorProvider).selectedCoordinate;
     TurnPhase phase = ref.watch(boardStateProvider).currentPhase;
+    // If we are in combat, pull up the combat window
+    if(phase == TurnPhase.combat) {
+      return const CombatPage(state: CombatState.enteringCombat);
+    }
+
+    
+    // Return the non-Combat Window
     String phaseString = phase.toString().split('.').last.toUpperCase();
     return Row(
       children: [
