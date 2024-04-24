@@ -34,78 +34,82 @@ class _CreateAndJoinPageState extends State<CreateAndJoinPage> implements Create
     return Scaffold(
       body: SafeArea(
         child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
           decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage('images/background.jpg'),
               fit: BoxFit.cover
             )
           ),
-          child: Column(
-            children: [
-              //Used to ensure the background is 100% of the screen
-              const SizedBox(width: double.infinity),
-              //Title
-              ShaderMask(
-                blendMode: BlendMode.srcIn,
-                shaderCallback: (bounds) => titleGradiant.createShader(
-                  Rect.fromLTWH(0, 0, bounds.width, bounds.height),
-                ),
-                child: const Text(Strings.appTitle,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 100.0,
-                    fontFamily: 'Ambroise Firmin'
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                //Used to ensure the background is 100% of the screen
+                const SizedBox(width: double.infinity),
+                //Title
+                ShaderMask(
+                  blendMode: BlendMode.srcIn,
+                  shaderCallback: (bounds) => titleGradiant.createShader(
+                    Rect.fromLTWH(0, 0, bounds.width, bounds.height),
                   ),
-                ),
-              ),
-              //Subtitle
-              ShaderMask(
-                blendMode: BlendMode.srcIn,
-                shaderCallback: (bounds) => titleGradiant.createShader(
-                  Rect.fromLTWH(0, 0, bounds.width, bounds.height),
-                ),
-                child: const Text(Strings.tagLine,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 50.0,
-                    fontFamily: 'Handel Gothic D'
-                  ),
-                ),
-              ), 
-              //Input Boxes
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: DecoratedBox(
-                  decoration: const BoxDecoration(
-                    color: Colors.white30,
-                    borderRadius: BorderRadius.all(Radius.circular(10))
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(10.0, 8.0, 10.0, 8.0),
-                    child: Column(
-                      children: _buildInputColumn()
+                  child: const Text(Strings.appTitle,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 100.0,
+                      fontFamily: 'Ambroise Firmin'
                     ),
                   ),
                 ),
-              ),
-              //Selection Buttons
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: DecoratedBox(
-                  decoration: const BoxDecoration(
-                    color: Colors.black54,
-                    borderRadius: BorderRadius.all(Radius.circular(10))
+                //Subtitle
+                ShaderMask(
+                  blendMode: BlendMode.srcIn,
+                  shaderCallback: (bounds) => titleGradiant.createShader(
+                    Rect.fromLTWH(0, 0, bounds.width, bounds.height),
                   ),
-                  child: SizedBox(
-                    width: 300,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: _buildButtonRow(),
+                  child: const Text(Strings.tagLine,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 50.0,
+                      fontFamily: 'Handel Gothic D'
+                    ),
+                  ),
+                ), 
+                //Input Boxes
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: DecoratedBox(
+                    decoration: const BoxDecoration(
+                      color: Colors.white30,
+                      borderRadius: BorderRadius.all(Radius.circular(10))
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(10.0, 8.0, 10.0, 8.0),
+                      child: Column(
+                        children: _buildInputColumn()
+                      ),
                     ),
                   ),
                 ),
-              )
-            ],
+                //Selection Buttons
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: DecoratedBox(
+                    decoration: const BoxDecoration(
+                      color: Colors.black54,
+                      borderRadius: BorderRadius.all(Radius.circular(10))
+                    ),
+                    child: SizedBox(
+                      width: 300,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: _buildButtonRow(),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
