@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class OutlinedLetters extends StatelessWidget {
-  const OutlinedLetters({super.key, required this.content, this.fontSize = 14.0});
+  const OutlinedLetters({super.key, required this.content, this.fontSize = 14.0, this.fontFamily});
   final String content;
   final double fontSize;
+  final String? fontFamily;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,8 @@ class OutlinedLetters extends StatelessWidget {
         style: TextStyle(
           fontSize: fontSize,
           fontWeight: FontWeight.bold,
-          color: Colors.white
+          color: Colors.white,
+          fontFamily: fontFamily
           ),
         ),
       ]

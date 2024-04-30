@@ -5,7 +5,6 @@ import 'package:client/board/system.dart';
 import 'package:client/model/board_state.dart';
 import 'package:client/model/system_state.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class BoardSpace extends ConsumerStatefulWidget {
@@ -31,15 +30,17 @@ class _BoardSpaceState extends ConsumerState<BoardSpace> {
     Color overlay = const Color.fromARGB(0, 0, 0, 0);
     bool existsActivatedSystem =
         ref.watch(boardStateProvider).activeCoordinate != null;
+    TurnPhase phase = ref.read(boardStateProvider).currentPhase;
     if (widget.activated) {
       overlay = const Color.fromARGB(155, 255, 100, 55);
     }
     if (widget.selected) {
-      overlay = const Color.fromARGB(155, 255, 255, 0);
+      overlay = const Color.fromARGB(155, 0, 187, 212);
     }
     return Stack(
       children: [
         GestureDetector(
+          onTap: (phase != TurnPhase.movement) ? () => highlightSystem() : () => selectShips(),
           onDoubleTap: !existsActivatedSystem
               ? () => activateSystem()
               : () => selectShips(),
@@ -58,6 +59,10 @@ class _BoardSpaceState extends ConsumerState<BoardSpace> {
 
   activateSystem() {
     ref.read(boardStateProvider.notifier).activateSystem(widget.coordinate);
+  }
+
+  highlightSystem() {
+    ref.read(boardStateProvider.notifier).selectSystem(widget.coordinate);
   }
 
   selectShips() {

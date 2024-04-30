@@ -23,10 +23,10 @@ class _PlanetState extends State<Planet> {
       child: ConstrainedBox(
         constraints: BoxConstraints.tight(widget.planet.name != "Mecatol Rex"
             ? const Size(
-                40,
-                40,
+                25,
+                25,
               )
-            : const Size(80, 80)),
+            : const Size(40, 40)),
         child: MouseRegion(
           onEnter: _onEnter,
           onExit: _onExit,

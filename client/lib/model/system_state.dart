@@ -5,9 +5,18 @@ import 'package:client/model/ship_model.dart';
 
 class SystemState{
 
-  SystemState({airSpace, required this.systemModel}){
+  SystemState({planets, airSpace, required this.systemModel}){
     if(airSpace != null){
       this.airSpace = airSpace;
+    }
+    if(planets != null) {
+      this.planets = planets;
+    }
+    else if(systemModel.planets == null) {
+      this.planets = null;
+    }
+    else {
+      this.planets = systemModel.planets!.map((e) => PlanetState(planet: e)).toList();
     }
   }
   List<ShipModel> airSpace = List.empty(growable: true);

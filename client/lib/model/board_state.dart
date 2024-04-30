@@ -120,6 +120,14 @@ class BoardState extends _$BoardState {
 
   void endPhase() {
     var currentPhase = state.currentPhase;
+    if (currentPhase == TurnPhase.activation && state.selectedCoordinate != null) {
+      state = BoardStateObject(
+        systemStates: state.systemStates,
+        activeCoordinate: state.selectedCoordinate,
+        currentPhase: TurnPhase.movement
+      );
+      return;
+    }
     if (currentPhase == TurnPhase.movement) {
       state = BoardStateObject(
         systemStates: state.systemStates,
@@ -140,6 +148,15 @@ class BoardState extends _$BoardState {
       endTurn();
       return;
     }
+  }
+
+  void selectSystem(Coordinate coordinate) {
+    state = BoardStateObject(
+      systemStates: state.systemStates,
+      activeCoordinate: state.activeCoordinate,
+      selectedCoordinate: coordinate,
+      currentPhase: state.currentPhase
+    );
   }
 
   void activateSystem(Coordinate coordinate) {
@@ -172,6 +189,7 @@ class BoardState extends _$BoardState {
 class BoardStateObject {
   final List<List<SystemState>> systemStates;
   final Coordinate? activeCoordinate;
+  final Coordinate? selectedCoordinate;
   final bool isModified;
   final int currentPlayerSeatNumber;
   final TurnPhase currentPhase;
@@ -179,6 +197,7 @@ class BoardStateObject {
   BoardStateObject({
     required this.systemStates,
     this.activeCoordinate,
+    this.selectedCoordinate,
     this.isModified = true,
     this.currentPlayerSeatNumber = -1,
     this.currentPhase = TurnPhase.activation,

@@ -431,5 +431,11 @@ class PlanetData {
       influence: 2,
       color: const Color.fromRGBO(38, 100, 57, 1),
     ),
+    'null': PlanetModel(
+      name: 'Unselected',
+      resources: 0,
+      influence: 0,
+      color: Colors.grey
+    )
   };
 }

@@ -1,7 +1,6 @@
 import 'package:client/board/board_space.dart';
 import 'package:client/board/coordinate.dart';
 import 'package:client/board/production_widget.dart';
-import 'package:client/board/ship_selector_provider.dart';
 import 'package:client/board/ship_selector_widget.dart';
 import 'package:client/combat/combat_page.dart';
 import 'package:client/data/strings.dart';
@@ -29,7 +28,8 @@ class _BoardGridState extends ConsumerState<BoardGrid> {
     Coordinate? activeCoordinate =
         ref.watch(boardStateProvider).activeCoordinate;
     Coordinate? selectedCoordinate =
-        ref.watch(shipSelectorProvider).selectedCoordinate;
+        // ref.watch(shipSelectorProvider).selectedCoordinate;
+        ref.watch(boardStateProvider).selectedCoordinate;
     TurnPhase phase = ref.watch(boardStateProvider).currentPhase;
     // If we are in combat, pull up the combat window
     if(phase == TurnPhase.combat) {
@@ -117,8 +117,7 @@ class _BoardGridState extends ConsumerState<BoardGrid> {
                         width: 140,
                       child: ElevatedButton(
                         style: ButtonStyle(
-                          backgroundColor: phase == TurnPhase.production ||
-                                  phase == TurnPhase.movement
+                          backgroundColor: _getButtonHighlight(phase, selectedCoordinate) 
                               ? MaterialStateProperty.all(Colors.amber.shade300)
                               : MaterialStateProperty.all(Colors.grey),
                         ),
@@ -141,5 +140,15 @@ class _BoardGridState extends ConsumerState<BoardGrid> {
         const ProductionWidget(),
       ],
     );
+  }
+
+  bool _getButtonHighlight(TurnPhase phase, Coordinate? selected) {
+    if (phase == TurnPhase.production || phase == TurnPhase.movement) {
+      return true;
+    }
+    if (phase == TurnPhase.activation && selected != null) {
+      return true;
+    }
+    return false;
   }
 }
