@@ -2,7 +2,6 @@ package com.twilightimperium.Handlers;
 
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
 import com.twilightimperium.backend.Game;
 import com.twilightimperium.backend.Server;
 import com.twilightimperium.backend.model.RequestResponse.CreateRequest;
@@ -11,17 +10,14 @@ import com.twilightimperium.backend.model.RequestResponse.ErrorResponse;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.charset.StandardCharsets;
 
 /**
  * Handles game creation requests to the /create endpoint.
  */
-public class CreateGameHandler implements HttpHandler {
-    private final Server server;
+public class CreateGameHandler extends BaseHandler {
 
     public CreateGameHandler(Server server) {
-        this.server = server;
+        super(server);
     }
 
     @Override
@@ -52,22 +48,6 @@ public class CreateGameHandler implements HttpHandler {
             sendResponse(exchange, gson.toJson(new ErrorResponse("Game already Exists")), 405);
             e.printStackTrace();
         }
-    }
-
-
-    /**
-     * Sends an HTTP response with the given body and status code.
-     *
-     * @param exchange The HttpExchange object.
-     * @param responseBody The response body as a String.
-     * @param statusCode The HTTP status code.
-     */
-    private void sendResponse(HttpExchange exchange, String responseBody, int statusCode) throws IOException {
-        exchange.getResponseHeaders().set("Content-Type", "application/json");
-        exchange.sendResponseHeaders(statusCode, responseBody.getBytes(StandardCharsets.UTF_8).length);
-        OutputStream os = exchange.getResponseBody();
-        os.write(responseBody.getBytes(StandardCharsets.UTF_8));
-        os.close();
     }
 }
 

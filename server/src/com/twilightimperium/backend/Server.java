@@ -36,7 +36,7 @@ public class Server {
         server.createContext("/activate",new ActivateHandler(this));
         server.createContext("/move",new MoveHandler(this));
         server.createContext("/update",new UpdateHandler(this));
-        server.createContext("/", new DefaultHandler());
+        server.createContext("/", new DefaultHandler(this));
         server.setExecutor(null);
     }
 
