@@ -27,7 +27,9 @@ public class LoginHandler implements HttpHandler {
     public void handle(HttpExchange exchange) throws IOException {
         // Only process POST requests
         Gson gson = new Gson();
+        System.err.println(exchange.getRequestMethod());
         if (!"POST".equals(exchange.getRequestMethod())) {
+            
             sendResponse(exchange, gson.toJson(new ErrorResponse("Bad Request Method")), 405);
             return;
         }
@@ -35,6 +37,8 @@ public class LoginHandler implements HttpHandler {
             // Here I would parse through JSON file when we have things implemented
             String requestBody = new String(exchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8);
             LoginRequest request = gson.fromJson(requestBody, LoginRequest.class);
+
+            System.err.println(requestBody);
             
             // Simulated authentication check
             String token = server.login(request.getRoomCode(), request.getRoomPass(),request.getPlayerNum());
@@ -47,10 +51,12 @@ public class LoginHandler implements HttpHandler {
                 String jsonResponse = gson.toJson(response);
                 sendResponse(exchange, jsonResponse, 200);
             } else {
+                System.err.println("bad input");
                 // Authentication failed
                 sendResponse(exchange, gson.toJson(new ErrorResponse("Bad Input")), 401);
             }
         } catch (Exception e) {
+            System.err.println("Internal Error");
             sendResponse(exchange, gson.toJson(new ErrorResponse("Internal Server Error")), 500);
             e.printStackTrace();
         }
@@ -64,6 +70,8 @@ public class LoginHandler implements HttpHandler {
      * @param statusCode The HTTP status code.
      */
     private void sendResponse(HttpExchange exchange, String responseBody, int statusCode) throws IOException {
+        exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
+        exchange.getResponseHeaders().add("Access-Control-Allow-Methods", "POST");
         exchange.getResponseHeaders().set("Content-Type", "application/json");
         exchange.sendResponseHeaders(statusCode, responseBody.getBytes(StandardCharsets.UTF_8).length);
         OutputStream os = exchange.getResponseBody();

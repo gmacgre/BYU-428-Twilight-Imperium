@@ -30,7 +30,7 @@ public class CreateGameHandler implements HttpHandler {
 
         // Only process POST requests
         if (!"POST".equals(exchange.getRequestMethod())) {
-            sendResponse(exchange, gson.toJson(new ErrorResponse("Game Already Exists")), 405);
+            sendResponse(exchange, gson.toJson(new ErrorResponse("Wrong HTTP Method")), 405);
             return;
         }
         try {

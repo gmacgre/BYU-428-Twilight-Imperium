@@ -110,7 +110,7 @@ public class Game {
         updates = newUpdates;
     }
 
-    public Game(){
+    public Game() {
         nextCommand = ACTION; // we start for now by expecting an activate System command
         playerNum = 0;
         tokens = new HashMap<String, Integer>();
