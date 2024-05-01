@@ -124,6 +124,7 @@ class PlanetInfo extends StatelessWidget {
                       color: Colors.black,
                       width: 5
                     )),
+                child: (fullState.exhausted) ? const Center(child: Text('Exhausted', style: TextStyle(color: Color.fromARGB(255, 93, 25, 21)),)): null,
               ),
             ),
           ),

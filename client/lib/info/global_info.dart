@@ -93,7 +93,8 @@ class GlobalInfo extends ConsumerWidget {
         padding: const EdgeInsets.fromLTRB(8.0, 10.0, 8.0, 5.0),
         child: DecoratedBox(
           decoration: const BoxDecoration(color: Colors.black54),
-          child: Row(
+          child: Wrap(
+            crossAxisAlignment: WrapCrossAlignment.center,
             children: _buildUntakenRow(),
           ),
         ),
@@ -107,7 +108,8 @@ class GlobalInfo extends ConsumerWidget {
           decoration: const BoxDecoration(color: Colors.black54),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Row(
+            child: Wrap(
+              crossAxisAlignment: WrapCrossAlignment.center,
               children: _buildPublicObjectives(),
             ),
           ),
@@ -204,9 +206,11 @@ class GlobalInfo extends ConsumerWidget {
       Column(
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: toInsert.sublist(0, split),
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: toInsert.sublist(split, toInsert.length),
           )
         ]

@@ -41,13 +41,11 @@ class PlayerOverview extends StatelessWidget {
       decoration: BoxDecoration(
         color: background[playerColor]
       ),
-      child: SizedBox(
-        height: 70,
-        child: Row(
+      child: Wrap(
+        crossAxisAlignment: WrapCrossAlignment.center,
           children: _buildRow()
         ),
-      )
-    );
+      );
   }
 
   List<Widget> _buildRow() {
@@ -75,16 +73,11 @@ class PlayerOverview extends StatelessWidget {
       _PoolCount(Strings.fleet, fleetTokenCount, '${Strings.fleetTokenDesc}\n${Strings.tokenCount(fleetTokenCount, Strings.fleet)}'),
       _PoolCount(Strings.strategy, strategyTokenCount, '${Strings.strategyTokenDesc}\n${Strings.tokenCount(strategyTokenCount, Strings.strategy)}')
     ];
-    List<Widget> toReturn = [];
-
-    for(int i = 0; i < innerItems.length; i++) {
-      toReturn.add(Padding(
-        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-        child: innerItems[i]
-      ));
-    }
     
-    return toReturn;
+    return innerItems.map((e) => Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: e
+      )).toList();
   }
 
   String _getIcon(String race) {
