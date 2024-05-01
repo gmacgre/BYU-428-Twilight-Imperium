@@ -16,7 +16,7 @@ class ShipSelectorWidget extends ConsumerWidget {
     bool shipSelectorActive =
         ref.watch(boardStateProvider).currentPhase == TurnPhase.movement;
     Coordinate? selectedCoordinate =
-        ref.watch(shipSelectorProvider).selectedCoordinate;
+        ref.watch(boardStateProvider).selectedCoordinate;
     var selectedShipsMap = ref.watch(shipSelectorProvider).selectedShips;
     var selectableShips = [];
     if (selectedCoordinate != null) {

@@ -44,6 +44,7 @@ class Strings {
   static const String invalidStrategyCard = 'This Strategy Card ID is invalid.';
   static const String untakenStrategyCards = 'Untaken Strategy Cards:';
   static const String publicObjectives = 'Public Objectives:';
+  static const String selectedSystem = 'Selected System:';
   static String tokenCount(int count, String type) {
     return 'This player has $count ${type.toLowerCase()} token(s).';
   }
@@ -85,4 +86,7 @@ class Strings {
 
   static const String production = "Production";
   static const String nextPhase = 'Next Phase';
+
+
+  static const String noSystemSelected = 'No System Selected';
 }

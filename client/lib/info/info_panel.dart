@@ -2,6 +2,7 @@ import 'package:client/data/datacache.dart';
 import 'package:client/data/strings.dart';
 import 'package:client/info/global_info.dart';
 import 'package:client/info/player_info.dart';
+import 'package:client/model/board_state.dart';
 import 'package:client/model/player.dart';
 import 'package:client/model/player_state.dart';
 import 'package:flutter/material.dart';
@@ -13,8 +14,12 @@ class InfoPanel extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     List<Player> players = ref.watch(playerStateProvider);
+    // Though unused, this ensures that child tabs can update when referencing this riverpod.
+    // Do not remove.
+    ref.watch(boardStateProvider).selectedCoordinate;  
     return DefaultTabController(
       length: players.length + 1,
+      initialIndex: players.length,
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(50),

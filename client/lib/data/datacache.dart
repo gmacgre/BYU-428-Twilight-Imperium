@@ -1,6 +1,7 @@
 import 'package:client/combat/force_makeup.dart';
 import 'package:client/data/system_data.dart';
 import 'package:client/model/objective.dart';
+import 'package:client/model/planet_state.dart';
 import 'package:client/model/player.dart';
 import 'package:client/model/ship_model.dart';
 import 'package:client/model/system_state.dart';
@@ -81,7 +82,9 @@ class DataCache {
       SystemState(systemModel: SystemData.systemList['Archon Ren']!),
       SystemState(systemModel: SystemData.systemList['Empty']!),
       SystemState(systemModel: SystemData.systemList['Empty']!),
-      SystemState(systemModel: SystemData.systemList['Quann']!),
+      SystemState(
+        systemModel: SystemData.systemList['Quann']!,
+        planets: [ PlanetState(planet: SystemData.systemList['Quann']!.planets![0], exhausted: true)]),
       SystemState(systemModel: SystemData.systemList['Empty']!),
       SystemState(systemModel: SystemData.systemList['Empty']!),
     ],

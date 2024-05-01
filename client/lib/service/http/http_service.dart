@@ -13,10 +13,10 @@ class HTTPService {
   void getRequest(String uri, Map<String, String> headers) async {
     try {
       http.Response res =  await http.get(
-      Uri.parse('$_serverDomain$uri'),
-      headers: headers
-    );
-    _determineResult(res);
+        Uri.parse('$_serverDomain$uri'),
+        headers: headers
+      );
+      _determineResult(res);
     }
     on http.ClientException catch (error) {
       _observer.processException('Failed to call ${error.uri.toString()}: ${error.message}');

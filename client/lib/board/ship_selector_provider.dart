@@ -22,16 +22,16 @@ class ShipSelector extends _$ShipSelector {
     if(ref.read(boardStateProvider).currentPhase != TurnPhase.movement) {
       return;
     }
+    ref.read(boardStateProvider.notifier).selectSystem(coordinate);
     var selectedShips = {...state.selectedShips};
     state = ShipSelectorObject(
       selectedShips: selectedShips,
-      selectedCoordinate: coordinate,
     );
   }
 
   void selectShip(ShipModel ship) {
     var selectedShips = {...state.selectedShips};
-    var selectedCoordinate = state.selectedCoordinate;
+    var selectedCoordinate = ref.read(boardStateProvider).selectedCoordinate;
     if (selectedCoordinate != null) {
       if (selectedShips[selectedCoordinate] == null) {
         selectedShips[selectedCoordinate] = [];
@@ -41,22 +41,19 @@ class ShipSelector extends _$ShipSelector {
 
     state = ShipSelectorObject(
       selectedShips: selectedShips,
-      selectedCoordinate: selectedCoordinate,
     );
   }
 
   void deselectShip(ShipModel ship) {
     var selectedShips = {...state.selectedShips};
-    var selectedCoordinate = state.selectedCoordinate;
+    var selectedCoordinate = ref.read(boardStateProvider).selectedCoordinate;
     if (selectedCoordinate != null) {
       if (selectedShips[selectedCoordinate] != null) {
         selectedShips[selectedCoordinate]!.remove(ship);
       }
     }
-
     state = ShipSelectorObject(
       selectedShips: selectedShips,
-      selectedCoordinate: selectedCoordinate,
     );
   }
 
@@ -74,10 +71,8 @@ class ShipSelector extends _$ShipSelector {
 
 class ShipSelectorObject {
   Map<Coordinate, List<ShipModel>> selectedShips;
-  Coordinate? selectedCoordinate;
 
   ShipSelectorObject({
     this.selectedShips = const {},
-    this.selectedCoordinate,
   });
 }

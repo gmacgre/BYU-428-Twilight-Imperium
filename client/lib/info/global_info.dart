@@ -1,14 +1,18 @@
+import 'package:client/board/coordinate.dart';
 import 'package:client/info/objective_view.dart';
 import 'package:client/info/player_overview.dart';
+import 'package:client/info/selected_system.dart';
 import 'package:client/info/strategy_card.dart';
+import 'package:client/model/board_state.dart';
 import 'package:client/model/objective.dart';
 import 'package:client/model/player.dart';
 import 'package:client/res/hover_tip.dart';
 import 'package:client/res/outlined_letters.dart';
 import 'package:client/data/strings.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class GlobalInfo extends StatelessWidget {
+class GlobalInfo extends ConsumerWidget {
   final List<Player> players;
   final List<Objective> publicObjectives;
 
@@ -19,16 +23,11 @@ class GlobalInfo extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return ListView(
-      children: _buildChildren(),
-    );
-  }
-
-  List<Widget> _buildChildren() {
+  Widget build(BuildContext context, WidgetRef ref) {
     //Build n player overview Widgets
     //One non-player info Widget
     List<Widget> toReturn = [];
+    Coordinate? coords = ref.read(boardStateProvider).selectedCoordinate;
 
     for(int i = 0; i < players.length; i++) {
       toReturn.add(
@@ -46,7 +45,7 @@ class GlobalInfo extends StatelessWidget {
         )
       );
     }
-    //Divider between Player Overviews and generic global info
+    //Divider between Player Overviews and selected system info
     toReturn.add(
       const DecoratedBox(
         decoration: BoxDecoration(
@@ -57,13 +56,45 @@ class GlobalInfo extends StatelessWidget {
         )
       )
     );
+    
+    toReturn.add(
+      Padding(
+        padding: const EdgeInsets.fromLTRB(8.0, 10.0, 8.0, 5.0),
+        child: DecoratedBox(
+          decoration: const BoxDecoration(color: Colors.black54),
+          child: Column(
+            children: [
+              const OutlinedLetters(content: Strings.selectedSystem),
+              SelectedSystem(
+                coords: coords,
+                state: (coords == null) ? null : ref.read(boardStateProvider).systemStates[coords.q][coords.r],
+              )
+            ],
+          ),
+        ),
+      )
+    );
+    toReturn.add(
+      const DecoratedBox(
+        decoration: BoxDecoration(
+        color: Colors.amber,
+        ),
+        child: SizedBox(
+          height: 5.0,
+        )
+      )
+    );
+    // Divider between Selected System Info and General Game Info
+
+    
     //Untaken Strategy Cards
     toReturn.add(
       Padding(
         padding: const EdgeInsets.fromLTRB(8.0, 10.0, 8.0, 5.0),
         child: DecoratedBox(
           decoration: const BoxDecoration(color: Colors.black54),
-          child: Row(
+          child: Wrap(
+            crossAxisAlignment: WrapCrossAlignment.center,
             children: _buildUntakenRow(),
           ),
         ),
@@ -77,15 +108,23 @@ class GlobalInfo extends StatelessWidget {
           decoration: const BoxDecoration(color: Colors.black54),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Row(
+            child: Wrap(
+              crossAxisAlignment: WrapCrossAlignment.center,
               children: _buildPublicObjectives(),
             ),
           ),
         ),
       )
     );
-
-    return toReturn;
+    final ScrollController controller = ScrollController();
+    return Scrollbar(
+      thumbVisibility: true,
+      controller: controller,
+      child: ListView(
+        controller: controller,
+        children: toReturn,
+      ),
+    );
   }
 
   List<Widget> _buildUntakenRow() {
@@ -167,9 +206,11 @@ class GlobalInfo extends StatelessWidget {
       Column(
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: toInsert.sublist(0, split),
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: toInsert.sublist(split, toInsert.length),
           )
         ]
