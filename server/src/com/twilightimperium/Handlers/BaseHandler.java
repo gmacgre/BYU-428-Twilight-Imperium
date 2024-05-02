@@ -25,8 +25,12 @@ public abstract class BaseHandler implements HttpHandler {
      * @param statusCode The HTTP status code.
      */
     protected void sendResponse(HttpExchange exchange, String responseBody, int statusCode) throws IOException {
+        
+        //CORS stuff to add to all responses
         exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
         exchange.getResponseHeaders().add("Access-Control-Allow-Methods", "*");
+        exchange.getResponseHeaders().add("Access-Control-Allow-Headers", "*");
+        exchange.getResponseHeaders().add("Access-Control-Max-Age", "86400");
         exchange.getResponseHeaders().set("Content-Type", "application/json");
         exchange.sendResponseHeaders(statusCode, responseBody.getBytes(StandardCharsets.UTF_8).length);
         OutputStream os = exchange.getResponseBody();
