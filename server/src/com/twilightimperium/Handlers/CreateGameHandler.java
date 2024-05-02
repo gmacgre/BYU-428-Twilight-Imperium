@@ -4,8 +4,7 @@ import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.twilightimperium.backend.Game;
 import com.twilightimperium.backend.Server;
-import com.twilightimperium.backend.model.RequestResponse.CreateRequest;
-import com.twilightimperium.backend.model.RequestResponse.CreateResponse;
+import com.twilightimperium.backend.model.RequestResponse.CreateRequestResponse;
 import com.twilightimperium.backend.model.RequestResponse.ErrorResponse;
 
 import java.io.IOException;
@@ -32,14 +31,14 @@ public class CreateGameHandler extends BaseHandler {
         try {
             InputStream body = exchange.getRequestBody();
             String requestBodyString = new String(body.readAllBytes());
-            CreateRequest request = gson.fromJson(requestBodyString,CreateRequest.class);
+            CreateRequestResponse request = gson.fromJson(requestBodyString,CreateRequestResponse.class);
             String roomCode = request.getRoomCode();
             String roomPass = request.getRoomPassword();
 
             Game newGame = new Game();
             String token = server.addNewGame(newGame, roomCode, roomPass); // Add game to list and get a token
             newGame.addPlayer(token);
-            CreateResponse response = new CreateResponse(token, 0);
+            CreateRequestResponse response = new CreateRequestResponse(request.getRoomCode(), request.getRoomPassword());
             String jsonResponse = gson.toJson(response);
 
             // Respond with the token.

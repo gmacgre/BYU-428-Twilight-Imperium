@@ -1,4 +1,4 @@
-package com.twilightimperium.backend.model.RequestResponse;
+package com.twilightimperium.backend.model.update;
 
 public class Update {
     String type;

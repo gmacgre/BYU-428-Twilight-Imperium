@@ -68,6 +68,11 @@ class CreateAndJoinPagePresenter {
     _view.setButtonState(true);
     _view.swapToBoard();
   }
+
+  void _login(String room, String pass) {
+    _view.postToast(Strings.createSuccess);
+    _loginService.sendLoginRequest(room, pass, _playerNumber);
+  }
 }
 
 class _LoginServiceObserver implements LoginServiceObserver {
@@ -93,8 +98,8 @@ class _CreateServiceObserver implements CreateServiceObserver {
   final CreateAndJoinPagePresenter _presenter;
   _CreateServiceObserver(this._presenter);
   @override
-  void notifySuccess(int id, String userToken) {
-    _presenter._getGameState(id, userToken);
+  void notifySuccess(String room, String pass) {
+    _presenter._login(room, pass);
   }
 
   @override

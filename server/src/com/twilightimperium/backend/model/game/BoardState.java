@@ -1,4 +1,5 @@
 package com.twilightimperium.backend.model.game;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -12,17 +13,24 @@ public class BoardState {
                 map[j][i] = new Tile();
             }
         }
-        map[3][0].setSystem("Jord");
-        map[3][0].getShips().add(new Ship(0,3,"carrier"));
-        map[3][0].getShips().add(new Ship(0,3,"carrier"));
-        map[3][0].getShips().add(new Ship(0,3,"destroyer"));
-        for(int i = 0; i < 3; i++){
-        map[3][0].getShips().add(new Ship(0,3,"fighter"));
+        
+        // This is a default map, use it for now.
+        // 6 Player default map
+        String[][] row = {
+            {   "Empty", "Empty", "Empty", "Jord", "Tequ'ran", "Empty", "Winnu"},
+            {   "Empty", "Empty", "Thibah", "Mellon", "Lodor", "New Albion", "Vefut II"},
+            {   "Empty", "Supernova", "WormholeBeta", "Asteroid", "Mehar Xull", "Empty", "Centauri"},
+            {   "Jol", "Bereg", "Tar'Mann", "Mecatol Rex", "Nebula", "Corneeq", "Hercant"},
+            {   "Dal Bootha", "Saudor", "Asteroid", "Wellon", "Quann", "Qucen'n", "Empty"},
+            {   "Empty", "Arnor", "WormholeAlpha", "Abyz", "Arinam", "Empty", "Empty"},
+            {   "Archon Ren", "Lazar", "Empty", "Lisis II", "Empty", "Empty", "Empty"}
+        };
+        for(int i = 0; i < row.length; i++) {
+            for(int j = 0; j < row[i].length; j++) {
+                map[i][j].setSystem(row[i][j]);
+            }
         }
-        for(int i = 0; i < 5; i++){
-            map[3][0].getShips().add(new Ship(0,3,"infantry"));
-        }
-        map[3][0].getShips().add(new Ship(0,3,"space_dock"));
+
     }
     public Tile getTile(int x, int y){
         return map[y][x];

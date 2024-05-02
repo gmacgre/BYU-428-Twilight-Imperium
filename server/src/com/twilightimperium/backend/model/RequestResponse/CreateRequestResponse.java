@@ -1,6 +1,6 @@
 package com.twilightimperium.backend.model.RequestResponse;
 
-public class CreateRequest {
+public class CreateRequestResponse {
     final String roomCode;
     final String roomPassword;
 
@@ -13,7 +13,7 @@ public class CreateRequest {
         return this.roomPassword;
     }
 
-    public CreateRequest(String code, String password){
+    public CreateRequestResponse(String code, String password){
         roomCode = code;
         roomPassword = password;
     }

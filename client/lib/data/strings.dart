@@ -17,6 +17,7 @@ class Strings {
       'Enter both the Room Code and Password, and a Player Seat Number.';
   static const String loginAttempt = 'Attempting to Log In...';
   static const String createAttempt = 'Attempting to Create Game...';
+  static const String createSuccess = 'Game Creation Success!';
   static const String fleet = 'Fleet';
   static const String tactic = 'Tactic';
   static const String strategy = 'Strategy';

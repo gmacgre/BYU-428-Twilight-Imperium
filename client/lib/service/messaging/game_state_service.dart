@@ -37,7 +37,8 @@ class GameStateService implements HTTPServiceObserver {
         List<SystemContent> row = map[i].row;
         for(int j = 0; j < row.length; j++) {
           SystemContent content = row[j];
-
+          print(content.systemName);
+          print(SystemData.systemList[content.systemName]);
           //System Constant Data
           SystemState newState = SystemState(systemModel: SystemData.systemList[content.systemName]!);
           newRow.add(newState);

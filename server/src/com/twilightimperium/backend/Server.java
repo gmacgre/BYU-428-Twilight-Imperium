@@ -2,7 +2,7 @@ package com.twilightimperium.backend;
 
 import com.sun.net.httpserver.HttpServer;
 import com.twilightimperium.Handlers.*;
-import com.twilightimperium.backend.model.RequestResponse.Update;
+import com.twilightimperium.backend.model.update.Update;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -90,7 +90,7 @@ public class Server {
         String token;
         if(game.getPlayerNum() <= playerNum){
             //This player doesn't exist, generate a new token
-            //TODO currently just assigns them to the next slot regardless of what number they sent
+            //TODO: currently just assigns them to the next slot regardless of what number they sent
             token = UUID.randomUUID().toString();
             game.addPlayer(token);
             tokenToGameIndex.put(token, gameIdToIndex.get(gameCode));

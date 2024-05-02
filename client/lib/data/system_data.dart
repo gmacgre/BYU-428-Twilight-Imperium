@@ -49,9 +49,9 @@ class SystemData {
         PlanetData.planets["Gral"]!,
       ],
     ),
-    "Coorneeq": SystemModel(
+    "Corneeq": SystemModel(
       planets: [
-        PlanetData.planets["Coorneeq"]!,
+        PlanetData.planets["Corneeq"]!,
         PlanetData.planets["Resculon"]!,
       ],
     ),

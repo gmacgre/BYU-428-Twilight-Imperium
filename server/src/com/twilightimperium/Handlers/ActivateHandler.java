@@ -7,7 +7,7 @@ import com.twilightimperium.backend.Game;
 import com.twilightimperium.backend.Server;
 import com.twilightimperium.backend.model.RequestResponse.ActivateRequest;
 import com.twilightimperium.backend.model.RequestResponse.ErrorResponse;
-import com.twilightimperium.backend.model.RequestResponse.Update;
+import com.twilightimperium.backend.model.update.Update;
 
 public class ActivateHandler extends BaseHandler{
 

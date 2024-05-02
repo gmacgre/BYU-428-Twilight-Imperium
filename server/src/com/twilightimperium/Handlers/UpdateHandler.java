@@ -10,7 +10,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.twilightimperium.backend.Pair;
 import com.twilightimperium.backend.Server;
 import com.twilightimperium.backend.model.RequestResponse.ErrorResponse;
-import com.twilightimperium.backend.model.RequestResponse.Update;
+import com.twilightimperium.backend.model.update.Update;
 
 public class UpdateHandler extends BaseHandler{
 

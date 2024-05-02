@@ -7,8 +7,8 @@ import com.twilightimperium.backend.Game;
 import com.twilightimperium.backend.Server;
 import com.twilightimperium.backend.model.RequestResponse.ErrorResponse;
 import com.twilightimperium.backend.model.RequestResponse.MoveRequest;
-import com.twilightimperium.backend.model.RequestResponse.Update;
 import com.twilightimperium.backend.model.game.Ship;
+import com.twilightimperium.backend.model.update.Update;
 
 public class MoveHandler extends BaseHandler{
 

@@ -46,7 +46,7 @@ class DataCache {
     [
       SystemState(systemModel: SystemData.systemList['Empty']!),
       SystemState(systemModel: SystemData.systemList['Empty']!),
-      SystemState(systemModel: SystemData.systemList['Coorneeq']!, airSpace: [
+      SystemState(systemModel: SystemData.systemList['Corneeq']!, airSpace: [
         ShipModel(1, 1, 1, 1, ShipType.fighter),
         ShipModel(1, 1, 1, 1, ShipType.fighter),
         ShipModel(1, 1, 1, 1, ShipType.flagship),

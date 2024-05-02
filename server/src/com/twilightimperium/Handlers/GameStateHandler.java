@@ -16,7 +16,7 @@ public class GameStateHandler extends BaseHandler{
     public void handle(HttpExchange exchange) throws IOException {
         Gson gson = new Gson();
         if ("OPTIONS".equals(exchange.getRequestMethod())) {
-            sendResponse(exchange, "", 200);
+            sendResponse(exchange, "", 204);
             return;
         } 
         else if (!"GET".equals(exchange.getRequestMethod())) {

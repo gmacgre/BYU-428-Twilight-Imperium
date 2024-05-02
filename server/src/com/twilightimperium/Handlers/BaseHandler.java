@@ -32,9 +32,14 @@ public abstract class BaseHandler implements HttpHandler {
         exchange.getResponseHeaders().add("Access-Control-Allow-Headers", "*");
         exchange.getResponseHeaders().add("Access-Control-Max-Age", "86400");
         exchange.getResponseHeaders().set("Content-Type", "application/json");
-        exchange.sendResponseHeaders(statusCode, responseBody.getBytes(StandardCharsets.UTF_8).length);
+        if(statusCode != 204) {
+            exchange.sendResponseHeaders(statusCode, responseBody.getBytes(StandardCharsets.UTF_8).length);
+        }
+        else exchange.sendResponseHeaders(statusCode, 0);
         OutputStream os = exchange.getResponseBody();
-        os.write(responseBody.getBytes(StandardCharsets.UTF_8));
+        if(statusCode != 204) {
+            os.write(responseBody.getBytes(StandardCharsets.UTF_8));
+        }
         os.close();
     }  
 }

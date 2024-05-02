@@ -4,13 +4,12 @@ import java.util.*;
 
 import com.google.gson.Gson;
 import com.twilightimperium.backend.data.SystemModel;
-import com.twilightimperium.backend.model.RequestResponse.Update;
 import com.twilightimperium.backend.model.game.BoardState;
 import com.twilightimperium.backend.model.game.GameState;
 import com.twilightimperium.backend.model.game.Location;
 import com.twilightimperium.backend.model.game.Player;
 import com.twilightimperium.backend.model.game.Ship;
-
+import com.twilightimperium.backend.model.update.Update;
 import com.twilightimperium.backend.data.SystemData;
 
 
