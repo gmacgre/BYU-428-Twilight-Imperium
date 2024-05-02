@@ -8,6 +8,7 @@ import com.twilightimperium.backend.Server;
 import com.twilightimperium.backend.model.RequestResponse.ErrorResponse;
 import com.twilightimperium.backend.model.RequestResponse.MoveRequest;
 import com.twilightimperium.backend.model.game.Ship;
+import com.twilightimperium.backend.model.update.MoveUpdate;
 import com.twilightimperium.backend.model.update.Update;
 
 public class MoveHandler extends BaseHandler{
@@ -38,7 +39,7 @@ public class MoveHandler extends BaseHandler{
             }
             if (game.move(ships)){
                 int playerNum = game.getPlayerTurn(token);
-                Update newUpdate = new Update("move",gson.toJson(request),playerNum);
+                Update newUpdate = new MoveUpdate(playerNum);
                 game.addUpdate(newUpdate);
                 server.updatePlayer(token);
                 sendResponse(exchange, "",200);

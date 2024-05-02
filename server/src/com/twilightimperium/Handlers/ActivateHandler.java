@@ -7,6 +7,7 @@ import com.twilightimperium.backend.Game;
 import com.twilightimperium.backend.Server;
 import com.twilightimperium.backend.model.RequestResponse.ActivateRequest;
 import com.twilightimperium.backend.model.RequestResponse.ErrorResponse;
+import com.twilightimperium.backend.model.update.ActivateUpdate;
 import com.twilightimperium.backend.model.update.Update;
 
 public class ActivateHandler extends BaseHandler{
@@ -38,7 +39,7 @@ public class ActivateHandler extends BaseHandler{
             if (game.activateSystem(x, y, token)){
                 int playerNum = game.getPlayerTurn(token);
                 
-                Update newUpdate = new Update("activate",gson.toJson(request),playerNum);
+                Update newUpdate = new ActivateUpdate(playerNum, x, y);
                 game.addUpdate(newUpdate);
                 server.updatePlayer(token);
                 sendResponse(exchange, "",200);

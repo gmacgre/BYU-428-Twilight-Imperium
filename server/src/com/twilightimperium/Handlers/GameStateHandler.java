@@ -31,8 +31,7 @@ public class GameStateHandler extends BaseHandler{
                 System.err.println("No Game Found");
                 sendResponse(exchange, gson.toJson(new ErrorResponse("Bad Token")), 405);
             }
-            // TODO: READD THIS LATER
-            // server.updatePlayer(token);
+            server.updatePlayer(token);
             
             sendResponse(exchange, game.jsonGameState(),200);
         }

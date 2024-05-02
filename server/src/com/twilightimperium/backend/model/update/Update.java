@@ -1,16 +1,22 @@
 package com.twilightimperium.backend.model.update;
 
-public class Update {
-    String type;
-    String content;
-    int player;
+public abstract class Update {
+    protected String type;
+    protected int player;
+    protected UpdateInfo info;
 
 
-    public Update(String type, String content, int player) {
+    Update(String type, int player, UpdateInfo info) {
         this.type = type;
-        this.content = content;
         this.player = player;
+        this.info = info;
     }
     
+    public String getType() {
+        return type;
+    }
 
+    public int getPlayer() {
+        return player;
+    }
 }

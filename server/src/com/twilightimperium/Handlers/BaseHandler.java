@@ -35,7 +35,7 @@ public abstract class BaseHandler implements HttpHandler {
         if(statusCode != 204) {
             exchange.sendResponseHeaders(statusCode, responseBody.getBytes(StandardCharsets.UTF_8).length);
         }
-        else exchange.sendResponseHeaders(statusCode, 0);
+        else exchange.sendResponseHeaders(statusCode, -1);
         OutputStream os = exchange.getResponseBody();
         if(statusCode != 204) {
             os.write(responseBody.getBytes(StandardCharsets.UTF_8));

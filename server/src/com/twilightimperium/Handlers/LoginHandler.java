@@ -35,8 +35,6 @@ public class LoginHandler extends BaseHandler {
             
             // Simulated authentication check
             String token = server.login(request.getRoomCode(), request.getRoomPass(),request.getPlayerNum());
-            
-            System.err.println(token);
             if (token != null) {
                 int playerId = server.getGameByToken(token).getPlayerTurn(token);
                 // Respond with the generated token

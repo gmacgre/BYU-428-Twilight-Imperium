@@ -9,6 +9,7 @@ import com.twilightimperium.backend.model.game.GameState;
 import com.twilightimperium.backend.model.game.Location;
 import com.twilightimperium.backend.model.game.Player;
 import com.twilightimperium.backend.model.game.Ship;
+import com.twilightimperium.backend.model.update.NewPlayerUpdate;
 import com.twilightimperium.backend.model.update.Update;
 import com.twilightimperium.backend.data.SystemData;
 
@@ -28,6 +29,9 @@ public class Game {
     private Map<String, Integer> tokenToUpdate;
     private List<Pair<Integer,Update>> updates;
 
+    public int getMaxPlayers() {
+        return maxPlayers;
+    }
     public int getPlayerTurn(String token){
         return tokens.get(token);
     }
@@ -36,16 +40,6 @@ public class Game {
         Gson gson = new Gson();
         return gson.toJson(state);
     }
-
-    // private void nextTurn(){
-    //     //in the future, this will handle initiative.
-    //     //for now, it just goes in order of join.
-    //     if(activePlayer < playerNum-1){
-    //         activePlayer++;
-    //     } else {
-    //         activePlayer = 0;
-    //     }
-    // }
 
     public int getActivePlayer(){
         return activePlayer;
@@ -114,23 +108,25 @@ public class Game {
         playerNum = 0;
         tokens = new HashMap<String, Integer>();
         playerNumToToken = new HashMap<>();
+        maxPlayers = 6;
         state = new GameState(maxPlayers);
         activePlayer = 0; //assume that the creator of the game goes first;
-        maxPlayers = 6;
         activeSystem = new Location(-1,-1);
-
         tokenToUpdate = new HashMap<>();
         updates = new LinkedList<>();
     }
 
 
-    public void addPlayer(String token) {
+    public void addPlayer(String token, int seatId) {
         if(playerNum < maxPlayers){
             tokens.put(token, playerNum);
             playerNumToToken.put(playerNum,token);
             tokenToUpdate.put(token,-1); //This means they haven't gotten any updates
+            Player toadd = new Player();
+            toadd.setRace("jol_nar");
+            state.getPlayers().set(seatId, toadd);
+            updates.add(new Pair<Integer,Update>(1, new NewPlayerUpdate(playerNum, "jol_nar")));
             playerNum++;
-            state.getPlayers().add(new Player());
         } else {
             throw new RuntimeException();
         }

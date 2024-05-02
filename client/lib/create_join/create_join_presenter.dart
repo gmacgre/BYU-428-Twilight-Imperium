@@ -32,7 +32,7 @@ class CreateAndJoinPagePresenter {
   void joinGame() {
     if(_noInput()) return;
     _view.setButtonState(false);
-    _loginService.sendLoginRequest(_text, _pass, _playerNumber);
+    _loginService.sendLoginRequest(_text, _pass, _playerNumber - 1);
   }
 
   void createGame() {
@@ -71,7 +71,7 @@ class CreateAndJoinPagePresenter {
 
   void _login(String room, String pass) {
     _view.postToast(Strings.createSuccess);
-    _loginService.sendLoginRequest(room, pass, _playerNumber);
+    _loginService.sendLoginRequest(room, pass, _playerNumber - 1);
   }
 }
 

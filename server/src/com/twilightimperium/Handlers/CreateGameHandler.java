@@ -36,8 +36,7 @@ public class CreateGameHandler extends BaseHandler {
             String roomPass = request.getRoomPassword();
 
             Game newGame = new Game();
-            String token = server.addNewGame(newGame, roomCode, roomPass); // Add game to list and get a token
-            newGame.addPlayer(token);
+            server.addNewGame(newGame, roomCode, roomPass); // Add game to list and get a token
             CreateRequestResponse response = new CreateRequestResponse(request.getRoomCode(), request.getRoomPassword());
             String jsonResponse = gson.toJson(response);
 
