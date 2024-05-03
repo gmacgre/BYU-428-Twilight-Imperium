@@ -4,6 +4,7 @@ import 'package:client/board/ship_selector_provider.dart';
 import 'package:client/data/datacache.dart';
 import 'package:client/model/ship_model.dart';
 import 'package:client/model/system_state.dart';
+import 'package:client/model/update/activate.dart';
 import 'package:client/model/update/update.dart';
 import 'package:client/service/messaging/activation_service.dart';
 import 'package:flutter/material.dart';
@@ -13,8 +14,14 @@ part 'board_state.g.dart';
 
 @riverpod
 class BoardState extends _$BoardState {
-  final ActivationService _activateService =
-      ActivationService(_ActivateServiceObserver());
+  late final ActivationService _activateService; 
+
+  late Coordinate? _activationHold;
+
+  BoardState() {
+    _activateService =
+      ActivationService(_ActivateServiceObserver(owner: this));
+  }
 
   @override
   BoardStateObject build() {
@@ -165,12 +172,23 @@ class BoardState extends _$BoardState {
   }
 
   void activateSystem(Coordinate coordinate) {
+    print('activating a system');
+    _activationHold = coordinate;
     _activateService.sendActivationRequest(coordinate.q, coordinate.r);
     state = BoardStateObject(
       systemStates: state.systemStates,
       activeCoordinate: coordinate,
       currentPhase: TurnPhase.movement,
     );
+  }
+
+  void _setSystemActive() {
+    state = BoardStateObject(
+      systemStates: state.systemStates,
+      activeCoordinate: _activationHold,
+      currentPhase: TurnPhase.movement,
+    );
+    _activationHold = null;
   }
 
   void deactivateSystem(Coordinate coordinate) {
@@ -190,6 +208,16 @@ class BoardState extends _$BoardState {
 
   void processUpdates(List<Update> updates) {
     for(Update u in updates) {
+      switch(u.type) {
+        case 'activate': {
+          if(u.info is ActivateUpdateInfo) {
+            print('updating Activated location');
+            var info = u.info as ActivateUpdateInfo;
+            activateSystem(Coordinate(info.x, info.y));
+          }
+        }
+        break;
+      }
       // TODO: ADD NEW UPDATE TYPES HERE
     }
   }
@@ -198,13 +226,13 @@ class BoardState extends _$BoardState {
 ///This is used to represent the state of the board.
 ///Since there is more to the state than just the system states, this allows for easy access to all state variables.
 class BoardStateObject {
-  final List<List<SystemState>> systemStates;
-  final Coordinate? activeCoordinate;
-  final Coordinate? selectedCoordinate;
-  final bool isModified;
-  final int currentPlayerSeatNumber;
-  final TurnPhase currentPhase;
-  late SystemState? activeSystemState;
+  final List<List<SystemState>> systemStates; // A map of all the states
+  Coordinate? activeCoordinate;               // The most recent system to be activated in that turn
+  final Coordinate? selectedCoordinate;       // Used for info panel, showing which system to display
+  final bool isModified;                      // Unused, will be done when player is not up to date or is ahead of the server.
+  final int currentPlayerSeatNumber;          // Unused, denotes the clients seat number
+  TurnPhase currentPhase;                     // The current phase in a player's turn- TurnPhase.observe otherwise
+  late SystemState? activeSystemState;        // The state of the currently active system, for easier access
   BoardStateObject({
     required this.systemStates,
     this.activeCoordinate,
@@ -228,19 +256,23 @@ enum TurnPhase {
   production,
 }
 
+
+// This should probably move to a subclass if I'm honest- not good to put business logic in our model.
 class _ActivateServiceObserver implements ActivationServiceObserver {
+  BoardState owner;
+  _ActivateServiceObserver({
+    required this.owner
+  });
   @override
-  void notifySent() {
-    // TODO: implement notifySent
-  }
+  void notifySent() {}
 
   @override
   void notifySuccess() {
-    // TODO: implement notifySuccess
+    owner._setSystemActive();
   }
 
   @override
   void notifyFailure(String message) {
-    // TODO: implement notifyFailure
+    print('failure');
   }
 }

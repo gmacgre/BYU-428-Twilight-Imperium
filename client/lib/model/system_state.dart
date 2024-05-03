@@ -5,7 +5,7 @@ import 'package:client/model/ship_model.dart';
 
 class SystemState{
 
-  SystemState({planets, airSpace, required this.systemModel}){
+  SystemState({planets, airSpace, required this.systemModel, activationTokens}){
     if(airSpace != null){
       this.airSpace = airSpace;
     }
@@ -18,9 +18,11 @@ class SystemState{
     else {
       this.planets = systemModel.planets!.map((e) => PlanetState(planet: e)).toList();
     }
+    activationTokens ??= [];
   }
   List<ShipModel> airSpace = List.empty(growable: true);
   List<PlanetState>? planets;
   SystemModel systemModel;
   Player? systemOwner;
+  late List<int> activationTokens;
 }

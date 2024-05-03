@@ -21,7 +21,6 @@ class PlayerState extends _$PlayerState {
   void processUpdates(List<Update> updates) {
     List<Player> newState = state.players;
     for(Update u in updates) {
-      print('got update here');
       if(u.type == 'newPlayer' && u.info is NewPlayerUpdateInfo) {
         var info = u.info as NewPlayerUpdateInfo;
 

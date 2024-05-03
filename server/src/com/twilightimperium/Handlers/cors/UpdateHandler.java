@@ -23,12 +23,14 @@ public final class UpdateHandler extends BaseCORSHandler{
             sendResponse(exchange, gson.toJson(new ErrorResponse("Bad Request Method")), 501);
             return;
         }
+        if (server.getGameByToken(token) == null) {
+            sendResponse(exchange, gson.toJson(new ErrorResponse("Game Does Not Exist")), 0);
+        }
         int oldUpdate = server.getPlayerUpdate(token);
         List<Pair<Integer,Update>> allUpdates = server.getUpdateList(token);
         List<Update> updatesToSend = new ArrayList<>();
         //find the Update the player currently has. Then get all updates after that
         for(Pair<Integer,Update> i : allUpdates){
-            System.err.println(i.second().getPlayer());
             if(i.first() <= oldUpdate){
                 continue;
             } else {

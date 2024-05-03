@@ -3,6 +3,7 @@ package com.twilightimperium.Handlers;
 import java.io.IOException;
 import com.google.gson.Gson;
 import com.sun.net.httpserver.*;
+import com.twilightimperium.Handlers.cors.BaseCORSHandler;
 import com.twilightimperium.backend.Game;
 import com.twilightimperium.backend.Server;
 import com.twilightimperium.backend.model.RequestResponse.ActivateRequest;
@@ -10,20 +11,19 @@ import com.twilightimperium.backend.model.RequestResponse.ErrorResponse;
 import com.twilightimperium.backend.model.update.ActivateUpdate;
 import com.twilightimperium.backend.model.update.Update;
 
-public class ActivateHandler extends BaseHandler{
+public class ActivateHandler extends BaseCORSHandler{
 
     public ActivateHandler(Server server) {
         super(server);
     }
 
-    public void handle(HttpExchange exchange) throws IOException {
+    @Override
+    public void handleCORSFree(HttpExchange exchange, String token) throws IOException {
         Gson gson = new Gson();
         if (!"POST".equals(exchange.getRequestMethod())) {
             sendResponse(exchange, gson.toJson(new ErrorResponse("Bad Request Method")), 501);
             return;
         } else {
-            Headers header = exchange.getRequestHeaders();
-            String token = header.getFirst("token");
             ActivateRequest request = gson.fromJson(new String(exchange.getRequestBody().readAllBytes()),ActivateRequest.class);
             int x = request.getCoords().x;
             int y = request.getCoords().y;
@@ -47,6 +47,5 @@ public class ActivateHandler extends BaseHandler{
                 sendResponse(exchange, gson.toJson(new ErrorResponse("System already active")),405);
             }
         }
-
     }
 }

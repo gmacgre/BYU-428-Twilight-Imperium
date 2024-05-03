@@ -1,3 +1,4 @@
+import 'package:client/model/update/activate.dart';
 import 'package:client/model/update/new_player.dart';
 import 'package:client/model/update/unknown.dart';
 
@@ -33,6 +34,10 @@ class Update {
     switch(type) {
       case 'newPlayer': {
         return NewPlayerUpdateInfo.fromJson(info);
+      }
+
+      case 'activate': {
+        return ActivateUpdateInfo.fromJson(info);
       }
 
       case _: {
