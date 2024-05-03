@@ -6,13 +6,14 @@ import 'package:client/model/player.dart';
 import 'package:client/model/ship_model.dart';
 import 'package:client/model/system_state.dart';
 
+
+// NOTE: This class is basically technical debt, but functions as a layer of safety for the program. If no server is reachable, it uses these defaults instead.
+// DO NOT REMOVE
 class DataCache {
   DataCache._();
   static final DataCache instance = DataCache._();
 
   String userToken = '';
-  // I don't know how we are currently keeping track of which player is which.
-  // I'm using the seat number they select, which would probably be an index in the players list as well?
   int userSeatNumber = 0;
 
   List<Player> players = [

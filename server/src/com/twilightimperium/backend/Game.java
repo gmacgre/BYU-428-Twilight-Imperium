@@ -20,7 +20,6 @@ public class Game {
     private GameState state;
     private Map<String,Integer> tokens;
     private Map<Integer, String> playerNumToToken;
-    private int playerNum; //stores the next player # to hand out. The first player is 0, the second is 1 etc.
     private Location activeSystem;
     private int activePlayer;
     private int maxPlayers;
@@ -43,10 +42,6 @@ public class Game {
 
     public int getActivePlayer(){
         return activePlayer;
-    }
-
-    public int getPlayerNum(){
-        return playerNum;
     }
     
     public GameState getGameState(){
@@ -105,7 +100,6 @@ public class Game {
 
     public Game() {
         nextCommand = ACTION; // we start for now by expecting an activate System command
-        playerNum = 0;
         tokens = new HashMap<String, Integer>();
         playerNumToToken = new HashMap<>();
         maxPlayers = 6;
@@ -118,15 +112,14 @@ public class Game {
 
 
     public void addPlayer(String token, int seatId) {
-        if(playerNum < maxPlayers){
-            tokens.put(token, playerNum);
-            playerNumToToken.put(playerNum,token);
+        if(seatId < maxPlayers){
+            tokens.put(token, seatId);
+            playerNumToToken.put(seatId,token);
             tokenToUpdate.put(token,-1); //This means they haven't gotten any updates
             Player toadd = new Player();
             toadd.setRace("jol_nar");
             state.getPlayers().set(seatId, toadd);
-            updates.add(new Pair<Integer,Update>(1, new NewPlayerUpdate(playerNum, "jol_nar")));
-            playerNum++;
+            addUpdate(new NewPlayerUpdate(seatId, "jol_nar"));
         } else {
             throw new RuntimeException();
         }
@@ -245,6 +238,9 @@ public class Game {
             return false;
         }
         return false;
+    }
+    public void setPlayerUpdate(String token, Integer first) {
+        tokenToUpdate.put(token, first);
     }
 
 

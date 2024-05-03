@@ -1,17 +1,21 @@
 import 'package:client/create_join/create_join_presenter.dart';
+import 'package:client/model/board_state.dart';
+import 'package:client/model/player.dart';
+import 'package:client/model/player_state.dart';
+import 'package:client/model/system_state.dart';
 import 'package:client/res/outlined_letters.dart';
 import 'package:client/data/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-class CreateAndJoinPage extends StatefulWidget {
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+class CreateAndJoinPage extends ConsumerStatefulWidget {
   const CreateAndJoinPage({super.key});
 
   @override
-  State<CreateAndJoinPage> createState() => _CreateAndJoinPageState();
+  ConsumerState<CreateAndJoinPage> createState() => _CreateAndJoinPageState();
 }
 
-class _CreateAndJoinPageState extends State<CreateAndJoinPage> implements CreateAndJoinPageView {
+class _CreateAndJoinPageState extends ConsumerState<CreateAndJoinPage> implements CreateAndJoinPageView {
 
   late CreateAndJoinPagePresenter _presenter;
 
@@ -249,7 +253,9 @@ class _CreateAndJoinPageState extends State<CreateAndJoinPage> implements Create
   }
 
   @override
-  void swapToBoard() {
+  void swapToBoard(List<Player> players, List<List<SystemState>> board) {
+    ref.read(playerStateProvider.notifier).setState(players);
+    ref.read(boardStateProvider.notifier).setSystems(board);
     Navigator.of(context).pushNamed('/game');
   }
 

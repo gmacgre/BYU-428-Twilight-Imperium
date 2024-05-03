@@ -2,6 +2,8 @@ package com.twilightimperium.backend;
 
 import com.sun.net.httpserver.HttpServer;
 import com.twilightimperium.Handlers.*;
+import com.twilightimperium.Handlers.cors.GameStateHandler;
+import com.twilightimperium.Handlers.cors.UpdateHandler;
 import com.twilightimperium.backend.model.update.Update;
 
 import java.io.IOException;
@@ -115,11 +117,9 @@ public class Server {
         ongoingGames.get(tokenToGameIndex.get(token)).addUpdate(update);
     }
 
-    /*public boolean checkUpToDate(String token){
-        return ongoingGames.get(tokenToGameIndex.get(token)).isToDate(token);
-    }*/
-
-    // Other server methods...
+    public void setPlayerUpdate(String token, Integer first) {
+        ongoingGames.get(tokenToGameIndex.get(token)).setPlayerUpdate(token, first);
+    }
 }
 
 

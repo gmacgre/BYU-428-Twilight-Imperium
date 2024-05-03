@@ -6,7 +6,7 @@ part of 'board_state.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$boardStateHash() => r'c4dc81a2c194adac556613f36d922d5abfca8d43';
+String _$boardStateHash() => r'8827410865b6b16dc1d9f51a9ecc93eb252659d4';
 
 /// See also [BoardState].
 @ProviderFor(BoardState)

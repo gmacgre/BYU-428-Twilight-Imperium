@@ -1,4 +1,4 @@
-package com.twilightimperium.Handlers;
+package com.twilightimperium.Handlers.cors;
 
 import java.io.IOException;
 import com.google.gson.Gson;
@@ -7,25 +7,20 @@ import com.twilightimperium.backend.Game;
 import com.twilightimperium.backend.Server;
 import com.twilightimperium.backend.model.RequestResponse.ErrorResponse;
 
-public class GameStateHandler extends BaseHandler{
+public final class GameStateHandler extends BaseCORSHandler{
 
     public GameStateHandler(Server server) {
         super(server);
     }
     
-    public void handle(HttpExchange exchange) throws IOException {
-        Gson gson = new Gson();
-        if ("OPTIONS".equals(exchange.getRequestMethod())) {
-            sendResponse(exchange, "", 204);
-            return;
-        } 
-        else if (!"GET".equals(exchange.getRequestMethod())) {
+    public void handleCORSFree(HttpExchange exchange, String token) throws IOException {
+        Gson gson = new Gson(); 
+        if (!"GET".equals(exchange.getRequestMethod())) {
             sendResponse(exchange, gson.toJson(new ErrorResponse("Bad Request Method")), 501);
             return;
         }
         else {
-            Headers header = exchange.getRequestHeaders();
-            String token = header.getFirst("token");
+            
             Game game = server.getGameByToken(token);
             if (game == null){
                 System.err.println("No Game Found");
@@ -35,6 +30,5 @@ public class GameStateHandler extends BaseHandler{
             
             sendResponse(exchange, game.jsonGameState(),200);
         }
-
     }
 }

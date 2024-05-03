@@ -4,6 +4,7 @@ import 'package:client/board/ship_selector_provider.dart';
 import 'package:client/data/datacache.dart';
 import 'package:client/model/ship_model.dart';
 import 'package:client/model/system_state.dart';
+import 'package:client/model/update/update.dart';
 import 'package:client/service/messaging/activation_service.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -62,6 +63,10 @@ class BoardState extends _$BoardState {
     state = BoardStateObject(
         systemStates: systems, activeCoordinate: state.activeCoordinate);
     //Any call to the server can be made here to send the request
+  }
+
+  void setSystems(List<List<SystemState>> newSystems) {
+    state = BoardStateObject(systemStates: newSystems);
   }
 
   /// This is used to move ships from one system to another.
@@ -181,6 +186,12 @@ class BoardState extends _$BoardState {
     ref.invalidate(shipSelectorProvider);
     ref.invalidate(productionProvider);
     ref.invalidateSelf();
+  }
+
+  void processUpdates(List<Update> updates) {
+    for(Update u in updates) {
+      // TODO: ADD NEW UPDATE TYPES HERE
+    }
   }
 }
 
