@@ -3,7 +3,7 @@ import 'package:client/model/player.dart';
 
 //This is three or four nested class levels of hell. :(
 class GameStateResponse {
-  //TODO: still need to add World
+  //TODO: still need to add World State off of the board
   final WorldMap map;
   final List<Player> players;
   GameStateResponse({

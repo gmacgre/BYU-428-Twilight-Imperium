@@ -1,7 +1,6 @@
-package com.twilightimperium.Handlers;
+package com.twilightimperium.Handlers.cors.turncheck;
 
 import java.io.IOException;
-import com.google.gson.Gson;
 import com.sun.net.httpserver.*;
 import com.twilightimperium.backend.Game;
 import com.twilightimperium.backend.Server;
@@ -11,34 +10,24 @@ import com.twilightimperium.backend.model.game.Ship;
 import com.twilightimperium.backend.model.update.MoveUpdate;
 import com.twilightimperium.backend.model.update.Update;
 
-public class MoveHandler extends BaseHandler{
+public class MoveHandler extends BaseTurnCheckHandler{
 
     public MoveHandler(Server server) {
         super(server);
     }
 
-    public void handle(HttpExchange exchange) throws IOException {
-        Gson gson = new Gson();
+    @Override
+    protected void handleTurnFree(HttpExchange exchange, String token) throws IOException {
         if (!"POST".equals(exchange.getRequestMethod())) {
             sendResponse(exchange, gson.toJson(new ErrorResponse("Bad Request Method")), 501);
             return;
         } else {
-            Headers header = exchange.getRequestHeaders();
-            String token = header.getFirst("token");
             MoveRequest request = gson.fromJson(new String(exchange.getRequestBody().readAllBytes()),MoveRequest.class);
             Ship[] ships = request.getShips();
 
             Game game = server.getGameByToken(token);
-            if(game == null){
-                sendResponse(exchange, gson.toJson(new ErrorResponse("Bad Token")), 405);
-                return;
-            }
-            if(!game.isToDate(token)){
-                sendResponse(exchange, gson.toJson(new ErrorResponse("Client not up to date")), 405);
-                return;
-            }
             if (game.move(ships)){
-                int playerNum = game.getPlayerTurn(token);
+                int playerNum = game.getPlayerSeatId(token);
                 Update newUpdate = new MoveUpdate(playerNum);
                 game.addUpdate(newUpdate);
                 server.updatePlayer(token);
@@ -47,7 +36,6 @@ public class MoveHandler extends BaseHandler{
                 sendResponse(exchange, gson.toJson(new ErrorResponse("Invalid Move Command")),405);
             }
         }
-
     }
 
 }

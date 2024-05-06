@@ -31,8 +31,12 @@ public class Game {
     public int getMaxPlayers() {
         return maxPlayers;
     }
-    public int getPlayerTurn(String token){
+    public int getPlayerSeatId(String token){
         return tokens.get(token);
+    }
+
+    public boolean currentlyActivePlayer(String token) {
+        return activePlayer == tokens.get(token);
     }
     public String jsonGameState(){
         //encode state as json
@@ -104,7 +108,7 @@ public class Game {
         playerNumToToken = new HashMap<>();
         maxPlayers = 6;
         state = new GameState(maxPlayers);
-        activePlayer = 0; //assume that the creator of the game goes first;
+        activePlayer = 0;
         activeSystem = new Location(-1,-1);
         tokenToUpdate = new HashMap<>();
         updates = new LinkedList<>();
@@ -130,7 +134,6 @@ public class Game {
     }
 
     public boolean activateSystem(int x, int y, String token){
-
         if(nextCommand == ACTION){
             //first we get the player number from the token.
             Integer player = tokens.get(token);
@@ -148,12 +151,12 @@ public class Game {
     }
 
     private boolean placeTokenSystem(int x, int y, int player){
-            activeSystem.x = x;
-            activeSystem.y = y;
+        activeSystem.x = x;
+        activeSystem.y = y;
 
-            //true indicates a success
-            //false indicates that the tile was already activated by that player
-            return state.getMap().activateTile(x, y, player);
+        //true indicates a success
+        //false indicates that the tile was already activated by that player
+        return state.getMap().activateTile(x, y, player);
     }
 
     public boolean move(Ship[] ships){
@@ -185,10 +188,6 @@ public class Game {
 
     public boolean validateMove(Ship ship, Location end) {
         return true;
-        /*BoardState board = state.getMap();
-        int[7][7] visited = {false};
-        if()
-        */
     }
 
     private boolean validateMoveHelper(Location current, Location goal, int remaining, int[][] visited, BoardState board){
@@ -239,6 +238,7 @@ public class Game {
         }
         return false;
     }
+    
     public void setPlayerUpdate(String token, Integer first) {
         tokenToUpdate.put(token, first);
     }

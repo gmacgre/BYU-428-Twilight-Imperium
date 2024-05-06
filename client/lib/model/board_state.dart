@@ -172,14 +172,8 @@ class BoardState extends _$BoardState {
   }
 
   void activateSystem(Coordinate coordinate) {
-    print('activating a system');
     _activationHold = coordinate;
     _activateService.sendActivationRequest(coordinate.q, coordinate.r);
-    state = BoardStateObject(
-      systemStates: state.systemStates,
-      activeCoordinate: coordinate,
-      currentPhase: TurnPhase.movement,
-    );
   }
 
   void _setSystemActive() {
@@ -213,7 +207,8 @@ class BoardState extends _$BoardState {
           if(u.info is ActivateUpdateInfo) {
             print('updating Activated location');
             var info = u.info as ActivateUpdateInfo;
-            activateSystem(Coordinate(info.x, info.y));
+            _activationHold = Coordinate(info.x, info.y);
+            _setSystemActive();
           }
         }
         break;
@@ -273,6 +268,6 @@ class _ActivateServiceObserver implements ActivationServiceObserver {
 
   @override
   void notifyFailure(String message) {
-    print('failure');
+    print('Failure - In Activation Service');
   }
 }
