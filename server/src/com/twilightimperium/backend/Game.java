@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.twilightimperium.backend.data.SystemModel;
 import com.twilightimperium.backend.model.game.BoardState;
 import com.twilightimperium.backend.model.game.GameState;
+import com.twilightimperium.backend.model.game.GameStateNode;
 import com.twilightimperium.backend.model.game.Location;
 import com.twilightimperium.backend.model.game.Player;
 import com.twilightimperium.backend.model.game.Ship;
@@ -15,15 +16,12 @@ import com.twilightimperium.backend.data.SystemData;
 
 
 public class Game {
-    private static final int ACTION = 0;
-    private static final int MOVE = 1;
     private GameState state;
     private Map<String,Integer> tokens;
     private Map<Integer, String> playerNumToToken;
     private Location activeSystem;
-    private int activePlayer;
     private int maxPlayers;
-    private int nextCommand; //This stores what the game is waiting on. Does it expect an activate system or move command etc.
+     //This stores what the game is waiting on. Does it expect an activate system or move command etc.
 
     private Map<String, Integer> tokenToUpdate;
     private List<Pair<Integer,Update>> updates;
@@ -36,7 +34,7 @@ public class Game {
     }
 
     public boolean currentlyActivePlayer(String token) {
-        return activePlayer == tokens.get(token);
+        return state.getWorld().getActivePlayer() == tokens.get(token);
     }
     public String jsonGameState(){
         //encode state as json
@@ -45,7 +43,7 @@ public class Game {
     }
 
     public int getActivePlayer(){
-        return activePlayer;
+        return state.getWorld().getActivePlayer();
     }
     
     public GameState getGameState(){
@@ -103,12 +101,12 @@ public class Game {
     }
 
     public Game() {
-        nextCommand = ACTION; // we start for now by expecting an activate System command
         tokens = new HashMap<String, Integer>();
         playerNumToToken = new HashMap<>();
         maxPlayers = 6;
         state = new GameState(maxPlayers);
-        activePlayer = 0;
+        state.getWorld().setNextCommand(GameStateNode.ACTION); // we start for now by expecting an activate System command
+        state.getWorld().setActivePlayer(0);      // Assume Player 1 starts the game
         activeSystem = new Location(-1,-1);
         tokenToUpdate = new HashMap<>();
         updates = new LinkedList<>();
@@ -134,7 +132,7 @@ public class Game {
     }
 
     public boolean activateSystem(int x, int y, String token){
-        if(nextCommand == ACTION){
+        if(state.getWorld().getNextCommand() == GameStateNode.ACTION){
             //first we get the player number from the token.
             Integer player = tokens.get(token);
             if (player == null){
@@ -142,7 +140,8 @@ public class Game {
             }
             boolean success = placeTokenSystem(x, y, player);
             if (success){
-                nextCommand = MOVE;
+                state.getWorld().setActiveSystem(x, y);
+                state.getWorld().setNextCommand(GameStateNode.MOVE);
             }
             return success;
         } else {
@@ -160,10 +159,10 @@ public class Game {
     }
 
     public boolean move(Ship[] ships){
-        if(nextCommand == MOVE){
+        if(state.getWorld().getNextCommand() == GameStateNode.MOVE){
             boolean success = moveShips(new ArrayList<Ship>(Arrays.asList(ships)));
             if (success){
-                nextCommand = ACTION;
+                state.getWorld().setNextCommand(GameStateNode.ACTION);
             }
             return success;
         }else {

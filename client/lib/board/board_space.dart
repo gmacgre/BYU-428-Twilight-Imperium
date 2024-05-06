@@ -4,6 +4,7 @@ import 'package:client/board/ship_selector_provider.dart';
 import 'package:client/board/system.dart';
 import 'package:client/model/board_state.dart';
 import 'package:client/model/system_state.dart';
+import 'package:client/model/turn_phase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

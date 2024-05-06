@@ -4,6 +4,7 @@ import 'package:client/board/ship_selector_provider.dart';
 import 'package:client/data/datacache.dart';
 import 'package:client/model/ship_model.dart';
 import 'package:client/model/system_state.dart';
+import 'package:client/model/turn_phase.dart';
 import 'package:client/model/update/activate.dart';
 import 'package:client/model/update/update.dart';
 import 'package:client/service/messaging/activation_service.dart';
@@ -28,7 +29,12 @@ class BoardState extends _$BoardState {
     // This will need to get the cached state from the DataCache
     // This can be used to undo any modifications to the state and revert to the last saved state.
     return BoardStateObject(
-        systemStates: DataCache.instance.boardState, isModified: false);
+        systemStates: DataCache.instance.boardState, 
+        isModified: false,
+        activeCoordinate: (DataCache.instance.activeSystem.q + DataCache.instance.activeSystem.r > 0) ? DataCache.instance.activeSystem : null,
+        activePlayer: DataCache.instance.activePlayer,
+        currentPhase: DataCache.instance.phase
+        );
   }
 
   void addShips(Map<ShipType, int> shipQuantities) {
@@ -205,7 +211,6 @@ class BoardState extends _$BoardState {
       switch(u.type) {
         case 'activate': {
           if(u.info is ActivateUpdateInfo) {
-            print('updating Activated location');
             var info = u.info as ActivateUpdateInfo;
             _activationHold = Coordinate(info.x, info.y);
             _setSystemActive();
@@ -225,16 +230,18 @@ class BoardStateObject {
   Coordinate? activeCoordinate;               // The most recent system to be activated in that turn
   final Coordinate? selectedCoordinate;       // Used for info panel, showing which system to display
   final bool isModified;                      // Unused, will be done when player is not up to date or is ahead of the server.
-  final int currentPlayerSeatNumber;          // Unused, denotes the clients seat number
+  final int playerSeatNumber;                 // Unused, denotes the clients seat number
   TurnPhase currentPhase;                     // The current phase in a player's turn- TurnPhase.observe otherwise
   late SystemState? activeSystemState;        // The state of the currently active system, for easier access
+  int activePlayer;
   BoardStateObject({
     required this.systemStates,
     this.activeCoordinate,
     this.selectedCoordinate,
     this.isModified = true,
-    this.currentPlayerSeatNumber = -1,
+    this.playerSeatNumber = -1,
     this.currentPhase = TurnPhase.activation,
+    this.activePlayer = 0
   }) {
     if (activeCoordinate != null) {
       activeSystemState =
@@ -243,13 +250,7 @@ class BoardStateObject {
   }
 }
 
-enum TurnPhase {
-  activation,
-  movement,
-  combat,
-  invasion,
-  production,
-}
+
 
 
 // This should probably move to a subclass if I'm honest- not good to put business logic in our model.
@@ -267,7 +268,5 @@ class _ActivateServiceObserver implements ActivationServiceObserver {
   }
 
   @override
-  void notifyFailure(String message) {
-    print('Failure - In Activation Service');
-  }
+  void notifyFailure(String message) {}
 }

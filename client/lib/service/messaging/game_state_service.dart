@@ -1,3 +1,4 @@
+import 'package:client/board/coordinate.dart';
 import 'package:client/data/datacache.dart';
 import 'package:client/data/system_data.dart';
 import 'package:client/model/player.dart';
@@ -29,6 +30,9 @@ class GameStateService implements HTTPServiceObserver {
       GameStateResponse res = JSONEncoder.decodeGameStateResponse(body);
       DataCache cache = DataCache.instance;
       cache.players = res.players;
+      cache.activePlayer = res.world.activePlayer;
+      cache.activeSystem = Coordinate(res.world.coords.x, res.world.coords.y);
+      cache.phase = res.world.phase;
       List<List<SystemState>> newBoard = List.empty(growable: true);
 
       //This loads the cache with the new version of the map

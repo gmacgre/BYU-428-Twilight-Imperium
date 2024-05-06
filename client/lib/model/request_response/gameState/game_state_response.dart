@@ -1,25 +1,29 @@
 import 'package:client/model/player.dart';
+import 'package:client/model/turn_phase.dart';
 
 
 //This is three or four nested class levels of hell. :(
 class GameStateResponse {
-  //TODO: still need to add World State off of the board
+  final GlobalState world;
   final WorldMap map;
   final List<Player> players;
   GameStateResponse({
     required this.map,
-    required this.players
+    required this.players,
+    required this.world
   });
 
   factory GameStateResponse.fromJson(Map<String, dynamic> json) {
     return switch (json) {
       {
         'map': Map<String, dynamic> map,
-        'players': List<dynamic> players
+        'players': List<dynamic> players,
+        'world': Map<String, dynamic> world
       } =>
         GameStateResponse(
           players: players.map((player) => Player.fromJson(player)).toList(),
-          map: WorldMap.fromJson(map)
+          map: WorldMap.fromJson(map),
+          world: GlobalState.fromJson(world)
         ),
       _ => throw const FormatException('Failed to load GameStateResponse')
     };
@@ -134,6 +138,36 @@ class ResponseShipCoords {
       } =>
         ResponseShipCoords(x: x, y: y),
       _ => throw const FormatException('Failed to load ResponseShipCoords')
+    };
+  }
+}
+
+class GlobalState {
+  int activePlayer;
+  TurnPhase phase;
+  ResponseShipCoords coords;
+
+
+  GlobalState({
+    required this.activePlayer,
+    required this.phase,
+    required this.coords
+  });
+
+  factory GlobalState.fromJson(Map<String, dynamic> json) {
+    print(json);
+    return switch (json) {
+      {
+        'activePlayer': int activePlayer,
+        'nextCommand': String phase,
+        'activeSystem': Map<String, dynamic> coords
+      } =>
+        GlobalState(
+          activePlayer: activePlayer,
+          phase: TurnPhaseFactory.fromString(phase),
+          coords: ResponseShipCoords.fromJson(coords)
+        ),
+      _ => throw const FormatException('Failed to load GlobalState')
     };
   }
 }

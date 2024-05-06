@@ -1,3 +1,4 @@
+import 'package:client/board/coordinate.dart';
 import 'package:client/combat/force_makeup.dart';
 import 'package:client/data/system_data.dart';
 import 'package:client/model/objective.dart';
@@ -5,6 +6,7 @@ import 'package:client/model/planet_state.dart';
 import 'package:client/model/player.dart';
 import 'package:client/model/ship_model.dart';
 import 'package:client/model/system_state.dart';
+import 'package:client/model/turn_phase.dart';
 
 
 // NOTE: This class is basically technical debt, but functions as a layer of safety for the program. If no server is reachable, it uses these defaults instead.
@@ -15,6 +17,12 @@ class DataCache {
 
   String userToken = '';
   int userSeatNumber = 0;
+
+  int activePlayer = 0;
+
+  Coordinate activeSystem = Coordinate(0, 0);
+
+  TurnPhase phase = TurnPhase.observation;
 
   List<Player> players = [
     Player('jol_nar', false, 5, 5, 5, 3, false, 1),
