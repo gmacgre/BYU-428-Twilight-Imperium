@@ -155,7 +155,6 @@ class GlobalState {
   });
 
   factory GlobalState.fromJson(Map<String, dynamic> json) {
-    print(json);
     return switch (json) {
       {
         'activePlayer': int activePlayer,

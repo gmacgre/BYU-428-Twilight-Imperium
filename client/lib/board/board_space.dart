@@ -69,9 +69,5 @@ class _BoardSpaceState extends ConsumerState<BoardSpace> {
   selectShips() {
     debugPrint("${widget.systemState.airSpace.length} ships selected.");
     ref.read(shipSelectorProvider.notifier).activate(widget.coordinate);
-    //TODO: Create popup to select ships to move
-
-    // ref.read(boardStateProvider.notifier).moveShips(
-    //     from: widget.coordinate, ships: [...widget.systemState.airSpace]);
   }
 }
