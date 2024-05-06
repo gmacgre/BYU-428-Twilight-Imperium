@@ -1,5 +1,6 @@
 import 'package:client/data/datacache.dart';
 import 'package:client/data/system_data.dart';
+import 'package:client/model/player.dart';
 import 'package:client/model/request_response/error_response.dart';
 import 'package:client/model/request_response/gameState/game_state_response.dart';
 import 'package:client/model/system_state.dart';
@@ -37,7 +38,6 @@ class GameStateService implements HTTPServiceObserver {
         List<SystemContent> row = map[i].row;
         for(int j = 0; j < row.length; j++) {
           SystemContent content = row[j];
-
           //System Constant Data
           SystemState newState = SystemState(systemModel: SystemData.systemList[content.systemName]!);
           newRow.add(newState);
@@ -46,7 +46,7 @@ class GameStateService implements HTTPServiceObserver {
       }
       cache.boardState = newBoard;
 
-      _observer.notifySuccess();
+      _observer.notifySuccess(res.players, newBoard);
     } on FormatException  catch (e){
       _observer.notifyFailure('Error Processing Successful /gameState: ${e.message}');
     }
@@ -69,5 +69,5 @@ class GameStateService implements HTTPServiceObserver {
 }
 
 abstract class GameStateServiceObserver extends ServiceObserver {
-  void notifySuccess();
+  void notifySuccess(List<Player> players, List<List<SystemState>> board);
 }

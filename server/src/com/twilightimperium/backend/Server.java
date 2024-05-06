@@ -2,7 +2,9 @@ package com.twilightimperium.backend;
 
 import com.sun.net.httpserver.HttpServer;
 import com.twilightimperium.Handlers.*;
-import com.twilightimperium.backend.model.RequestResponse.Update;
+import com.twilightimperium.Handlers.cors.GameStateHandler;
+import com.twilightimperium.Handlers.cors.UpdateHandler;
+import com.twilightimperium.backend.model.update.Update;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -36,6 +38,7 @@ public class Server {
         server.createContext("/activate",new ActivateHandler(this));
         server.createContext("/move",new MoveHandler(this));
         server.createContext("/update",new UpdateHandler(this));
+        server.createContext("/", new DefaultHandler(this));
         server.setExecutor(null);
     }
 
@@ -48,19 +51,15 @@ public class Server {
         server.stop(1);
     }
 
-    public synchronized String addNewGame(Game game, String gameId, String password) throws Exception{
+    public synchronized void addNewGame(Game game, String gameId, String password) throws Exception{
         if(gameIdToIndex.containsKey(gameId)){
             throw new Exception("Game already exists");
         }
         ongoingGames.add(game);
-        String token = UUID.randomUUID().toString();
-        // Map the token to the index of the newly added game
-        tokenToGameIndex.put(token, ongoingGames.size() - 1);
         gameIdToIndex.put(gameId, ongoingGames.size()-1);
 
         //Eventually we hash the password with salt before storing it for safety. For now I'm rushing to get the demo done
         gamePassword.put(gameId, password);
-        return token;
     }
 
     public synchronized Integer getGameIndexByToken(String token) {
@@ -86,21 +85,19 @@ public class Server {
             return null;
         }
         Game game = ongoingGames.get(gameIdToIndex.get(gameCode));
-        String token;
-        if(game.getPlayerNum() <= playerNum){
-            //This player doesn't exist, generate a new token
-            //TODO currently just assigns them to the next slot regardless of what number they sent
-            token = UUID.randomUUID().toString();
-            game.addPlayer(token);
-            tokenToGameIndex.put(token, gameIdToIndex.get(gameCode));
-        } else {
-            token = game.requestToken(playerNum);
-            if (token == null){
-                //This shouldn't happen, but just in case
-                token = UUID.randomUUID().toString();
-                game.addPlayer(token);
-            }
+        if (playerNum >= game.getMaxPlayers()) {
+            // Asking for an unavailable seat
+            return null;
         }
+        String token;
+        if(game.requestToken(playerNum) != null) {
+            token = game.requestToken(playerNum);
+        }
+        else {
+            token = UUID.randomUUID().toString();
+        }
+        game.addPlayer(token, playerNum);
+        tokenToGameIndex.put(token, gameIdToIndex.get(gameCode));
         return token;
     }
 
@@ -120,11 +117,9 @@ public class Server {
         ongoingGames.get(tokenToGameIndex.get(token)).addUpdate(update);
     }
 
-    /*public boolean checkUpToDate(String token){
-        return ongoingGames.get(tokenToGameIndex.get(token)).isToDate(token);
-    }*/
-
-    // Other server methods...
+    public void setPlayerUpdate(String token, Integer first) {
+        ongoingGames.get(tokenToGameIndex.get(token)).setPlayerUpdate(token, first);
+    }
 }
 
 

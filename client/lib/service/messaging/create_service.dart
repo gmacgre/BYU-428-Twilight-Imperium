@@ -1,6 +1,4 @@
-import 'package:client/data/datacache.dart';
 import 'package:client/model/request_response/create/create_request.dart';
-import 'package:client/model/request_response/create/create_response.dart';
 import 'package:client/model/request_response/error_response.dart';
 import 'package:client/service/http/http_service.dart';
 import 'package:client/service/messaging/service_observer.dart';
@@ -34,9 +32,8 @@ class CreateService implements HTTPServiceObserver {
   @override
   void processSuccess(String body) {
     try {
-      CreateResponse res = JSONEncoder.decodeCreateResponse(body);
-      DataCache.instance.userToken = res.userToken;
-      _observer.notifySuccess(res.playerTurn, res.userToken);
+      CreateRequest res = JSONEncoder.decodeCreateRequest(body);
+      _observer.notifySuccess(res.roomCode, res.roomPassword);
     } on FormatException catch (e) {
       _observer.notifyFailure('Error Processing /create: ${e.message}');
     }
@@ -49,5 +46,5 @@ class CreateService implements HTTPServiceObserver {
 }
 
 abstract class CreateServiceObserver extends ServiceObserver {
-  void notifySuccess(int id, String userToken);
+  void notifySuccess(String room, String pass);
 }

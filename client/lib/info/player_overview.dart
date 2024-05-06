@@ -99,7 +99,10 @@ class _PoolCount extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          OutlinedLetters(content: title),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: OutlinedLetters(content: title),
+          ),
           CustomPaint(
             size: const Size(35.0, 35.0),
             painter: _TrianglePainter(),

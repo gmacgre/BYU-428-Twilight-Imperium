@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 class PlanetModel {
@@ -115,8 +113,8 @@ class PlanetData {
       techColor: Tech.blue,
       color: const Color.fromRGBO(1, 223, 156, 1),
     ),
-    "Coorneeq": PlanetModel(
-      name: "Coorneeq",
+    "Corneeq": PlanetModel(
+      name: "Corneeq",
       resources: 1,
       influence: 2,
       trait: PlanetTrait.cultural,

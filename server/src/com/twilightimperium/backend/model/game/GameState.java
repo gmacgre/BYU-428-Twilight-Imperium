@@ -12,6 +12,7 @@ public class GameState {
         world = new WorldInfo();
         map = new BoardState(7);
         players = new ArrayList<>(numPlayers);
+        while(players.size() < numPlayers) players.add(new Player());
     }
 
 

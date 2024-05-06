@@ -1,12 +1,12 @@
 class Player {
-  final String _race;
-  final int _tacticPool;
-  final int _fleetPool;
-  final int _strategyPool;
-  final int _victoryPoints;
-  final int _strategyCardId;
-  final bool _strategyExhausted;
-  final bool _passed;
+  String _race;
+  int _tacticPool;
+  int _fleetPool;
+  int _strategyPool;
+  int _victoryPoints;
+  int _strategyCardId;
+  bool _strategyExhausted;
+  bool _passed;
 
 
   Player(
@@ -22,6 +22,10 @@ class Player {
 
   String getName() {
     return _race;
+  }
+
+  void setName(String newRace) {
+    _race = newRace;
   }
 
   int getTacticPool() {

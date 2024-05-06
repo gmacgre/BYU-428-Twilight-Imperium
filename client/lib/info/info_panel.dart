@@ -13,7 +13,7 @@ class InfoPanel extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    List<Player> players = ref.watch(playerStateProvider);
+    List<Player> players = ref.watch(playerStateProvider).players;
     // Though unused, this ensures that child tabs can update when referencing this riverpod.
     // Do not remove.
     ref.watch(boardStateProvider).selectedCoordinate;  

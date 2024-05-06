@@ -1,4 +1,6 @@
 import 'package:client/data/strings.dart';
+import 'package:client/model/player.dart';
+import 'package:client/model/system_state.dart';
 import 'package:client/service/messaging/create_service.dart';
 import 'package:client/service/messaging/game_state_service.dart';
 import 'package:client/service/messaging/login_service.dart';
@@ -32,7 +34,7 @@ class CreateAndJoinPagePresenter {
   void joinGame() {
     if(_noInput()) return;
     _view.setButtonState(false);
-    _loginService.sendLoginRequest(_text, _pass, _playerNumber);
+    _loginService.sendLoginRequest(_text, _pass, _playerNumber - 1);
   }
 
   void createGame() {
@@ -64,9 +66,14 @@ class CreateAndJoinPagePresenter {
     _view.postToast(message);
   }
 
-  void _swapToBoard() {
+  void _swapToBoard(List<Player> players, List<List<SystemState>> board) {
     _view.setButtonState(true);
-    _view.swapToBoard();
+    _view.swapToBoard(players, board);
+  }
+
+  void _login(String room, String pass) {
+    _view.postToast(Strings.createSuccess);
+    _loginService.sendLoginRequest(room, pass, _playerNumber - 1);
   }
 }
 
@@ -93,8 +100,8 @@ class _CreateServiceObserver implements CreateServiceObserver {
   final CreateAndJoinPagePresenter _presenter;
   _CreateServiceObserver(this._presenter);
   @override
-  void notifySuccess(int id, String userToken) {
-    _presenter._getGameState(id, userToken);
+  void notifySuccess(String room, String pass) {
+    _presenter._login(room, pass);
   }
 
   @override
@@ -118,8 +125,8 @@ class _GameStateServiceObserver implements GameStateServiceObserver {
   }
 
   @override
-  void notifySuccess() {
-    _presenter._swapToBoard();
+  void notifySuccess(List<Player> players, List<List<SystemState>> board) {
+    _presenter._swapToBoard(players, board);
   }
 
   @override
@@ -127,7 +134,7 @@ class _GameStateServiceObserver implements GameStateServiceObserver {
 }
 
 abstract interface class CreateAndJoinPageView {
-  void swapToBoard();
+  void swapToBoard(List<Player> players, List<List<SystemState>> board);
   void postToast(String msg);
   void setButtonState(bool state);
 }

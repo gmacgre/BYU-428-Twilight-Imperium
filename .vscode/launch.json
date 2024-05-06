@@ -15,7 +15,6 @@
             "name": "Main",
             "request": "launch",
             "mainClass": "com.twilightimperium.backend.Main",
-            "projectName": "BYU-428-Twilight-Imperium_40753038"
         }
     ]
 }
