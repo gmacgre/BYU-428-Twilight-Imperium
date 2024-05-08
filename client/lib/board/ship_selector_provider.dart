@@ -1,6 +1,7 @@
 import 'package:client/board/coordinate.dart';
 import 'package:client/model/board_state.dart';
 import 'package:client/model/ship_model.dart';
+import 'package:client/model/turn_phase.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'ship_selector_provider.g.dart';
@@ -14,9 +15,6 @@ class ShipSelector extends _$ShipSelector {
 
   void activate(Coordinate coordinate) {
     if (ref.read(boardStateProvider).activeCoordinate == null) {
-      return;
-    }
-    if (coordinate == ref.read(boardStateProvider).activeCoordinate) {
       return;
     }
     if(ref.read(boardStateProvider).currentPhase != TurnPhase.movement) {

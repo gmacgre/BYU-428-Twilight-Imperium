@@ -3,6 +3,9 @@ package com.twilightimperium.backend.model.game;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.twilightimperium.backend.model.game.entities.Player;
+import com.twilightimperium.backend.model.game.entities.Ship;
+
 public class GameState {
     WorldInfo world;
     BoardState map;
@@ -38,6 +41,27 @@ public class GameState {
 
     public void setPlayers(List<Player> players) {
         this.players = players;
+    }
+
+
+    public boolean moveShips(List<Ship> ships) {
+        BoardState oldMap = map.clone();
+        int player = world.getActivePlayer();
+        Location activeSystem = world.getActiveSystem();
+        for(Ship currentShip : ships){
+            if(!validateMove(currentShip, world.getActiveSystem())){
+                setMap(oldMap);
+                return false;
+            } else {
+                map.addShip(activeSystem.x, activeSystem.y, currentShip.getShipClass(), player);
+                map.removeShip(currentShip.getX(), currentShip.getY(), currentShip.getShipClass());
+            }
+        }
+        return true;
+    }
+
+    private boolean validateMove(Ship ship, Location activeSystem) {
+        return true;
     }
     
 }

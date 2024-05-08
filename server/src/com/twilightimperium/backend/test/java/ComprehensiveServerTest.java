@@ -20,7 +20,7 @@ import com.google.gson.Gson;
 import com.twilightimperium.backend.Server;
 import com.twilightimperium.backend.model.RequestResponse.*;
 import com.twilightimperium.backend.model.game.Location;
-import com.twilightimperium.backend.model.game.Ship;
+import com.twilightimperium.backend.model.game.entities.Ship;
 import com.twilightimperium.backend.model.update.Update;
 
 

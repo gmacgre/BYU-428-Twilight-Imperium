@@ -1,11 +1,13 @@
-package com.twilightimperium.backend.model.game;
+package com.twilightimperium.backend.model.game.entities;
+
+import com.twilightimperium.backend.model.game.Location;
 
 public class Ship {
     Location coords;
-    String shipClass;
+    ShipClass shipClass;
 
     public Ship clone(){
-        return new Ship(Integer.valueOf(coords.x),Integer.valueOf(coords.y),new String(shipClass));
+        return new Ship(Integer.valueOf(coords.x),Integer.valueOf(coords.y), shipClass);
     }
 
     public Location getCoords() {
@@ -28,16 +30,16 @@ public class Ship {
         this.coords.y = y;
     }
 
-    public Ship(int x, int y, String cl){
+    public Ship(int x, int y, ShipClass cl){
         this.coords = new Location(x,y);
         this.shipClass = cl;
     }
 
-    public String getShipClass() {
+    public ShipClass getShipClass() {
         return this.shipClass;
     }
 
-    public void setShipClass(String shipClass) {
+    public void setShipClass(ShipClass shipClass) {
         this.shipClass = shipClass;
     }
     

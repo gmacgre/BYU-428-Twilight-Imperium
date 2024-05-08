@@ -1,4 +1,4 @@
-package com.twilightimperium.backend.model.game;
+package com.twilightimperium.backend.model.game.entities;
 
 public class Player {
     private String race;

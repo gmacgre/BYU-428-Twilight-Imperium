@@ -4,6 +4,7 @@ import 'package:client/board/ship_selector_provider.dart';
 import 'package:client/board/system.dart';
 import 'package:client/model/board_state.dart';
 import 'package:client/model/system_state.dart';
+import 'package:client/model/turn_phase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -31,19 +32,22 @@ class _BoardSpaceState extends ConsumerState<BoardSpace> {
     bool existsActivatedSystem =
         ref.watch(boardStateProvider).activeCoordinate != null;
     TurnPhase phase = ref.read(boardStateProvider).currentPhase;
+    int activePlayer = ref.read(boardStateProvider).activePlayer;
+    int seatId = ref.read(boardStateProvider).playerSeatNumber;
     if (widget.activated) {
       overlay = const Color.fromARGB(155, 255, 100, 55);
     }
     if (widget.selected) {
       overlay = const Color.fromARGB(155, 0, 187, 212);
     }
+    if (widget.selected && widget.activated) {
+      overlay = const Color.fromARGB(155, 128, 144, 134);
+    }
     return Stack(
       children: [
         GestureDetector(
-          onTap: (phase != TurnPhase.movement) ? () => highlightSystem() : () => selectShips(),
-          onDoubleTap: !existsActivatedSystem
-              ? () => activateSystem()
-              : () => selectShips(),
+          onTap: () => _processTap(phase, activePlayer == seatId),
+          onDoubleTap: () => _processDoubleTap(phase, activePlayer == seatId, existsActivatedSystem),
           child: Container(
             decoration: BoxDecoration(
               shape: BoxShape.circle,
@@ -57,6 +61,25 @@ class _BoardSpaceState extends ConsumerState<BoardSpace> {
     );
   }
 
+  _processTap(TurnPhase phase, bool isActivePlayer) {
+    if(phase == TurnPhase.movement && isActivePlayer ) {
+      selectShips();
+    }
+    else {
+      highlightSystem();
+    }
+  }
+
+  _processDoubleTap(TurnPhase phase, bool isActivePlayer, bool existsActivatedSystem) {
+    if(!existsActivatedSystem){
+      highlightSystem();
+      activateSystem();
+    }
+    else {
+      selectShips();
+    }
+  }
+
   activateSystem() {
     ref.read(boardStateProvider.notifier).activateSystem(widget.coordinate);
   }
@@ -66,11 +89,6 @@ class _BoardSpaceState extends ConsumerState<BoardSpace> {
   }
 
   selectShips() {
-    debugPrint("${widget.systemState.airSpace.length} ships selected.");
     ref.read(shipSelectorProvider.notifier).activate(widget.coordinate);
-    //TODO: Create popup to select ships to move
-
-    // ref.read(boardStateProvider.notifier).moveShips(
-    //     from: widget.coordinate, ships: [...widget.systemState.airSpace]);
   }
 }

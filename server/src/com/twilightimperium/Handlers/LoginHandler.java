@@ -36,7 +36,7 @@ public class LoginHandler extends BaseHandler {
             // Simulated authentication check
             String token = server.login(request.getRoomCode(), request.getRoomPass(),request.getPlayerNum());
             if (token != null) {
-                int playerId = server.getGameByToken(token).getPlayerTurn(token);
+                int playerId = server.getGameByToken(token).getPlayerSeatId(token);
                 // Respond with the generated token
                 LoginResponse response = new LoginResponse(token, playerId);
                 String jsonResponse = gson.toJson(response);

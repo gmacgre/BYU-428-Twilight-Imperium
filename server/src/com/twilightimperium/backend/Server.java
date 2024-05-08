@@ -4,6 +4,8 @@ import com.sun.net.httpserver.HttpServer;
 import com.twilightimperium.Handlers.*;
 import com.twilightimperium.Handlers.cors.GameStateHandler;
 import com.twilightimperium.Handlers.cors.UpdateHandler;
+import com.twilightimperium.Handlers.cors.turncheck.ActivateHandler;
+import com.twilightimperium.Handlers.cors.turncheck.MoveHandler;
 import com.twilightimperium.backend.model.update.Update;
 
 import java.io.IOException;
