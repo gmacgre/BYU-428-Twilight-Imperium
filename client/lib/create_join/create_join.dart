@@ -1,8 +1,5 @@
 import 'package:client/create_join/create_join_presenter.dart';
 import 'package:client/model/board_state.dart';
-import 'package:client/model/player.dart';
-import 'package:client/model/player_state.dart';
-import 'package:client/model/system_state.dart';
 import 'package:client/res/outlined_letters.dart';
 import 'package:client/data/strings.dart';
 import 'package:flutter/material.dart';
@@ -253,9 +250,8 @@ class _CreateAndJoinPageState extends ConsumerState<CreateAndJoinPage> implement
   }
 
   @override
-  void swapToBoard(List<Player> players, List<List<SystemState>> board) {
-    ref.read(playerStateProvider.notifier).setState(players);
-    ref.read(boardStateProvider.notifier).setSystems(board);
+  void swapToBoard() {
+    ref.read(boardStateProvider.notifier).invalidate();
     Navigator.of(context).pushNamed('/game');
   }
 

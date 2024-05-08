@@ -29,12 +29,15 @@ class BoardState extends _$BoardState {
     // This will need to get the cached state from the DataCache
     // This can be used to undo any modifications to the state and revert to the last saved state.
     return BoardStateObject(
-        systemStates: DataCache.instance.boardState, 
-        isModified: false,
-        activeCoordinate: (DataCache.instance.activeSystem.q + DataCache.instance.activeSystem.r > 0) ? DataCache.instance.activeSystem : null,
-        activePlayer: DataCache.instance.activePlayer,
-        currentPhase: DataCache.instance.phase
-        );
+      systemStates: DataCache.instance.boardState, 
+      isModified: false,
+      activeCoordinate: (DataCache.instance.activeSystem.q + DataCache.instance.activeSystem.r > 0) ? DataCache.instance.activeSystem : null,
+      activePlayer: DataCache.instance.activePlayer,
+      currentPhase: DataCache.instance.phase,
+      playerSeatNumber: DataCache.instance.userSeatNumber,
+      oldState: null,
+      alreadyProvided: const {'im', 'ac', 'ap', 'cp', 'ps'}
+    );
   }
 
   void addShips(Map<ShipType, int> shipQuantities) {
@@ -64,9 +67,8 @@ class BoardState extends _$BoardState {
         SystemState(systemModel: activeSystem.systemModel, airSpace: ships);
     state = BoardStateObject(
       systemStates: systems,
-      activeCoordinate: state.activeCoordinate,
-      isModified: true,
-      currentPhase: state.currentPhase,
+      oldState: state,
+      alreadyProvided: const {}
     );
   }
 
@@ -74,12 +76,19 @@ class BoardState extends _$BoardState {
     var systems = [...state.systemStates];
     systems[coordinate.q][coordinate.r] = newState;
     state = BoardStateObject(
-        systemStates: systems, activeCoordinate: state.activeCoordinate);
+      systemStates: systems, 
+      oldState: state,
+      alreadyProvided: const {}
+    );
     //Any call to the server can be made here to send the request
   }
 
   void setSystems(List<List<SystemState>> newSystems) {
-    state = BoardStateObject(systemStates: newSystems);
+    state = BoardStateObject(
+      systemStates: newSystems,
+      oldState: state,
+      alreadyProvided: const {}
+    );
   }
 
   /// This is used to move ships from one system to another.
@@ -114,7 +123,10 @@ class BoardState extends _$BoardState {
         ],
       );
       state = BoardStateObject(
-          systemStates: systems, activeCoordinate: state.activeCoordinate);
+        systemStates: systems,
+        oldState: state,
+        alreadyProvided: const {}
+      );
     }
     //If someone owns the airspace and it's not the current player, go to combat phase
     // TODO: Real launch is here for later
@@ -123,16 +135,20 @@ class BoardState extends _$BoardState {
             DataCache.instance.players
                 .indexOf(state.activeSystemState!.systemOwner!)) {
       state = BoardStateObject(
-          systemStates: state.systemStates,
-          activeCoordinate: state.activeCoordinate,
-          currentPhase: TurnPhase.combat);
+        systemStates: state.systemStates,
+        currentPhase: TurnPhase.combat,
+        oldState: state,
+        alreadyProvided: const {'cp'}
+      );
     } else {
       //I'm skipping ground invasions for now, if there is no space combat we're going straight to production
       state = BoardStateObject(
         //TODO : THIS WILL NEED TO BE MODIFIED LATER AS WELL
-          systemStates: state.systemStates,
-          activeCoordinate: state.activeCoordinate,
-          currentPhase: TurnPhase.combat);
+        systemStates: state.systemStates,
+        currentPhase: TurnPhase.combat,
+        oldState: state,
+        alreadyProvided: const {'cp'}
+      );
     }
   }
 
@@ -141,16 +157,18 @@ class BoardState extends _$BoardState {
     if (currentPhase == TurnPhase.activation && state.selectedCoordinate != null) {
       state = BoardStateObject(
         systemStates: state.systemStates,
-        activeCoordinate: state.selectedCoordinate,
-        currentPhase: TurnPhase.movement
+        currentPhase: TurnPhase.movement,
+        oldState: state,
+        alreadyProvided: const {'cp'}
       );
       return;
     }
     if (currentPhase == TurnPhase.movement) {
       state = BoardStateObject(
         systemStates: state.systemStates,
-        activeCoordinate: state.activeCoordinate,
         currentPhase: TurnPhase.combat,
+        oldState: state,
+        alreadyProvided: const {'cp'}
       );
       ref.read(shipSelectorProvider.notifier).cancel();
       return;
@@ -158,8 +176,9 @@ class BoardState extends _$BoardState {
     if (currentPhase == TurnPhase.combat) {
       state = BoardStateObject(
         systemStates: state.systemStates,
-        activeCoordinate: state.activeCoordinate,
-        currentPhase: TurnPhase.production
+        currentPhase: TurnPhase.production,
+        oldState: state,
+        alreadyProvided: const {'cp'}
       );
     }
     if (currentPhase == TurnPhase.production) {
@@ -169,11 +188,16 @@ class BoardState extends _$BoardState {
   }
 
   void selectSystem(Coordinate coordinate) {
+    Coordinate? toSubmit = coordinate;
+    if(state.selectedCoordinate != null && 
+      (coordinate.q == state.selectedCoordinate!.q && coordinate.r == state.selectedCoordinate!.r)){
+        toSubmit = null;
+    }
     state = BoardStateObject(
       systemStates: state.systemStates,
-      activeCoordinate: state.activeCoordinate,
-      selectedCoordinate: coordinate,
-      currentPhase: state.currentPhase
+      selectedCoordinate: toSubmit,
+      oldState: state,
+      alreadyProvided: const {'sc'}
     );
   }
 
@@ -183,10 +207,13 @@ class BoardState extends _$BoardState {
   }
 
   void _setSystemActive() {
+    TurnPhase toSet = (state.activePlayer == state.playerSeatNumber) ? TurnPhase.movement : TurnPhase.observation;
     state = BoardStateObject(
       systemStates: state.systemStates,
       activeCoordinate: _activationHold,
-      currentPhase: TurnPhase.movement,
+      currentPhase: toSet,
+      oldState: state,
+      alreadyProvided: const {'cp', 'ac'}
     );
     _activationHold = null;
   }
@@ -195,6 +222,8 @@ class BoardState extends _$BoardState {
     state = BoardStateObject(
       systemStates: state.systemStates,
       activeCoordinate: null,
+      oldState: state,
+      alreadyProvided: const {'ac'}
     );
   }
 
@@ -221,19 +250,69 @@ class BoardState extends _$BoardState {
       // TODO: ADD NEW UPDATE TYPES HERE
     }
   }
+
+  void setPlayer(int activePlayer, int userSeatNumber) {
+    state = BoardStateObject(
+      systemStates: state.systemStates, 
+      activePlayer: activePlayer,
+      playerSeatNumber: userSeatNumber,
+      oldState: state,
+      alreadyProvided: const {'ap', 'ps'}
+    );
+  }
+
+  void setPhase(TurnPhase phase) {
+    state = BoardStateObject(
+      systemStates: state.systemStates, 
+      currentPhase: phase,
+      oldState: state,
+      alreadyProvided: const {'cp'}
+    );
+  }
+
+  void setActiveSystem(Coordinate activeSystem) {
+    state = BoardStateObject(
+      systemStates: state.systemStates,
+      activeCoordinate: activeSystem,
+      oldState: state,
+      alreadyProvided: const {'ac'}
+    );
+  }
+
+  void invalidate() {
+    ref.invalidate(shipSelectorProvider);
+    ref.invalidate(productionProvider);
+    ref.invalidateSelf();
+  }
 }
 
 ///This is used to represent the state of the board.
 ///Since there is more to the state than just the system states, this allows for easy access to all state variables.
 class BoardStateObject {
-  final List<List<SystemState>> systemStates; // A map of all the states
-  Coordinate? activeCoordinate;               // The most recent system to be activated in that turn
-  final Coordinate? selectedCoordinate;       // Used for info panel, showing which system to display
-  final bool isModified;                      // Unused, will be done when player is not up to date or is ahead of the server.
-  final int playerSeatNumber;                 // Unused, denotes the clients seat number
-  TurnPhase currentPhase;                     // The current phase in a player's turn- TurnPhase.observe otherwise
+  late final List<List<SystemState>> systemStates; // A map of all the states
+  late Coordinate? activeCoordinate;               // The most recent system to be activated in that turn
+  late Coordinate? selectedCoordinate;       // Used for info panel, showing which system to display
+  late bool isModified;                      // Unused, will be done when player is not up to date or is ahead of the server.
+  late int playerSeatNumber;                 // Unused, denotes the clients seat number
+  late TurnPhase currentPhase;                     // The current phase in a player's turn- TurnPhase.observe otherwise
   late SystemState? activeSystemState;        // The state of the currently active system, for easier access
-  int activePlayer;
+  late int activePlayer;
+
+  static const List<String> _variableSet = [
+    'ac', // activeCoordinate
+    'sc', // selectedCoordinate
+    'im', // isModified
+    'ps', // playerSeatNumber
+    'cp', // currentPhase
+    'ap'  // activePlayer
+  ];
+
+
+
+  // The proper way to construct this object is to first set the variables you want modified
+  // into the constructor, with those being added to a set passsed at the end (alreadyProvided)
+  // using the codes above in _variableSet. Adding in the old state will cause the new state to 
+  // Union the changes with the old state, to keep continuity.
   BoardStateObject({
     required this.systemStates,
     this.activeCoordinate,
@@ -241,11 +320,45 @@ class BoardStateObject {
     this.isModified = true,
     this.playerSeatNumber = -1,
     this.currentPhase = TurnPhase.activation,
-    this.activePlayer = 0
+    this.activePlayer = 0,
+    required BoardStateObject? oldState,
+    required Set<String> alreadyProvided
   }) {
+    if (oldState == null) {
+      return;
+    }
+    for (String code in _variableSet) {
+      if (alreadyProvided.contains(code)) {
+        continue;
+      }
+      switch(code) {
+        case 'ac': {
+          activeCoordinate = oldState.activeCoordinate;
+          break;
+        }
+        case 'sc': {
+          selectedCoordinate = oldState.selectedCoordinate;
+        }
+        case 'im': {
+          isModified = oldState.isModified;
+        }
+        case 'ps': {
+          playerSeatNumber = oldState.playerSeatNumber;
+        }
+        case 'cp': {
+          currentPhase = oldState.currentPhase;
+        }
+        case 'ap': {
+          activePlayer = oldState.activePlayer;
+        }
+      }
+    }
     if (activeCoordinate != null) {
       activeSystemState =
           systemStates[activeCoordinate!.q][activeCoordinate!.r];
+    }
+    else {
+      activeSystemState = null;
     }
   }
 }

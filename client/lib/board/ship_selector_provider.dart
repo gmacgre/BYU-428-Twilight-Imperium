@@ -17,9 +17,6 @@ class ShipSelector extends _$ShipSelector {
     if (ref.read(boardStateProvider).activeCoordinate == null) {
       return;
     }
-    if (coordinate == ref.read(boardStateProvider).activeCoordinate) {
-      return;
-    }
     if(ref.read(boardStateProvider).currentPhase != TurnPhase.movement) {
       return;
     }

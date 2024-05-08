@@ -1,6 +1,4 @@
 import 'package:client/data/strings.dart';
-import 'package:client/model/player.dart';
-import 'package:client/model/system_state.dart';
 import 'package:client/service/messaging/create_service.dart';
 import 'package:client/service/messaging/game_state_service.dart';
 import 'package:client/service/messaging/login_service.dart';
@@ -66,9 +64,9 @@ class CreateAndJoinPagePresenter {
     _view.postToast(message);
   }
 
-  void _swapToBoard(List<Player> players, List<List<SystemState>> board) {
+  void _swapToBoard() {
     _view.setButtonState(true);
-    _view.swapToBoard(players, board);
+    _view.swapToBoard();
   }
 
   void _login(String room, String pass) {
@@ -125,8 +123,8 @@ class _GameStateServiceObserver implements GameStateServiceObserver {
   }
 
   @override
-  void notifySuccess(List<Player> players, List<List<SystemState>> board) {
-    _presenter._swapToBoard(players, board);
+  void notifySuccess() {
+    _presenter._swapToBoard();
   }
 
   @override
@@ -134,7 +132,7 @@ class _GameStateServiceObserver implements GameStateServiceObserver {
 }
 
 abstract interface class CreateAndJoinPageView {
-  void swapToBoard(List<Player> players, List<List<SystemState>> board);
+  void swapToBoard();
   void postToast(String msg);
   void setButtonState(bool state);
 }
