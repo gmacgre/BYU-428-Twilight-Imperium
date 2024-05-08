@@ -72,7 +72,7 @@ class Strings {
   }
 
   static String flagship = 'Flagship';
-  static String dreadnaught = 'Dreadnaught';
+  static String dreadnought = 'Dreadnought';
   static String cruiser = 'Cruiser';
   static String destroyer = 'Destroyer';
   static String carrier = 'Carrier';

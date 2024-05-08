@@ -95,7 +95,7 @@ class _CombatPageState extends ConsumerState<CombatPage> {
       _hitEnemy(enemyHits);
       allies.flagship -= getMinus(Strings.flagship);
       allies.warsun -= getMinus(Strings.warsun);
-      allies.dreadnaught -= getMinus(Strings.dreadnaught);
+      allies.dreadnaught -= getMinus(Strings.dreadnought);
       allies.cruiser -= getMinus(Strings.cruiser);
       allies.carrier -= getMinus(Strings.carrier);
       allies.destroyer -= getMinus(Strings.destroyer);
@@ -170,7 +170,7 @@ class _CombatPageState extends ConsumerState<CombatPage> {
     selections = {
       Strings.flagship : [],
       Strings.warsun : [],
-      Strings.dreadnaught : [],
+      Strings.dreadnought : [],
       Strings.cruiser : [],
       Strings.carrier : [],
       Strings.destroyer : [],
@@ -183,7 +183,7 @@ class _CombatPageState extends ConsumerState<CombatPage> {
       selections[Strings.warsun]?.add(false);
     }
     for(int i = 0; i < allies.dreadnaught; i++) {
-      selections[Strings.dreadnaught]?.add(false);
+      selections[Strings.dreadnought]?.add(false);
     }
     for(int i = 0; i < allies.cruiser; i++) {
       selections[Strings.cruiser]?.add(false);

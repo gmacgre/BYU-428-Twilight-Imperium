@@ -40,7 +40,7 @@ class CombatForces extends StatelessWidget {
       toReturn = [ ...toReturn, ..._buildFlagshipRow(fill) ];
     }
     if(forces.dreadnaught > 0) {
-      toReturn = [ ...toReturn, ..._buildUnitRow(Strings.dreadnaught, forces.dreadnaught, DreadnaughtIcon(outline: Colors.grey, fill: fill, combat: 6, move: 1, capacity: 1, cost: 4, width: 200, height: 100)) ];
+      toReturn = [ ...toReturn, ..._buildUnitRow(Strings.dreadnought, forces.dreadnaught, DreadnaughtIcon(outline: Colors.grey, fill: fill, combat: 6, move: 1, capacity: 1, cost: 4, width: 200, height: 100)) ];
     }
     if(forces.cruiser > 0) {
       toReturn = [ ...toReturn, ..._buildUnitRow(Strings.cruiser, forces.cruiser, CruiserIcon(outline: Colors.grey, fill: fill, combat: 7, move: 2, capacity: 0, cost: 2, width: 200, height: 100)) ];

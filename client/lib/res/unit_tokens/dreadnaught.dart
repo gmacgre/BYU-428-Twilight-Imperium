@@ -51,7 +51,7 @@ class DreadnaughtIcon extends StatelessWidget {
       move: move,
       capacity: capacity,
       painter: _DreadnaughtPainter(fill, outline),
-      tip: Strings.buildUnitDesc(Strings.dreadnaught, cost, move, combat, capacity),
+      tip: Strings.buildUnitDesc(Strings.dreadnought, cost, move, combat, capacity),
     );
   }
 }
