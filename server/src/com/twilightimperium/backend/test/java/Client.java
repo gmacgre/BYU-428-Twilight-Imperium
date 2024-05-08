@@ -1,4 +1,4 @@
-package com.twilightimperium.backend;
+package com.twilightimperium.backend.test.java;
 
 import java.net.URI;
 import java.net.http.HttpClient;

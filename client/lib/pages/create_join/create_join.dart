@@ -1,5 +1,5 @@
-import 'package:client/create_join/create_join_presenter.dart';
-import 'package:client/model/board_state.dart';
+import 'package:client/pages/create_join/create_join_presenter.dart';
+import 'package:client/model/riverpod/board_state.dart';
 import 'package:client/res/outlined_letters.dart';
 import 'package:client/data/strings.dart';
 import 'package:flutter/material.dart';

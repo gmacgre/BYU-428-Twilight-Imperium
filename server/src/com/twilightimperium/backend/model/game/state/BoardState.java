@@ -1,6 +1,6 @@
-package com.twilightimperium.backend.model.game;
+package com.twilightimperium.backend.model.game.state;
 import com.twilightimperium.backend.model.game.entities.ShipClass;
-import com.twilightimperium.backend.model.game.tile.Tile;
+import com.twilightimperium.backend.model.game.state.tile.Tile;
 
 public class BoardState {
     Tile[][] map;

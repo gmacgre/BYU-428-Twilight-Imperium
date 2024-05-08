@@ -1,8 +1,9 @@
-package com.twilightimperium.backend.model.game;
+package com.twilightimperium.backend.model.game.state;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.twilightimperium.backend.model.game.Location;
 import com.twilightimperium.backend.model.game.entities.Player;
 import com.twilightimperium.backend.model.game.entities.Ship;
 

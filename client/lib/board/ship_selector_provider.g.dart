@@ -6,7 +6,7 @@ part of 'ship_selector_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$shipSelectorHash() => r'aeb4c831bd3c4bb27ee936f47e9b64d8aa8a6806';
+String _$shipSelectorHash() => r'cfa8c37a58df2412cd33cac75047bf62f279706c';
 
 /// See also [ShipSelector].
 @ProviderFor(ShipSelector)

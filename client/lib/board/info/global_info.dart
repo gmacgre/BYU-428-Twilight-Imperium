@@ -1,9 +1,9 @@
 import 'package:client/board/coordinate.dart';
-import 'package:client/info/objective_view.dart';
-import 'package:client/info/player_overview.dart';
-import 'package:client/info/selected_system.dart';
-import 'package:client/info/strategy_card.dart';
-import 'package:client/model/board_state.dart';
+import 'package:client/board/info/objective_view.dart';
+import 'package:client/board/info/player_overview.dart';
+import 'package:client/board/info/selected_system.dart';
+import 'package:client/board/info/strategy_card.dart';
+import 'package:client/model/riverpod/board_state.dart';
 import 'package:client/model/objective.dart';
 import 'package:client/model/player.dart';
 import 'package:client/res/hover_tip.dart';

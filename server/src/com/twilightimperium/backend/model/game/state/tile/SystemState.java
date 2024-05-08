@@ -1,4 +1,4 @@
-package com.twilightimperium.backend.model.game.tile;
+package com.twilightimperium.backend.model.game.state.tile;
 
 import java.util.ArrayList;
 import java.util.HashSet;

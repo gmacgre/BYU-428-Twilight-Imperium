@@ -4,7 +4,7 @@ import 'package:client/combat/force_makeup.dart';
 import 'package:client/data/datacache.dart';
 import 'package:client/data/strings.dart';
 import 'package:flutter/material.dart';
-import 'package:client/model/board_state.dart';
+import 'package:client/model/riverpod/board_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 enum CombatState {

@@ -1,12 +1,13 @@
-package com.twilightimperium.backend;
+package com.twilightimperium.backend.model.game;
 
 import java.util.*;
 
 import com.google.gson.Gson;
-import com.twilightimperium.backend.model.game.GameState;
-import com.twilightimperium.backend.model.game.GameStateNode;
+import com.twilightimperium.backend.Pair;
 import com.twilightimperium.backend.model.game.entities.Player;
 import com.twilightimperium.backend.model.game.entities.Ship;
+import com.twilightimperium.backend.model.game.state.GameState;
+import com.twilightimperium.backend.model.game.state.GameStateNode;
 import com.twilightimperium.backend.model.update.NewPlayerUpdate;
 import com.twilightimperium.backend.model.update.Update;
 
