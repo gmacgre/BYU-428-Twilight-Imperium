@@ -3,7 +3,7 @@ package com.twilightimperium.backend.model.game.entities;
 public enum ShipClass {
     FLAGSHIP,
     WARSUN,
-    DREADNAUGHT,
+    DREADNOUGHT,
     CRUISER,
     CARRIER,
     DESTROYER,
