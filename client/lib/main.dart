@@ -2,7 +2,7 @@ import 'package:client/board/board_grid.dart';
 import 'package:client/board/game_page.dart';
 import 'package:client/combat/combat_page.dart';
 import 'package:flutter/material.dart';
-import 'package:client/create_join/create_join.dart';
+import 'package:client/pages/create_join/create_join.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:client/data/strings.dart';
 

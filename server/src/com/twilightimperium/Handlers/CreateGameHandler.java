@@ -2,10 +2,10 @@ package com.twilightimperium.Handlers;
 
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
-import com.twilightimperium.backend.Game;
 import com.twilightimperium.backend.Server;
 import com.twilightimperium.backend.model.RequestResponse.CreateRequestResponse;
 import com.twilightimperium.backend.model.RequestResponse.ErrorResponse;
+import com.twilightimperium.backend.model.game.Game;
 
 import java.io.IOException;
 import java.io.InputStream;

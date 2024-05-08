@@ -1,4 +1,4 @@
-import 'package:client/model/board_state.dart';
+import 'package:client/model/riverpod/board_state.dart';
 import 'package:client/model/ship_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

@@ -5,9 +5,9 @@ import java.io.IOException;
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.twilightimperium.Handlers.cors.BaseCORSHandler;
-import com.twilightimperium.backend.Game;
 import com.twilightimperium.backend.Server;
 import com.twilightimperium.backend.model.RequestResponse.ErrorResponse;
+import com.twilightimperium.backend.model.game.Game;
 
 public abstract class BaseTurnCheckHandler extends BaseCORSHandler {
 

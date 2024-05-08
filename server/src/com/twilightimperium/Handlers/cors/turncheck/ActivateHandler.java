@@ -2,10 +2,10 @@ package com.twilightimperium.Handlers.cors.turncheck;
 
 import java.io.IOException;
 import com.sun.net.httpserver.*;
-import com.twilightimperium.backend.Game;
 import com.twilightimperium.backend.Server;
 import com.twilightimperium.backend.model.RequestResponse.ActivateRequest;
 import com.twilightimperium.backend.model.RequestResponse.ErrorResponse;
+import com.twilightimperium.backend.model.game.Game;
 import com.twilightimperium.backend.model.update.ActivateUpdate;
 import com.twilightimperium.backend.model.update.Update;
 

@@ -1,4 +1,4 @@
-import 'package:client/info/player_overview.dart';
+import 'package:client/board/info/player_overview.dart';
 import 'package:client/model/player.dart';
 import 'package:flutter/material.dart';
 

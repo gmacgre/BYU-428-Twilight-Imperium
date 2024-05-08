@@ -1,4 +1,6 @@
-package com.twilightimperium.backend.model.game;
+package com.twilightimperium.backend.model.game.state;
+
+import com.twilightimperium.backend.model.game.Location;
 
 public class WorldInfo {
     public WorldInfo() {

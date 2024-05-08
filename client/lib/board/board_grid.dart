@@ -4,7 +4,7 @@ import 'package:client/board/production_widget.dart';
 import 'package:client/board/ship_selector_widget.dart';
 import 'package:client/combat/combat_page.dart';
 import 'package:client/data/strings.dart';
-import 'package:client/model/board_state.dart';
+import 'package:client/model/riverpod/board_state.dart';
 import 'package:client/model/system_state.dart';
 import 'package:client/model/turn_phase.dart';
 import 'package:client/res/outlined_letters.dart';

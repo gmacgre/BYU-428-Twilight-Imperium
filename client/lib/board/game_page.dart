@@ -1,8 +1,8 @@
 import 'package:client/board/board_grid.dart';
 import 'package:client/data/datacache.dart';
-import 'package:client/info/info_panel.dart';
-import 'package:client/model/board_state.dart';
-import 'package:client/model/player_state.dart';
+import 'package:client/board/info/info_panel.dart';
+import 'package:client/model/riverpod/board_state.dart';
+import 'package:client/model/riverpod/player_state.dart';
 import 'package:client/model/update/update.dart';
 import 'package:client/updater/update_thread.dart';
 import 'package:flutter/material.dart';

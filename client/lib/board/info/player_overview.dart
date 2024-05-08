@@ -1,9 +1,9 @@
-import 'package:client/info/objective_view.dart';
+import 'package:client/board/info/objective_view.dart';
 import 'package:client/res/hover_tip.dart';
 import 'package:client/res/outlined_letters.dart';
 import 'package:client/data/strings.dart';
 import 'package:flutter/material.dart';
-import 'package:client/info/strategy_card.dart';
+import 'package:client/board/info/strategy_card.dart';
 
 class PlayerOverview extends StatelessWidget {
   PlayerOverview({
