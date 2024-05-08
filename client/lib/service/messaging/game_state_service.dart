@@ -1,8 +1,10 @@
 import 'package:client/board/coordinate.dart';
 import 'package:client/data/datacache.dart';
+import 'package:client/data/ship_data.dart';
 import 'package:client/data/system_data.dart';
 import 'package:client/model/request_response/error_response.dart';
 import 'package:client/model/request_response/gameState/game_state_response.dart';
+import 'package:client/model/ship_model.dart';
 import 'package:client/model/system_state.dart';
 import 'package:client/model/turn_phase.dart';
 import 'package:client/service/http/http_service.dart';
@@ -41,14 +43,18 @@ class GameStateService implements HTTPServiceObserver {
       List<List<SystemState>> newBoard = List.empty(growable: true);
 
       //This loads the cache with the new version of the map
-      List<SystemContentRow> map = res.map.map;
+      List<TileRow> map = res.map.map;
       for(int i = 0; i < map.length; i++) {
         List<SystemState> newRow = List.empty(growable: true);
-        List<SystemContent> row = map[i].row;
+        List<Tile> row = map[i].row;
         for(int j = 0; j < row.length; j++) {
-          SystemContent content = row[j];
+          Tile content = row[j];
           //System Constant Data
-          SystemState newState = SystemState(systemModel: SystemData.systemList[content.systemName]!);
+          List<ShipModel> airSpace = _transferAirspace(content.state.ships, content.state.owner);
+          SystemState newState = SystemState(
+            systemModel: SystemData.systemList[content.systemName]!,
+            airSpace: airSpace
+          );
           newRow.add(newState);
         }
         newBoard.add(newRow);
@@ -58,6 +64,20 @@ class GameStateService implements HTTPServiceObserver {
     } on FormatException  catch (e){
       _observer.notifyFailure('Error Processing Successful /gameState: ${e.message}');
     }
+  }
+
+  List<ShipModel> _transferAirspace(List<ResponseShip> ships, int owner) {
+    if (owner == -1) {
+      return const [];
+    }
+    List<ShipModel> toReturn = [];
+    ShipType t = ShipType.fighter;
+    // TODO: Check here for race specific ships
+    for (ResponseShip s in ships) {
+      t = ShipType.fromString(s.shipClass);
+      toReturn.add(ShipData.defaultData[t]!);
+    }
+    return toReturn;
   }
 
   @override

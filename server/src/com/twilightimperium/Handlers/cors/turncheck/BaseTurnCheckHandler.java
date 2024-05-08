@@ -30,7 +30,7 @@ public abstract class BaseTurnCheckHandler extends BaseCORSHandler {
             sendResponse(exchange, gson.toJson(new ErrorResponse("Client not up to date")), 402);
             return;
         }
-        if(!game.currentlyActivePlayer(token)) {
+        if(!game.isCurrentlyActivePlayer(token)) {
             sendResponse(exchange, gson.toJson(new ErrorResponse("Not the Client's Turn")), 401);
         }
         handleTurnFree(exchange, token);

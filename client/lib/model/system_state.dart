@@ -5,7 +5,12 @@ import 'package:client/model/ship_model.dart';
 
 class SystemState{
 
-  SystemState({planets, airSpace, required this.systemModel, activationTokens}){
+  SystemState({
+    required this.systemModel,
+    planets, 
+    airSpace, 
+    activationTokens
+  }){
     if(airSpace != null){
       this.airSpace = airSpace;
     }

@@ -50,4 +50,32 @@ enum ShipType {
 
   final String label;
   const ShipType({required this.label});
+
+  // This is mainly for conversion from the backend's messages 
+  static ShipType fromString(String s) {
+    switch(s) {
+      case 'FLAGSHIP': {
+        return ShipType.flagship;
+      }
+      case 'WARSUNS': {
+        return ShipType.warsun;
+      }
+      case 'DREADNAUGHT': {
+        return ShipType.dreadnought;
+      }
+      case 'CRUISER': {
+        return ShipType.cruiser;
+      }
+      case 'CARRIER': {
+        return ShipType.carrier;
+      }
+      case 'DESTROYER': {
+        return ShipType.destroyer;
+      }
+      case 'FIGHTER': {
+        return ShipType.fighter;
+      }
+    }
+    return ShipType.fighter;
+  }
 }

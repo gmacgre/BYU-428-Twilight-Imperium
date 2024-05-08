@@ -37,7 +37,7 @@ class GameStateResponse {
 }
 
 class WorldMap {
-  final List<SystemContentRow> map;
+  final List<TileRow> map;
 
   WorldMap({
     required this.map
@@ -49,103 +49,117 @@ class WorldMap {
         'map': List<dynamic> outerMap
       } =>
         WorldMap(
-          map: outerMap.map((row) => SystemContentRow.fromJson(row)).toList()
+          map: outerMap.map((row) => TileRow.fromJson(row)).toList()
         ),
       _ => throw const FormatException('Failed to load WorldMap')
     };
   }
 }
 
-class SystemContentRow {
-  final List<SystemContent> row;
+class TileRow {
+  final List<Tile> row;
 
-  SystemContentRow({
+  TileRow({
     required this.row
   });
 
-  factory SystemContentRow.fromJson(List<dynamic> json) {
-    List<SystemContent> inner = json.map((sc) => SystemContent.fromJson(sc)).toList();
-    return SystemContentRow(row: inner);
+  factory TileRow.fromJson(List<dynamic> json) {
+    List<Tile> inner = json.map((sc) => Tile.fromJson(sc)).toList();
+    return TileRow(row: inner);
   }
 }
 
-class SystemContent {
-  final List<int> tokens;
+class Tile {
+  final TileState state;
   final String systemName;
-  final List<ResponseShipModel> ships;
 
-  SystemContent({
-    required this.tokens,
+  Tile({
+    required this.state,
     required this.systemName,
-    required this.ships
   });
 
-  factory SystemContent.fromJson(Map<String, dynamic> json) {
+  factory Tile.fromJson(Map<String, dynamic> json) {
     return switch (json) {
       {
-        'tokens': List<dynamic> tokens,
+        'state': Map<String, dynamic> state,
         'system': String system,
-        'ships': List<dynamic> ships
       } =>
-        SystemContent(
-          tokens: List<int>.from(tokens),
+        Tile(
+          state: TileState.fromJson(state),
           systemName: system,
-          ships: List<ResponseShipModel>.from(ships.map((ship) => ResponseShipModel.fromJson(ship)))
         ),
-      _ => throw const FormatException('Failed to load SystemContent')
+      _ => throw const FormatException('Failed to load Tile')
     };
   }
 }
 
-class ResponseShipModel {
-  final String shipClass;
-  final ResponseShipCoords coords;
+class TileState {
+  final int owner;
+  final List<ResponseShip> ships;
+  final Set<int> tokens;
+  final List<ResponsePlanetState> planets;
 
-  ResponseShipModel({
-    required this.shipClass,
-    required this.coords
+  TileState({
+    required this.owner,
+    required this.ships,
+    required this.tokens,
+    required this.planets
   });
-
-  factory ResponseShipModel.fromJson(Map<String, dynamic> json) {
+  factory TileState.fromJson(Map<String, dynamic> json) {
     return switch (json) {
       {
-        'shipClass': String shipClass,
-        'coords': Map<String, dynamic> coords
+        'owner': int owner,
+        'ships': List<dynamic> ships,
+        'tokens': List<dynamic> tokens,
+        'planetStates': List<dynamic> planetStates,
       } =>
-        ResponseShipModel(
+        TileState(
+          owner: owner,
+          ships: ships.map((ship) => ResponseShip.fromJson(ship)).toList(),
+          tokens: tokens.map((e) => e as int).toSet(), // tokens.toSet(),
+          planets: planetStates.map((state) => ResponsePlanetState.fromJson(state)).toList(),
+        ),
+      _ => throw const FormatException('Failed to load TileState')
+    };
+  }
+}
+
+class ResponseShip {
+  Coords coords;
+  String shipClass;
+  ResponseShip({
+    required this.coords,
+    required this.shipClass
+  });
+
+  factory ResponseShip.fromJson(Map<String, dynamic> json) {
+    return switch (json) {
+      {
+        'coords': Map<String, dynamic> coords,
+        'shipClass': String shipClass
+      } =>
+        ResponseShip(
+          coords: Coords.fromJson(coords),
           shipClass: shipClass,
-          coords: ResponseShipCoords.fromJson(coords),
         ),
-      _ => throw const FormatException('Failed to load ResponseShipModel')
+      _ => throw const FormatException('Failed to load Ship')
     };
   }
 }
 
-class ResponseShipCoords {
-  final int x;
-  final int y;
-
-  ResponseShipCoords({
-    required this.x,
-    required this.y
-  });
-
-  factory ResponseShipCoords.fromJson(Map<String, dynamic> json) {
-    return switch (json) {
-      {
-        'x': int x,
-        'y': int y
-      } =>
-        ResponseShipCoords(x: x, y: y),
-      _ => throw const FormatException('Failed to load ResponseShipCoords')
-    };
+// TODO: Complete as we add Ground Forces, PDS and Spacedocks
+class ResponsePlanetState {
+  ResponsePlanetState();
+  factory ResponsePlanetState.fromJson(Map<String, dynamic> json) {
+    return ResponsePlanetState();
   }
 }
+
 
 class GlobalState {
   int activePlayer;
   TurnPhase phase;
-  ResponseShipCoords coords;
+  Coords coords;
 
 
   GlobalState({
@@ -164,9 +178,30 @@ class GlobalState {
         GlobalState(
           activePlayer: activePlayer,
           phase: TurnPhaseFactory.fromString(phase),
-          coords: ResponseShipCoords.fromJson(coords)
+          coords: Coords.fromJson(coords)
         ),
       _ => throw const FormatException('Failed to load GlobalState')
+    };
+  }
+}
+
+class Coords {
+  final int x;
+  final int y;
+
+  Coords({
+    required this.x,
+    required this.y
+  });
+
+  factory Coords.fromJson(Map<String, dynamic> json) {
+    return switch (json) {
+      {
+        'x': int x,
+        'y': int y
+      } =>
+        Coords(x: x, y: y),
+      _ => throw const FormatException('Failed to load ResponseShipCoords')
     };
   }
 }

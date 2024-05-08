@@ -1,6 +1,6 @@
 package com.twilightimperium.backend.model.game;
-import java.util.List;
-import java.util.Set;
+import com.twilightimperium.backend.model.game.entities.ShipClass;
+import com.twilightimperium.backend.model.game.tile.Tile;
 
 public class BoardState {
     Tile[][] map;
@@ -29,25 +29,20 @@ public class BoardState {
                 map[i][j].setSystem(row[i][j]);
             }
         }
+        
 
+        addShip(3, 0, ShipClass.CARRIER, 1);
+        addShip(3, 0, ShipClass.FIGHTER, 1);
+        addShip(3, 0, ShipClass.FIGHTER, 1);
+        addShip(3, 0, ShipClass.FIGHTER, 1);
     }
-    public Tile getTile(int x, int y){
-        return map[y][x];
-    }
-    
-    public void setTile(int x, int y, Tile newTile){
+
+    private void setTile(int x, int y, Tile newTile){
         map[y][x] = newTile;
     }
 
-    public void removeShip(int x, int y, String shipClass){
-        List<Ship> current = map[y][x].getShips();
-        for(Ship i : current){
-            if (i.getShipClass().equals(shipClass)){
-                current.remove(i);
-                break;
-            }
-        }
-        map[y][x].setShips(current);
+    public void removeShip(int x, int y, ShipClass shipClass){
+        map[y][x].removeShip(shipClass);
     }
 
     public BoardState clone(){
@@ -60,20 +55,12 @@ public class BoardState {
         return copyState;
     }
 
-    public void addShip(int x, int y, String shipClass){
-        map[y][x].getShips().add(new Ship(x,y,shipClass));
+    public void addShip(int x, int y, ShipClass shipClass, int owner){
+        map[y][x].addShip(x, y, shipClass, owner);
     }
 
     public boolean activateTile(int x, int y, int player){
-        Set<Integer> currentTokens = map[y][x].getTokens();
-        if(currentTokens.contains(player)){
-            return false;
-        } else {
-            currentTokens.add(player);
-            map[y][x].setTokens(currentTokens);
-            return true;
-        }
-        
+        return map[y][x].activate(player);       
     }
 
     public class InvalidMoveException extends Exception{
