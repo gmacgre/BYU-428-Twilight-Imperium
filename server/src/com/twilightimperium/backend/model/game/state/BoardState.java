@@ -29,20 +29,24 @@ public class BoardState {
                 map[i][j].setSystem(row[i][j]);
             }
         }
-        
-
-        addShip(3, 0, ShipClass.CARRIER, 1);
-        addShip(3, 0, ShipClass.FIGHTER, 1);
-        addShip(3, 0, ShipClass.FIGHTER, 1);
-        addShip(3, 0, ShipClass.FIGHTER, 1);
+        addShip(3, 0, ShipClass.CARRIER, 0);
+        addShip(3, 0, ShipClass.FIGHTER, 0);
+        addShip(3, 0, ShipClass.FIGHTER, 0);
+        addShip(3, 0, ShipClass.FIGHTER, 0);
+        addGroundForce(3, 0, 0, 2, 0);
+        addGroundForce(3, 1, 0, 0, 3);
+        addGroundForce(3, 1, 1, 0, 3);
+        addShip(3, 6, ShipClass.DREADNOUGHT, 2);
+        addShip(3, 6, ShipClass.WARSUN, 2);
+        addShip(3, 6, ShipClass.WARSUN, 2);
     }
 
     private void setTile(int x, int y, Tile newTile){
-        map[y][x] = newTile;
+        map[x][y] = newTile;
     }
 
     public void removeShip(int x, int y, ShipClass shipClass){
-        map[y][x].removeShip(shipClass);
+        map[x][y].removeShip(shipClass);
     }
 
     public BoardState clone(){
@@ -56,11 +60,15 @@ public class BoardState {
     }
 
     public void addShip(int x, int y, ShipClass shipClass, int owner){
-        map[y][x].addShip(x, y, shipClass, owner);
+        map[x][y].addShip(x, y, shipClass, owner);
+    }
+
+    public void addGroundForce(int x, int y, int planet, int quantity, int owner) {
+        map[x][y].addGroundForce(planet, quantity, owner);
     }
 
     public boolean activateTile(int x, int y, int player){
-        return map[y][x].activate(player);       
+        return map[x][y].activate(player);       
     }
 
     public class InvalidMoveException extends Exception{

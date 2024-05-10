@@ -10,6 +10,8 @@ class UpdateService implements HTTPServiceObserver{
   late final HTTPService _service = HTTPService(this);
 
   void ping(String token) async {
+    // Don't ping if you don't have a token.
+    if(token == '') return;
     _service.getRequest('/update', {'token': token});
   }
   

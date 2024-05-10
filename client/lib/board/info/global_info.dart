@@ -1,4 +1,4 @@
-import 'package:client/board/coordinate.dart';
+import 'package:client/res/coordinate.dart';
 import 'package:client/board/info/objective_view.dart';
 import 'package:client/board/info/player_overview.dart';
 import 'package:client/board/info/selected_system.dart';

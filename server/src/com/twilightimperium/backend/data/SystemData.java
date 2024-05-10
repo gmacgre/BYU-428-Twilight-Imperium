@@ -33,8 +33,8 @@ public class SystemData {
         PlanetData.planets.get("Centauri"),
         PlanetData.planets.get("Gral")
     ))));
-    systemList.put("Coorneeq", new SystemModel(new ArrayList<>(List.of(
-        PlanetData.planets.get("Coorneeq"),
+    systemList.put("Corneeq", new SystemModel(new ArrayList<>(List.of(
+        PlanetData.planets.get("Corneeq"),
         PlanetData.planets.get("Resculon")
     ))));
     systemList.put("Dal Bootha", new SystemModel(new ArrayList<>(List.of(

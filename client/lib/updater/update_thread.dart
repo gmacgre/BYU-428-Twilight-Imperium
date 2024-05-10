@@ -1,7 +1,7 @@
 import 'package:client/model/update/update.dart';
 import 'package:client/service/messaging/update_service.dart';
 
-class UpdateThread implements UpdateServiceObserver{
+final class UpdateThread implements UpdateServiceObserver{
   static final UpdateThread thread = UpdateThread._();
   UpdateThread._() {
     _runCount = 0;

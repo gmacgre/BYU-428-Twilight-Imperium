@@ -18,6 +18,10 @@ class PlayerState extends _$PlayerState {
     state = PlayerStateObject(players: newPlayers);
   }
 
+  void invalidate() {
+    ref.invalidateSelf();
+  }
+
   void processUpdates(List<Update> updates) {
     List<Player> newState = state.players;
     for(Update u in updates) {

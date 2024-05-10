@@ -1,4 +1,5 @@
 import 'package:client/board/info/objective_view.dart';
+import 'package:client/data/color_data.dart';
 import 'package:client/res/hover_tip.dart';
 import 'package:client/res/outlined_letters.dart';
 import 'package:client/data/strings.dart';
@@ -6,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:client/board/info/strategy_card.dart';
 
 class PlayerOverview extends StatelessWidget {
-  PlayerOverview({
+  const PlayerOverview({
     super.key,
     this.race = "",
     this.strategyCardId = -1,
@@ -24,22 +25,14 @@ class PlayerOverview extends StatelessWidget {
   final int strategyTokenCount;
   final int victoryPoints;
   final int playerColor;
-  final List<Color> background = [
-    Colors.red,
-    Colors.blue,
-    Colors.purple,
-    Colors.black87,
-    Colors.green,
-    Colors.yellow,
-    Colors.orange
-  ];
+  
 
 
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: background[playerColor]
+        color: ColorData.playerColor[playerColor]
       ),
       child: Wrap(
         crossAxisAlignment: WrapCrossAlignment.center,
@@ -100,7 +93,7 @@ class _PoolCount extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.fromLTRB(0, 0, 0, 2.0),
             child: OutlinedLetters(content: title),
           ),
           CustomPaint(

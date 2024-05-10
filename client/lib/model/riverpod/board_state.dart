@@ -1,4 +1,4 @@
-import 'package:client/board/coordinate.dart';
+import 'package:client/res/coordinate.dart';
 import 'package:client/board/production_provider.dart';
 import 'package:client/board/ship_selector_provider.dart';
 import 'package:client/data/datacache.dart';
@@ -130,10 +130,8 @@ class BoardState extends _$BoardState {
     }
     //If someone owns the airspace and it's not the current player, go to combat phase
     // TODO: Real launch is here for later
-    if (state.activeSystemState!.systemOwner != null &&
-        DataCache.instance.userSeatNumber !=
-            DataCache.instance.players
-                .indexOf(state.activeSystemState!.systemOwner!)) {
+    if (state.activeSystemState!.systemOwner != -1 &&
+        DataCache.instance.userSeatNumber != state.activeSystemState!.systemOwner) {
       state = BoardStateObject(
         systemStates: state.systemStates,
         currentPhase: TurnPhase.combat,

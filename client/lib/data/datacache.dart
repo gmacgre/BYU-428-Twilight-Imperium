@@ -1,4 +1,4 @@
-import 'package:client/board/coordinate.dart';
+import 'package:client/res/coordinate.dart';
 import 'package:client/combat/force_makeup.dart';
 import 'package:client/data/system_data.dart';
 import 'package:client/model/objective.dart';
@@ -26,9 +26,9 @@ class DataCache {
 
   List<Player> players = [
     Player('jol_nar', false, 5, 5, 5, 3, false, 1),
-    Player('jol_nar', false, 5, 5, 5, 3, false, 1),
-    Player('jol_nar', false, 5, 5, 5, 3, false, 1),
-    Player('jol_nar', false, 5, 5, 5, 3, false, 1),
+    Player('sol', false, 5, 5, 5, 3, false, 1),
+    Player('hacan', false, 5, 5, 5, 3, false, 1),
+    Player('l1z1x', false, 5, 5, 5, 3, false, 1),
   ];
 
   List<Objective> publicObjectives = [];
@@ -36,9 +36,7 @@ class DataCache {
   List<List<SystemState>> boardState = [
     //Column 1
     [
-      SystemState(
-        systemModel: SystemData.systemList['Empty']!,
-      ),
+      SystemState(systemModel: SystemData.systemList['Empty']!,),
       SystemState(systemModel: SystemData.systemList['Empty']!),
       SystemState(systemModel: SystemData.systemList['Empty']!),
       SystemState(
@@ -46,6 +44,11 @@ class DataCache {
         airSpace: [
           ShipModel(1, 1, 1, 1, ShipType.fighter),
         ],
+        planets: [
+          PlanetState(planet: SystemData.systemList['Abyz']!.planets![0], planetOwner: 1, numGroundForces: 3),
+          PlanetState(planet: SystemData.systemList['Abyz']!.planets![1], planetOwner: 3, numGroundForces: 3)
+        ],
+        systemOwner: 2
       ),
       SystemState(systemModel: SystemData.systemList['Arinam']!),
       SystemState(systemModel: SystemData.systemList['Empty']!),
@@ -55,11 +58,12 @@ class DataCache {
     [
       SystemState(systemModel: SystemData.systemList['Empty']!),
       SystemState(systemModel: SystemData.systemList['Empty']!),
-      SystemState(systemModel: SystemData.systemList['Corneeq']!, airSpace: [
+      SystemState(systemModel: SystemData.systemList['Corneeq']!, 
+      airSpace: [
         ShipModel(1, 1, 1, 1, ShipType.fighter),
         ShipModel(1, 1, 1, 1, ShipType.fighter),
         ShipModel(1, 1, 1, 1, ShipType.flagship),
-      ]),
+      ], systemOwner: 2),
       SystemState(systemModel: SystemData.systemList['Empty']!),
       SystemState(systemModel: SystemData.systemList['Lazar']!),
       SystemState(systemModel: SystemData.systemList['Empty']!),
@@ -68,7 +72,11 @@ class DataCache {
     //Column 3
     [
       SystemState(systemModel: SystemData.systemList['Empty']!),
-      SystemState(systemModel: SystemData.systemList['Mehar Xull']!),
+      SystemState(systemModel: SystemData.systemList['Mehar Xull']!,
+      airSpace: [
+        ShipModel(1, 1, 1, 1, ShipType.cruiser),
+
+      ], systemOwner: 3),
       SystemState(systemModel: SystemData.systemList['Mellon']!),
       SystemState(systemModel: SystemData.systemList['Empty']!),
       SystemState(systemModel: SystemData.systemList['Bereg']!),
@@ -77,7 +85,12 @@ class DataCache {
     ],
     //Column 4
     [
-      SystemState(systemModel: SystemData.systemList['Hercant']!),
+      SystemState(systemModel: SystemData.systemList['Hercant']!,
+      airSpace: [
+        ShipModel(1, 1, 1, 1, ShipType.fighter),
+        ShipModel(1, 1, 1, 1, ShipType.fighter),
+        ShipModel(1, 1, 1, 1, ShipType.flagship),
+      ], systemOwner: 2),
       SystemState(systemModel: SystemData.systemList['Empty']!),
       SystemState(systemModel: SystemData.systemList['Dal Bootha']!),
       SystemState(systemModel: SystemData.systemList['Mecatol Rex']!),
@@ -93,7 +106,7 @@ class DataCache {
       SystemState(systemModel: SystemData.systemList['Empty']!),
       SystemState(
         systemModel: SystemData.systemList['Quann']!,
-        planets: [ PlanetState(planet: SystemData.systemList['Quann']!.planets![0], exhausted: true)]),
+        planets: [ PlanetState(planet: SystemData.systemList['Quann']!.planets![0], exhausted: true, planetOwner: 0, numGroundForces: 1)]),
       SystemState(systemModel: SystemData.systemList['Empty']!),
       SystemState(systemModel: SystemData.systemList['Empty']!),
     ],

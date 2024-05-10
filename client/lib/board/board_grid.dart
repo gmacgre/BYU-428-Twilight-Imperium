@@ -1,5 +1,6 @@
-import 'package:client/board/board_space.dart';
-import 'package:client/board/coordinate.dart';
+import 'package:client/board/board_space/board_space.dart';
+import 'package:client/model/riverpod/player_state.dart';
+import 'package:client/res/coordinate.dart';
 import 'package:client/board/production_widget.dart';
 import 'package:client/board/ship_selector_widget.dart';
 import 'package:client/combat/combat_page.dart';
@@ -24,6 +25,10 @@ class BoardGrid extends ConsumerStatefulWidget {
 class _BoardGridState extends ConsumerState<BoardGrid> {
   @override
   Widget build(BuildContext context) {
+    // This is for making sure the board updates even if only players are involved.
+    // Do not remove.
+    ref.watch(playerStateProvider).players;
+    
     List<List<SystemState>> systems =
         ref.watch(boardStateProvider).systemStates;
     Coordinate? activeCoordinate =

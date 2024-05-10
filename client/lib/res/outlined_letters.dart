@@ -13,6 +13,7 @@ class OutlinedLetters extends StatelessWidget {
         Text(
           content,
           style: TextStyle(
+            decoration: TextDecoration.none,
             fontSize: fontSize,
             foreground: Paint()
               ..style = PaintingStyle.stroke
@@ -26,7 +27,8 @@ class OutlinedLetters extends StatelessWidget {
           fontSize: fontSize,
           fontWeight: FontWeight.bold,
           color: Colors.white,
-          fontFamily: fontFamily
+          fontFamily: fontFamily,
+          decoration: TextDecoration.none
           ),
         ),
       ]

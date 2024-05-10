@@ -63,4 +63,7 @@ public class Tile {
         }
         state.ships = current;
     }
+    public void addGroundForce(int planet, int quantity, int owner) {
+        state.planetStates.get(planet).addGroundForce(quantity, owner);
+    }
 }

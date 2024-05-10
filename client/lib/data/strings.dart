@@ -1,12 +1,15 @@
 //This currently the best way to have content all in one place in flutter. There is a JSON reader version but I lost the aim in trying to make it work. This will do for now.
 //Everything in this class should be both const and static, with no private variables.
 
+import 'package:client/data/planet_data.dart';
+
 class Strings {
 
   static String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
   //Make class unable to be instantiated, only referenced statically
   Strings._();
-  static const String appTitle = 'TWILIGHT IMPERIUM';
+  static const String appTitle = 'Twilight Imperium';
+  static const String mainTitle = 'TWILIGHT IMPERIUM';
   static const String tagLine = 'Pax Magnifica, Bellum Gloriosum';
   static const String joinGame = 'Join Game';
   static const String createGame = 'Create Game';
@@ -90,4 +93,11 @@ class Strings {
 
 
   static const String noSystemSelected = 'No System Selected';
+
+  static Map<PlanetTrait, String> planetTrait = {
+    PlanetTrait.hazardous: 'Hazardous',
+    PlanetTrait.industrial: 'Industrial',
+    PlanetTrait.cultural: 'Cultural',
+    PlanetTrait.none: 'Normal'
+  };
 }

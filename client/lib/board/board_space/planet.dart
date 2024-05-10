@@ -1,3 +1,4 @@
+import 'package:client/data/color_data.dart';
 import 'package:client/data/planet_data.dart';
 import 'package:client/res/outlined_letters.dart';
 import 'package:flutter/material.dart';
@@ -7,8 +8,14 @@ class Planet extends StatefulWidget {
   const Planet({
     super.key,
     required this.planet,
+    required this.owner,
+    required this.numGroundForces,
+    required this.diameter
   });
   final PlanetModel planet;
+  final int owner;
+  final int numGroundForces;
+  final double diameter;
   @override
   State<Planet> createState() => _PlanetState();
 }
@@ -18,28 +25,27 @@ class _PlanetState extends State<Planet> {
   late OverlayEntry? entry;
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return MouseRegion(
       key: key,
-      child: ConstrainedBox(
-        constraints: BoxConstraints.tight(widget.planet.name != "Mecatol Rex"
-            ? const Size(
-                25,
-                25,
-              )
-            : const Size(40, 40)),
-        child: MouseRegion(
-          onEnter: _onEnter,
-          onExit: _onExit,
-          child: Container(
-            height: double.infinity,
-            width: double.infinity,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadiusDirectional.circular(40),
-                color: widget.planet.color,
-                border: Border.all(
-                  //This will be set to the controlling player's color
-                  color: Colors.black,
-                )),
+      onEnter: _onEnter,
+      onExit: _onExit,
+      child: Center(
+        child: Container(
+          width: (widget.planet.name == 'Mecatol Rex') ? widget.diameter * 1.5 : widget.diameter,
+          height: (widget.planet.name == 'Mecatol Rex') ? widget.diameter * 1.5 : widget.diameter,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadiusDirectional.circular(50),
+            color: (widget.owner == -1)? Colors.white : ColorData.playerColor[widget.owner],
+            border: Border.all(
+              width: 3,
+              //This will be set to the controlling player's color
+              color: ColorData.traitColor[widget.planet.trait]!,
+            )
+          ),
+          child: Center(
+            child: OutlinedLetters(
+              content: '${widget.numGroundForces}'
+            ),
           ),
         ),
       ),

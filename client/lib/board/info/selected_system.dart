@@ -1,4 +1,5 @@
-import 'package:client/board/coordinate.dart';
+import 'package:client/data/color_data.dart';
+import 'package:client/res/coordinate.dart';
 import 'package:client/data/planet_data.dart';
 import 'package:client/data/strings.dart';
 import 'package:client/data/system_data.dart';
@@ -98,7 +99,7 @@ class PlanetInfo extends StatelessWidget {
     PlanetState fullState;
     if (planet == null) {
       toUse = PlanetData.planets['null']!;
-      fullState = PlanetState(planet: toUse);
+      fullState = PlanetState(planet: toUse, planetOwner: -1, numGroundForces: 0);
     }
     else {
       toUse = planet!;
@@ -106,7 +107,7 @@ class PlanetInfo extends StatelessWidget {
     }
     return SizedBox(
       width: 100,
-      height: 150,
+      height: 180,
       child: Column(
         children: [
           OutlinedLetters(content: toUse.name),
@@ -121,7 +122,7 @@ class PlanetInfo extends StatelessWidget {
                     color: (fullState.exhausted) ? Colors.grey : toUse.color,
                     border: Border.all(
                       //This will be set to the controlling player's color
-                      color: Colors.black,
+                      color: (fullState.planetOwner != -1) ? ColorData.playerColor[fullState.planetOwner] : Colors.white,
                       width: 5
                     )),
                 child: (fullState.exhausted) ? const Center(child: Text('Exhausted', style: TextStyle(color: Color.fromARGB(255, 93, 25, 21)),)): null,
@@ -130,6 +131,7 @@ class PlanetInfo extends StatelessWidget {
           ),
           Text('Resources: ${toUse.resources}', style: style,),
           Text('Influence: ${toUse.influence}', style: style,),
+          Text(Strings.planetTrait[toUse.trait]!, style: style,),
         ],
       ),
     );

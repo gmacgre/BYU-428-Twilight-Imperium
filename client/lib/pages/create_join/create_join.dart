@@ -1,3 +1,4 @@
+import 'package:client/model/riverpod/player_state.dart';
 import 'package:client/pages/create_join/create_join_presenter.dart';
 import 'package:client/model/riverpod/board_state.dart';
 import 'package:client/res/outlined_letters.dart';
@@ -54,7 +55,7 @@ class _CreateAndJoinPageState extends ConsumerState<CreateAndJoinPage> implement
                   shaderCallback: (bounds) => titleGradiant.createShader(
                     Rect.fromLTWH(0, 0, bounds.width, bounds.height),
                   ),
-                  child: const Text(Strings.appTitle,
+                  child: const Text(Strings.mainTitle,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 100.0,
@@ -252,6 +253,7 @@ class _CreateAndJoinPageState extends ConsumerState<CreateAndJoinPage> implement
   @override
   void swapToBoard() {
     ref.read(boardStateProvider.notifier).invalidate();
+    ref.read(playerStateProvider.notifier).invalidate();
     Navigator.of(context).pushNamed('/game');
   }
 

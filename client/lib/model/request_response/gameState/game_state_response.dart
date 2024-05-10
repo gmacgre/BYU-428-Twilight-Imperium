@@ -149,9 +149,27 @@ class ResponseShip {
 
 // TODO: Complete as we add Ground Forces, PDS and Spacedocks
 class ResponsePlanetState {
-  ResponsePlanetState();
+  final int owner;
+  final int numPds;
+  final bool hasSpacedock;
+  final int numGroundForces;
+  ResponsePlanetState({
+    required this.owner,
+    required this.numGroundForces,
+    required this.numPds,
+    required this.hasSpacedock
+  });
   factory ResponsePlanetState.fromJson(Map<String, dynamic> json) {
-    return ResponsePlanetState();
+    return switch (json) {
+      {
+        'owner': int o,
+        'numPds': int nPds,
+        'hasSpacedock': bool hS,
+        'numGroundForces': int nGF
+      } => 
+        ResponsePlanetState(owner: o, numGroundForces: nGF, numPds: nPds, hasSpacedock: hS),
+      _ => throw const FormatException('Failed to load PlanetState')
+    };
   }
 }
 
