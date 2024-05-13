@@ -59,7 +59,6 @@ class _AsteroidPainter extends CustomPainter{
     canvas.drawOval(Rect.fromCenter(center: Offset(size.width * 0.05, size.height * 0.7), width: size.width * 0.25, height: size.height * 0.15), p);
     canvas.restore();
 
-
     canvas.drawCircle(Offset(size.width * 0.6, size.height * 0.7), size.width * 0.13, p);
     canvas.drawCircle(Offset(size.width * 0.25, size.height * 0.9), size.width * 0.08, p);
     canvas.drawCircle(Offset(size.width * 0.05, size.height * 0.5), size.width * 0.1, p);
@@ -76,7 +75,40 @@ class _AsteroidPainter extends CustomPainter{
 class _RiftPainter extends CustomPainter{
   @override
   void paint(Canvas canvas, Size size) {
-    // TODO: implement paint
+    canvas.drawCircle(Offset(size.width * 0.5, size.height * 0.5), size.width * 0.33, Paint()..color = const Color.fromARGB(190, 142, 76, 154));
+    canvas.drawCircle(Offset(size.width * 0.5, size.height * 0.5), size.width * 0.3, Paint()..color = Colors.white);
+
+
+    Paint p = Paint()
+      ..color = Colors.white;
+    List<List<double>> conicPoints = [
+      [size.width * 0.3, size.height * 0.1],
+      [size.width * 0.2, size.height * 0.2],
+
+      [size.width * 0.1, size.height * 0.3],
+      [size.width * 0.2, size.height * 0.2],
+
+      [size.width * 0.7, size.height * 0.9],
+      [size.width * 0.8, size.height * 0.8],
+
+      [size.width * 0.9, size.height * 0.7],
+      [size.width * 0.8, size.height * 0.8],
+      
+    ];
+
+    Path path = Path();
+    path.moveTo(size.width * 0.5, size.height * 0.5);
+    for(int i = 0; i < conicPoints.length; i+=2) {
+      path.conicTo(conicPoints[i][0], conicPoints[i][1], conicPoints[(i + 1) % conicPoints.length][0], conicPoints[(i + 1) % conicPoints.length][1], 1);
+      path.conicTo(conicPoints[i][0], conicPoints[i][1], size.width * 0.5, size.height * 0.5, 0.8);
+      path.conicTo(conicPoints[i][0], conicPoints[i][1], conicPoints[(i + 1) % conicPoints.length][0], conicPoints[(i + 1) % conicPoints.length][1], 3);
+      path.conicTo(conicPoints[i][0], conicPoints[i][1], size.width * 0.5, size.height * 0.5, 2);
+    }
+    canvas.drawPath(path, p);
+
+    canvas.drawCircle(Offset(size.width * 0.5, size.height * 0.5), size.width * 0.27, Paint()..color = Colors.black38);
+    canvas.drawCircle(Offset(size.width * 0.5, size.height * 0.5), size.width * 0.25, Paint()..color = Colors.black87);
+    
   }
 
   @override
@@ -102,12 +134,12 @@ class _NebulaPainter extends CustomPainter {
 class _SupernovaPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    canvas.drawCircle(Offset(size.width * 0.5, size.height * 0.5), size.width * 0.45, Paint()..color = Color.fromARGB(186, 175, 142, 52));
-    canvas.drawCircle(Offset(size.width * 0.5, size.height * 0.5), size.width * 0.4, Paint()..color = Color.fromARGB(186, 165, 88, 33));
-    canvas.drawCircle(Offset(size.width * 0.5, size.height * 0.5), size.width * 0.35, Paint()..color = Color.fromARGB(187, 165, 41, 33));
-    canvas.drawCircle(Offset(size.width * 0.5, size.height * 0.5), size.width * 0.3, Paint()..color = Color.fromARGB(186, 188, 77, 69));
-    canvas.drawCircle(Offset(size.width * 0.5, size.height * 0.5), size.width * 0.25, Paint()..color = Color.fromARGB(185, 209, 117, 111));
-    canvas.drawCircle(Offset(size.width * 0.5, size.height * 0.5), size.width * 0.05, Paint()..color = Color.fromARGB(184, 207, 164, 164));
+    canvas.drawCircle(Offset(size.width * 0.5, size.height * 0.5), size.width * 0.45, Paint()..color = const Color.fromARGB(186, 175, 142, 52));
+    canvas.drawCircle(Offset(size.width * 0.5, size.height * 0.5), size.width * 0.4, Paint()..color = const Color.fromARGB(186, 165, 88, 33));
+    canvas.drawCircle(Offset(size.width * 0.5, size.height * 0.5), size.width * 0.35, Paint()..color = const Color.fromARGB(187, 165, 41, 33));
+    canvas.drawCircle(Offset(size.width * 0.5, size.height * 0.5), size.width * 0.3, Paint()..color = const Color.fromARGB(186, 188, 77, 69));
+    canvas.drawCircle(Offset(size.width * 0.5, size.height * 0.5), size.width * 0.25, Paint()..color = const Color.fromARGB(185, 209, 117, 111));
+    canvas.drawCircle(Offset(size.width * 0.5, size.height * 0.5), size.width * 0.05, Paint()..color = const Color.fromARGB(184, 207, 164, 164));
   }
 
   @override
