@@ -25,26 +25,30 @@ class _PlanetState extends State<Planet> {
   late OverlayEntry? entry;
   @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-      key: key,
-      onEnter: _onEnter,
-      onExit: _onExit,
-      child: Center(
-        child: Container(
-          width: (widget.planet.name == 'Mecatol Rex') ? widget.diameter * 1.5 : widget.diameter,
-          height: (widget.planet.name == 'Mecatol Rex') ? widget.diameter * 1.5 : widget.diameter,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadiusDirectional.circular(50),
-            color: (widget.owner == -1)? Colors.white : ColorData.playerColor[widget.owner],
-            border: Border.all(
-              width: 3,
-              //This will be set to the controlling player's color
-              color: ColorData.traitColor[widget.planet.trait]!,
-            )
-          ),
-          child: Center(
-            child: OutlinedLetters(
-              content: '${widget.numGroundForces}'
+    return Center(
+      child: SizedBox(
+        width: (widget.planet.name == 'Mecatol Rex') ? widget.diameter * 1.5 : widget.diameter,
+        height: (widget.planet.name == 'Mecatol Rex') ? widget.diameter * 1.5 : widget.diameter,
+        child: MouseRegion(
+          key: key,
+          onEnter: _onEnter,
+          onExit: _onExit,
+          child: Container(
+            width: (widget.planet.name == 'Mecatol Rex') ? widget.diameter * 1.5 : widget.diameter,
+            height: (widget.planet.name == 'Mecatol Rex') ? widget.diameter * 1.5 : widget.diameter,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadiusDirectional.circular(50),
+              color: (widget.owner == -1)? Colors.white : ColorData.playerColor[widget.owner],
+              border: Border.all(
+                width: 3,
+                //This will be set to the controlling player's color
+                color: ColorData.traitColor[widget.planet.trait]!,
+              )
+            ),
+            child: Center(
+              child: OutlinedLetters(
+                content: '${widget.numGroundForces}'
+              ),
             ),
           ),
         ),

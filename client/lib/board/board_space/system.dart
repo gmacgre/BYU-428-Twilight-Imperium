@@ -26,7 +26,7 @@ class _SystemState extends ConsumerState<System> {
         widget.listener.processDoubleTap();
       },
       onTap: () {
-        widget.listener.processTap();;
+        widget.listener.processTap();
       },
       child: switch (systemSize) {
         3 => threePlanetSystem(),

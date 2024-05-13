@@ -51,7 +51,7 @@ class AirSpace extends StatelessWidget {
           warsunCount++;
       }
     }
-    String hoverContent = '${player!.getName()} Airspace';
+    String hoverContent = '${Strings.raceString[player!.getName()]!} Airspace';
     if (warsunCount != 0) {
       hoverContent = '$hoverContent\n$warsunCount WarSun(s)';
     }

@@ -153,5 +153,6 @@ public class SystemData {
     systemList.put("WormholeBeta", new SystemModel(SystemModel.Wormhole.beta));
     systemList.put("CreussGate", new SystemModel(SystemModel.Wormhole.delta));
     systemList.put("Empty", new SystemModel());
+    systemList.put("Undefined", new SystemModel());
 }
 }
