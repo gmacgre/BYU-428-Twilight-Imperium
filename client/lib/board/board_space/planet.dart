@@ -41,7 +41,6 @@ class _PlanetState extends State<Planet> {
               color: (widget.owner == -1)? Colors.white : ColorData.playerColor[widget.owner],
               border: Border.all(
                 width: 3,
-                //This will be set to the controlling player's color
                 color: ColorData.traitColor[widget.planet.trait]!,
               )
             ),

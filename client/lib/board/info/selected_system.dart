@@ -62,7 +62,7 @@ class SelectedSystem extends StatelessWidget {
       toReturn = toReturn.substring(0, toReturn.length - 3);
     }
     if (model.anomaly != null) {
-      return Strings.anomalyName[model.anomaly]!;
+      return Strings.anomalyDisplayName[model.anomaly]!;
     }
     return toReturn;
   }

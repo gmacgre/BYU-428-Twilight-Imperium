@@ -103,7 +103,7 @@ class Strings {
     PlanetTrait.none: 'Normal'
   };
 
-  static Map<String, String> raceString = {
+  static Map<String, String> raceDisplayName = {
     'arborec': 'Arborec',
     'argent': 'Argent',
     'creuss': 'Creuss',
@@ -132,10 +132,16 @@ class Strings {
     'yssaril': 'Yssaril',
   };
 
-  static Map<Anomaly, String> anomalyName = {
-    Anomaly.asteroid: 'Asteroid',
+  static Map<Anomaly, String> anomalyDisplayName = {
+    Anomaly.asteroid: 'Asteroid Field',
     Anomaly.nebula: 'Nebula',
     Anomaly.rift: 'Gravity Rift',
     Anomaly.supernova: 'Supernova',
+  };
+
+  static Map<Wormhole, String> wormholeDisplayName = {
+    Wormhole.alpha: 'Alpha Wormhole',
+    Wormhole.beta: 'Beta Wormhole',
+    Wormhole.gamma: 'Gamma Wormhole',
   };
 }

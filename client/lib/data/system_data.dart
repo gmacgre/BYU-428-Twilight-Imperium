@@ -10,7 +10,7 @@ class SystemModel {
   SystemModel({this.planets, this.anomaly, this.wormhole, this.homeSystem});
 }
 
-enum Wormhole { alpha, beta, delta }
+enum Wormhole { alpha, beta, gamma }
 
 enum Anomaly { asteroid, nebula, supernova, rift }
 
@@ -177,7 +177,7 @@ class SystemData {
       planets: [
         PlanetData.planets["Creuss"]!,
       ],
-      wormhole: Wormhole.delta,
+      wormhole: Wormhole.gamma,
       homeSystem: "Creuss",
     ),
     "[0.0.0]": SystemModel(
@@ -264,7 +264,7 @@ class SystemData {
       wormhole: Wormhole.beta,
     ),
     "CreussGate": SystemModel(
-      wormhole: Wormhole.delta,
+      wormhole: Wormhole.gamma,
     ),
     "Empty": SystemModel(),
     "Undefined": SystemModel()
