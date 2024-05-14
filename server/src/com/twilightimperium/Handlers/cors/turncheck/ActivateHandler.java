@@ -6,8 +6,6 @@ import com.twilightimperium.backend.Server;
 import com.twilightimperium.backend.model.RequestResponse.ActivateRequest;
 import com.twilightimperium.backend.model.RequestResponse.ErrorResponse;
 import com.twilightimperium.backend.model.game.Game;
-import com.twilightimperium.backend.model.update.ActivateUpdate;
-import com.twilightimperium.backend.model.update.Update;
 
 public class ActivateHandler extends BaseTurnCheckHandler{
 
@@ -26,11 +24,7 @@ public class ActivateHandler extends BaseTurnCheckHandler{
             int y = request.getCoords().y;
             Game game = server.getGameByToken(token);
             if (game.activateSystem(x, y, token)){
-                int playerNum = game.getPlayerSeatId(token);
                 
-                Update newUpdate = new ActivateUpdate(playerNum, x, y);
-                game.addUpdate(newUpdate);
-                server.updatePlayer(token);
                 sendResponse(exchange, "",200);
             } else {
                 sendResponse(exchange, gson.toJson(new ErrorResponse("System already active")),405);

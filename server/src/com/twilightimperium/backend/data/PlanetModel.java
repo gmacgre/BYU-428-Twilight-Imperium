@@ -28,6 +28,23 @@ public class PlanetModel {
         this.techColor = Tech.none;
         this.trait = trait;
     }
+    public String getName() {
+        return name;
+    }
+    public int getResources() {
+        return resources;
+    }
+    public int getInfluence() {
+        return influence;
+    }
+    public Tech getTechColor() {
+        return techColor;
+    }
+    public PlanetTrait getTrait() {
+        return trait;
+    }
+
+    
 }
     
 enum PlanetTrait {

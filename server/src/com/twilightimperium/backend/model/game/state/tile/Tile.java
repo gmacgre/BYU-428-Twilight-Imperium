@@ -33,6 +33,10 @@ public class Tile {
         updateModels();
     }
 
+    public String getSystem() {
+        return system;
+    }
+
     // Private Setter method for constructors and setSystem()
     private void updateModels() {
         if (system != null) {
@@ -65,5 +69,41 @@ public class Tile {
     }
     public void addGroundForce(int planet, int quantity, int owner) {
         state.planetStates.get(planet).addGroundForce(quantity, owner);
+    }
+
+
+    public void spreadForces(int groundForces, int owner) {
+        int size = state.planetStates.size();
+        int perPlanet = groundForces / size;
+        int remainder = groundForces % size;
+        for(int i = 0; i < size; i++) {
+            addGroundForce(i, perPlanet, owner);
+            if(remainder != 0) {
+                addGroundForce(i, 1, owner);
+                remainder--;
+            }
+        }
+    }
+
+    public boolean addSpacedock(int owner) {
+        // Always pick the system with the greater value that the owner controls
+        int idx = -1;
+        int value = -1;
+        for(int i = 0; i < SystemData.systemList.get(system).getPlanets().size(); i++) {
+            if(state.planetStates.get(i).hasSpacedock || state.planetStates.get(i).owner != owner) {
+                continue;
+            }
+            int nVal = SystemData.systemList.get(system).getPlanets().get(i).getResources();
+            if(nVal > value) {
+                value = nVal;
+                idx = i;
+            }
+        }
+        if(idx == -1) {
+            // All systems have spacedocks or are controlled by others already!
+            return false;
+        }
+        state.planetStates.get(idx).hasSpacedock = true;
+        return true;
     }
 }

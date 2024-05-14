@@ -16,7 +16,7 @@ class GameStateResponse {
   factory GameStateResponse.fromJson(Map<String, dynamic> json) {
     return switch (json) {
       {
-        'map': Map<String, dynamic> map,
+        'board': Map<String, dynamic> map,
         'players': List<dynamic> players,
         'world': Map<String, dynamic> world
       } =>

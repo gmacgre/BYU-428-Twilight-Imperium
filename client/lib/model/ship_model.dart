@@ -60,7 +60,7 @@ enum ShipType {
       case 'WARSUNS': {
         return ShipType.warsun;
       }
-      case 'DREADNAUGHT': {
+      case 'DREADNOUGHT': {
         return ShipType.dreadnought;
       }
       case 'CRUISER': {

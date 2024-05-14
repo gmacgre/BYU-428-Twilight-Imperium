@@ -7,7 +7,6 @@ import com.twilightimperium.Handlers.cors.UpdateHandler;
 import com.twilightimperium.Handlers.cors.turncheck.ActivateHandler;
 import com.twilightimperium.Handlers.cors.turncheck.MoveHandler;
 import com.twilightimperium.backend.model.game.Game;
-import com.twilightimperium.backend.model.update.Update;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -102,26 +101,6 @@ public class Server {
         game.addPlayer(token, playerNum);
         tokenToGameIndex.put(token, gameIdToIndex.get(gameCode));
         return token;
-    }
-
-    public List<Pair<Integer,Update>> getUpdateList(String token){
-        return ongoingGames.get(tokenToGameIndex.get(token)).getUpdateList();
-    }
-
-    public Integer getPlayerUpdate(String token){
-        return ongoingGames.get(tokenToGameIndex.get(token)).getPlayerUpdate(token);
-    }
-
-    public void updatePlayer(String token){
-        ongoingGames.get(tokenToGameIndex.get(token)).updatePlayer(token);
-    }
-
-    public void addUpdate(String token, Update update){
-        ongoingGames.get(tokenToGameIndex.get(token)).addUpdate(update);
-    }
-
-    public void setPlayerUpdate(String token, Integer first) {
-        ongoingGames.get(tokenToGameIndex.get(token)).setPlayerUpdate(token, first);
     }
 }
 
