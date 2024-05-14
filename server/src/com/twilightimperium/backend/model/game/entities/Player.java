@@ -12,7 +12,7 @@ public class Player {
 
 
     public Player(){
-        race = "Not chosen";
+        race = "not_chosen";
         passed = false;
     }
 

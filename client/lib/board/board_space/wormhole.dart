@@ -30,7 +30,8 @@ class WormholeWidget extends StatelessWidget {
                   content: switch (wormhole) {
                     Wormhole.alpha => 'α',
                     Wormhole.beta => 'β',
-                    Wormhole.gamma => 'γ'
+                    Wormhole.gamma => 'γ',
+                    Wormhole.delta => 'δ'
                   }
                 ),
               ),
@@ -45,7 +46,8 @@ class WormholeWidget extends StatelessWidget {
     return switch (wormhole) {
       Wormhole.alpha => const Color.fromARGB(200, 255, 179, 66),
       Wormhole.beta => const Color.fromARGB(200, 92, 212, 71),
-      Wormhole.gamma => const Color.fromARGB(200, 233, 102, 145)
+      Wormhole.delta => const Color.fromARGB(199, 102, 117, 233),
+      Wormhole.gamma => const Color.fromARGB(200, 233, 102, 145),
     };
   }
 }

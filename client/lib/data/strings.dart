@@ -60,7 +60,7 @@ class Strings {
 
   static String victoryPoints = 'Victory Points';
 
-  static String noSelectedRace = 'Not chosen';
+  static String noSelectedRace = 'not_chosen';
 
   static const String selectedShips = 'Selected Ships';
   static const String selectableShips = 'Selectable Ships';
@@ -130,6 +130,7 @@ class Strings {
     'xxcha': 'Xxcha',
     'yin': 'Yin',
     'yssaril': 'Yssaril',
+    'not_chosen': 'Unchosen'
   };
 
   static Map<Anomaly, String> anomalyDisplayName = {
@@ -142,6 +143,6 @@ class Strings {
   static Map<Wormhole, String> wormholeDisplayName = {
     Wormhole.alpha: 'Alpha Wormhole',
     Wormhole.beta: 'Beta Wormhole',
-    Wormhole.gamma: 'Gamma Wormhole',
+    Wormhole.delta: 'Gamma Wormhole',
   };
 }

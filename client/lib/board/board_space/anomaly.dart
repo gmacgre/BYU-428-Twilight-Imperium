@@ -2,6 +2,7 @@ import 'package:client/data/strings.dart';
 import 'package:client/data/system_data.dart';
 import 'package:client/res/hover_tip.dart';
 import 'package:flutter/material.dart';
+import 'dart:math' as math;
 
 class AnomalyWidget extends StatelessWidget {
   const AnomalyWidget({
@@ -121,7 +122,47 @@ class _RiftPainter extends CustomPainter{
 class _NebulaPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    // TODO: implement paint
+    
+    Paint p = Paint();
+
+
+    p.color = const Color.fromARGB(200, 87, 235, 92);
+    canvas.drawCircle(Offset(size.width * 0.5, size.height * 0.5), size.width * 0.35, p);
+    p.color = const Color.fromARGB(198, 175, 142, 76);
+    // Outer "reaching" branches    
+    Path path = Path();
+    path.moveTo(size.width * 0.5, size.height * 0.4);
+    path.conicTo(size.width * 0.05, size.height * 0.53, 0.0, size.height * 0.47, 1);
+    path.conicTo(size.width * 0.05, size.height * 0.53, size.width * 0.5, size.height * 0.6, 2);
+    
+    
+    canvas.drawPath(path, p);
+
+    path = Path();
+    path.addArc(Rect.fromCenter(center: Offset(size.width * 0.75, size.height * 0.35), width: size.width * 0.4, height: size.height * 0.4), 0.0, -math.pi);
+    path.addArc(Rect.fromCenter(center: Offset(size.width * 0.77, size.height * 0.35), width: size.width * 0.35, height: size.height * 0.3), math.pi, math.pi);
+
+    path.addArc(Rect.fromCenter(center: Offset(size.width * 0.8, size.height * 0.6), width: size.width * 0.4, height: size.height * 0.4), (math.pi)/4, -math.pi);
+    path.addArc(Rect.fromCenter(center: Offset(size.width * 0.83, size.height * 0.63), width: size.width * 0.3, height: size.height * 0.3), (5 * math.pi)/4, math.pi);
+    
+    canvas.drawPath(path, p);
+
+    path = Path();
+    path.moveTo(size.width * 0.4, size.height * 0.5);
+    // path.lineTo(size.width * 0.2, size.height * 0.6);
+    // path.lineTo(size.width * 0.6, size.height * 0.5);
+    path.conicTo(size.width * 0.4, size.height * 0.9, size.width * 0.2, size.height * 0.9, 1);
+    path.conicTo(size.width * 0.5, size.height * 0.9, size.width * 0.6, size.height * 0.5, 1);
+    canvas.drawPath(path, p);
+
+    p.color = const Color.fromARGB(200, 87, 235, 92);
+    canvas.drawCircle(Offset(size.width * 0.5, size.height * 0.5), size.width * 0.3, p);
+    p.color = const Color.fromARGB(199, 70, 206, 239);
+    canvas.drawCircle(Offset(size.width * 0.5, size.height * 0.5), size.width * 0.25, p);
+    p.color = const Color.fromARGB(199, 146, 17, 60);
+    canvas.drawCircle(Offset(size.width * 0.5, size.height * 0.5), size.width * 0.1, p);
+
+    
   }
 
   @override

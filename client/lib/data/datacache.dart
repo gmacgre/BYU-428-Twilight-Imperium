@@ -30,7 +30,7 @@ class DataCache {
     Player('hacan', false, 5, 5, 5, 3, false, 1),
     Player('l1z1x', false, 5, 5, 5, 3, false, 1),
     Player('letnev', false, 5, 5, 5, 3, false, 1),
-    Player('winnu', false, 5, 5, 5, 3, false, 1),
+    Player('creuss', false, 5, 5, 5, 3, false, 1),
   ];
 
   List<Objective> publicObjectives = [];
@@ -119,13 +119,13 @@ class DataCache {
     //Column 6
     [
       SystemState(systemModel: SystemData.systemList['Empty']!),
-      SystemState(systemModel: SystemData.systemList['Empty']!),
+      SystemState(systemModel: SystemData.systemList['Creuss']!),
       SystemState(systemModel: SystemData.systemList['Nebula']!),
       SystemState(systemModel: SystemData.systemList['Darien']!,
       planets: [
         PlanetState(planet: SystemData.systemList['Darien']!.planets![0], planetOwner: 2, numGroundForces: 0)
       ]),
-      SystemState(systemModel: SystemData.systemList['Empty']!),
+      SystemState(systemModel: SystemData.systemList['CreussGate']!),
       SystemState(systemModel: SystemData.systemList['Undefined']!),
       SystemState(systemModel: SystemData.systemList['Undefined']!),
     ],
