@@ -1,5 +1,7 @@
+import 'package:client/board/board_space/anomaly.dart';
 import 'package:client/board/board_space/board_click_interface.dart';
 import 'package:client/board/board_space/planet.dart';
+import 'package:client/board/board_space/wormhole.dart';
 import 'package:client/data/system_data.dart';
 import 'package:client/model/planet_state.dart';
 import 'package:flutter/widgets.dart';
@@ -20,89 +22,105 @@ class _SystemState extends ConsumerState<System> {
   @override
   Widget build(BuildContext context) {
     int systemSize =
-        widget.system.planets != null ? widget.system.planets!.length : 0;
+        (widget.system.planets != null ? widget.system.planets!.length : 0) +
+        (widget.system.anomaly != null ? 1 : 0) +
+        (widget.system.wormhole != null ? 1 : 0);
     return GestureDetector(
       onDoubleTap: (){
         widget.listener.processDoubleTap();
       },
       onTap: () {
-        widget.listener.processTap();;
+        widget.listener.processTap();
       },
       child: switch (systemSize) {
-        3 => threePlanetSystem(),
-        2 => twoPlanetSystem(),
-        1 => onePlanetSystem(),
+        // 4 => fourItemSystem(),
+        3 => _threeItemSystem(),
+        2 => _twoItemSystem(),
+        1 => _oneItemSystem(),
         int() => null
       },
     );
   }
 
-  Widget twoPlanetSystem() {
+  List<Widget> _interiors(double size) {
+    List<Widget> toReturn = [];
+    if(widget.planets != null) {
+      for(int i = 0; i < widget.planets!.length; i++) {
+        toReturn.add(
+          Planet(
+            planet: widget.system.planets![i], 
+            owner: widget.planets![i].planetOwner, 
+            numGroundForces: widget.planets![i].numGroundForces, 
+            diameter: size
+          )
+        );
+      }
+    }
+    if(widget.system.wormhole != null) {
+      toReturn.add(
+        WormholeWidget(
+          wormhole: widget.system.wormhole!,
+          diameter: size
+        )
+      );
+    }
+    if(widget.system.anomaly != null) {
+      toReturn.add(
+        AnomalyWidget(
+          anomaly: widget.system.anomaly!,
+          diameter: size
+        )
+      );
+    }
+    return toReturn;
+  }
+
+  Widget _twoItemSystem() {
+    List<Widget> interiors = _interiors(widget.constraints.maxHeight * 0.4);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
           padding: EdgeInsets.fromLTRB(widget.constraints.maxHeight * 0.2, 0, 0, 0),
-          child: Planet(
-            planet: widget.system.planets![0],
-            owner: widget.planets![0].planetOwner,
-            numGroundForces: widget.planets![0].numGroundForces,
-            diameter: widget.constraints.maxHeight * 0.4
-          ),
+          child: interiors[0]
         ),
         Padding(
           padding: EdgeInsets.fromLTRB(0, 0, widget.constraints.maxHeight * 0.2, 0),
-          child: Planet(
-            planet: widget.system.planets![1],
-            owner: widget.planets![1].planetOwner,
-            numGroundForces: widget.planets![1].numGroundForces,
-            diameter: widget.constraints.maxHeight * 0.4
-          ),
+          child: interiors[1]
         ),
       ],
     );
   }
 
-  Widget onePlanetSystem() {
+  Widget _oneItemSystem() {
+    List<Widget> interiors;
+    if(widget.system.anomaly != null) {
+      interiors = _interiors(widget.constraints.maxWidth);
+    }
+    else {
+      interiors = _interiors(widget.constraints.maxHeight * 0.4);
+    }
+    
     return Center(
-      child: Planet(
-        planet: widget.system.planets![0],
-        numGroundForces: widget.planets![0].numGroundForces,
-        owner: widget.planets![0].planetOwner,
-        diameter: widget.constraints.maxHeight * 0.4
-      ),
+      child: interiors[0]
     );
   }
 
-  Widget threePlanetSystem() {
+  Widget _threeItemSystem() {
+    List<Widget> interiors = _interiors(widget.constraints.maxHeight * 0.3);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Planet(
-          planet: widget.system.planets![0],
-          numGroundForces: widget.planets![0].numGroundForces,
-          owner: widget.planets![0].planetOwner,
-          diameter: widget.constraints.maxHeight * 0.3
-        ),
+        interiors[0],
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Planet(
-              planet: widget.system.planets![1],
-              owner: widget.planets![1].planetOwner,
-              numGroundForces: widget.planets![1].numGroundForces,
-              diameter: widget.constraints.maxHeight * 0.3
-            ),
+            interiors[1],
             SizedBox(
               width: widget.constraints.maxWidth * 0.1,
             ),
-            Planet(
-              planet: widget.system.planets![2],
-              owner: widget.planets![2].planetOwner,
-              numGroundForces: widget.planets![2].numGroundForces,
-              diameter: widget.constraints.maxHeight * 0.3
-            ),
+            interiors[2]
           ],
         ),
       ],

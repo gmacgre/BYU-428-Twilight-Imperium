@@ -2,6 +2,7 @@
 //Everything in this class should be both const and static, with no private variables.
 
 import 'package:client/data/planet_data.dart';
+import 'package:client/data/system_data.dart';
 
 class Strings {
 
@@ -59,7 +60,7 @@ class Strings {
 
   static String victoryPoints = 'Victory Points';
 
-  static String noSelectedRace = 'Not chosen';
+  static String noSelectedRace = 'not_chosen';
 
   static const String selectedShips = 'Selected Ships';
   static const String selectableShips = 'Selectable Ships';
@@ -90,7 +91,8 @@ class Strings {
 
   static const String production = "Production";
   static const String nextPhase = 'Next Phase';
-
+  static const String exhausted = 'Exhausted';
+  static const String ready = 'Ready';
 
   static const String noSystemSelected = 'No System Selected';
 
@@ -99,5 +101,48 @@ class Strings {
     PlanetTrait.industrial: 'Industrial',
     PlanetTrait.cultural: 'Cultural',
     PlanetTrait.none: 'Normal'
+  };
+
+  static Map<String, String> raceDisplayName = {
+    'arborec': 'Arborec',
+    'argent': 'Argent',
+    'creuss': 'Creuss',
+    'empyrean': 'Empyrean',
+    'hacan': 'Hacan',
+    'jol_nar': 'Jol Nar',
+    'keleres': 'Keleres',
+    'l1z1x': 'L1Z1X',
+    'lazax': 'Lazax',
+    'letnev': 'Letnev',
+    'mahact': 'Mahact',
+    'mentak': 'Mentak',
+    'muaat': 'Muaat',
+    'naalu': 'Naalu',
+    'naaz_rhoka': 'Naaz-Rokha',
+    'nekro': 'Nekro Virus',
+    'nomad': 'Nomad',
+    'saar': 'Saar',
+    'sardakk': 'Sardakk',
+    'sol': 'Sol',
+    'titans': 'Titans',
+    'vuil_raith': 'Vuil\'Raith',
+    'winnu': 'Winnu',
+    'xxcha': 'Xxcha',
+    'yin': 'Yin',
+    'yssaril': 'Yssaril',
+    'not_chosen': 'Unchosen'
+  };
+
+  static Map<Anomaly, String> anomalyDisplayName = {
+    Anomaly.asteroid: 'Asteroid Field',
+    Anomaly.nebula: 'Nebula',
+    Anomaly.rift: 'Gravity Rift',
+    Anomaly.supernova: 'Supernova',
+  };
+
+  static Map<Wormhole, String> wormholeDisplayName = {
+    Wormhole.alpha: 'Alpha Wormhole',
+    Wormhole.beta: 'Beta Wormhole',
+    Wormhole.delta: 'Gamma Wormhole',
   };
 }

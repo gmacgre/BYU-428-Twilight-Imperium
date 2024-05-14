@@ -29,6 +29,8 @@ class DataCache {
     Player('sol', false, 5, 5, 5, 3, false, 1),
     Player('hacan', false, 5, 5, 5, 3, false, 1),
     Player('l1z1x', false, 5, 5, 5, 3, false, 1),
+    Player('letnev', false, 5, 5, 5, 3, false, 1),
+    Player('creuss', false, 5, 5, 5, 3, false, 1),
   ];
 
   List<Objective> publicObjectives = [];
@@ -36,9 +38,9 @@ class DataCache {
   List<List<SystemState>> boardState = [
     //Column 1
     [
-      SystemState(systemModel: SystemData.systemList['Empty']!,),
-      SystemState(systemModel: SystemData.systemList['Empty']!),
-      SystemState(systemModel: SystemData.systemList['Empty']!),
+      SystemState(systemModel: SystemData.systemList['Undefined']!,),
+      SystemState(systemModel: SystemData.systemList['Undefined']!),
+      SystemState(systemModel: SystemData.systemList['Undefined']!),
       SystemState(
         systemModel: SystemData.systemList['Abyz']!,
         airSpace: [
@@ -50,14 +52,18 @@ class DataCache {
         ],
         systemOwner: 2
       ),
-      SystemState(systemModel: SystemData.systemList['Arinam']!),
+      SystemState(systemModel: SystemData.systemList['Arinam']!,
+      planets: [
+        PlanetState(planet: SystemData.systemList['Arinam']!.planets![0], planetOwner: 4, numGroundForces: 2),
+        PlanetState(planet: SystemData.systemList['Arinam']!.planets![1], planetOwner: 5, numGroundForces: 8)
+      ]),
       SystemState(systemModel: SystemData.systemList['Empty']!),
       SystemState(systemModel: SystemData.systemList['Arnor']!),
     ],
     //Column 2
     [
-      SystemState(systemModel: SystemData.systemList['Empty']!),
-      SystemState(systemModel: SystemData.systemList['Empty']!),
+      SystemState(systemModel: SystemData.systemList['Undefined']!),
+      SystemState(systemModel: SystemData.systemList['Undefined']!),
       SystemState(systemModel: SystemData.systemList['Corneeq']!, 
       airSpace: [
         ShipModel(1, 1, 1, 1, ShipType.fighter),
@@ -71,7 +77,7 @@ class DataCache {
     ],
     //Column 3
     [
-      SystemState(systemModel: SystemData.systemList['Empty']!),
+      SystemState(systemModel: SystemData.systemList['Undefined']!),
       SystemState(systemModel: SystemData.systemList['Mehar Xull']!,
       airSpace: [
         ShipModel(1, 1, 1, 1, ShipType.cruiser),
@@ -108,27 +114,30 @@ class DataCache {
         systemModel: SystemData.systemList['Quann']!,
         planets: [ PlanetState(planet: SystemData.systemList['Quann']!.planets![0], exhausted: true, planetOwner: 0, numGroundForces: 1)]),
       SystemState(systemModel: SystemData.systemList['Empty']!),
-      SystemState(systemModel: SystemData.systemList['Empty']!),
+      SystemState(systemModel: SystemData.systemList['Undefined']!),
     ],
     //Column 6
     [
       SystemState(systemModel: SystemData.systemList['Empty']!),
-      SystemState(systemModel: SystemData.systemList['Empty']!),
-      SystemState(systemModel: SystemData.systemList['Empty']!),
-      SystemState(systemModel: SystemData.systemList['Darien']!),
-      SystemState(systemModel: SystemData.systemList['Empty']!),
-      SystemState(systemModel: SystemData.systemList['Empty']!),
-      SystemState(systemModel: SystemData.systemList['Empty']!),
+      SystemState(systemModel: SystemData.systemList['Creuss']!),
+      SystemState(systemModel: SystemData.systemList['Nebula']!),
+      SystemState(systemModel: SystemData.systemList['Darien']!,
+      planets: [
+        PlanetState(planet: SystemData.systemList['Darien']!.planets![0], planetOwner: 2, numGroundForces: 0)
+      ]),
+      SystemState(systemModel: SystemData.systemList['CreussGate']!),
+      SystemState(systemModel: SystemData.systemList['Undefined']!),
+      SystemState(systemModel: SystemData.systemList['Undefined']!),
     ],
     //Column 7
     [
       SystemState(systemModel: SystemData.systemList['Retillion']!),
-      SystemState(systemModel: SystemData.systemList['Empty']!),
-      SystemState(systemModel: SystemData.systemList['Empty']!),
-      SystemState(systemModel: SystemData.systemList['Empty']!),
-      SystemState(systemModel: SystemData.systemList['Empty']!),
-      SystemState(systemModel: SystemData.systemList['Empty']!),
-      SystemState(systemModel: SystemData.systemList['Empty']!),
+      SystemState(systemModel: SystemData.systemList['Asteroid']!),
+      SystemState(systemModel: SystemData.systemList['Supernova']!),
+      SystemState(systemModel: SystemData.systemList['Rift']!),
+      SystemState(systemModel: SystemData.systemList['Undefined']!),
+      SystemState(systemModel: SystemData.systemList['Undefined']!),
+      SystemState(systemModel: SystemData.systemList['Undefined']!),
     ],
   ];
 

@@ -5,6 +5,7 @@ import 'package:client/data/strings.dart';
 import 'package:client/data/system_data.dart';
 import 'package:client/model/planet_state.dart';
 import 'package:client/model/system_state.dart';
+import 'package:client/res/hover_tip.dart';
 import 'package:client/res/outlined_letters.dart';
 import 'package:flutter/material.dart';
 
@@ -50,7 +51,7 @@ class SelectedSystem extends StatelessWidget {
   }
 
   String _buildSystemName(SystemModel model) {
-    if (model.planets == null && model.anomalies == null && model.wormhole == null) {
+    if (model.planets == null && model.anomaly == null && model.wormhole == null) {
       return 'Empty Space';
     }
     String toReturn = '';
@@ -59,7 +60,9 @@ class SelectedSystem extends StatelessWidget {
         toReturn += "${planet.name} - ";
       }
       toReturn = toReturn.substring(0, toReturn.length - 3);
-      return toReturn;
+    }
+    if (model.anomaly != null) {
+      return Strings.anomalyDisplayName[model.anomaly]!;
     }
     return toReturn;
   }
@@ -119,13 +122,14 @@ class PlanetInfo extends StatelessWidget {
                 width: double.infinity,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadiusDirectional.circular(40),
-                    color: (fullState.exhausted) ? Colors.grey : toUse.color,
+                    color: (fullState.planetOwner != -1) ? ColorData.playerColor[fullState.planetOwner] : Colors.white,
                     border: Border.all(
-                      //This will be set to the controlling player's color
-                      color: (fullState.planetOwner != -1) ? ColorData.playerColor[fullState.planetOwner] : Colors.white,
+                      color: ColorData.traitColor[toUse.trait]!,
                       width: 5
                     )),
-                child: (fullState.exhausted) ? const Center(child: Text('Exhausted', style: TextStyle(color: Color.fromARGB(255, 93, 25, 21)),)): null,
+                child: (fullState.exhausted) ? 
+                  const HoverTip(message: Strings.exhausted, child: Icon(Icons.access_time, size: 40.0, color: Colors.white,)) : 
+                  const HoverTip(message: Strings.ready, child: Icon(Icons.check, size: 40.0, color: Colors.white,))
               ),
             ),
           ),

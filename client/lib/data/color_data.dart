@@ -8,8 +8,9 @@ class ColorData {
     Colors.purple,
     Colors.green,
     Colors.yellow,
-    Colors.orange,
     Colors.black87,
+    Colors.orange,
+    Colors.pink
   ];
 
   static final Map<PlanetTrait, Color> traitColor = {

@@ -16,13 +16,13 @@ public class BoardState {
         // This is a default map, use it for now.
         // 6 Player default map
         String[][] row = {
-            {   "Empty", "Empty", "Empty", "Jord", "Tequ'ran", "Empty", "Winnu"},
-            {   "Empty", "Empty", "Thibah", "Mellon", "Lodor", "New Albion", "Vefut II"},
-            {   "Empty", "Supernova", "WormholeBeta", "Asteroid", "Mehar Xull", "Empty", "Centauri"},
+            {   "Undefined", "Undefined", "Undefined", "Jord", "Tequ'ran", "Empty", "Winnu"},
+            {   "Undefined", "Undefined", "Thibah", "Mellon", "Lodor", "New Albion", "Vefut II"},
+            {   "Undefined", "Supernova", "WormholeBeta", "Asteroid", "Mehar Xull", "Empty", "Centauri"},
             {   "Jol", "Bereg", "Tar'Mann", "Mecatol Rex", "Nebula", "Corneeq", "Hercant"},
-            {   "Dal Bootha", "Saudor", "Asteroid", "Wellon", "Quann", "Qucen'n", "Empty"},
-            {   "Empty", "Arnor", "WormholeAlpha", "Abyz", "Arinam", "Empty", "Empty"},
-            {   "Archon Ren", "Lazar", "Empty", "Lisis II", "Empty", "Empty", "Empty"}
+            {   "Dal Bootha", "Saudor", "Asteroid", "Wellon", "Quann", "Qucen'n", "Undefined"},
+            {   "Empty", "Arnor", "WormholeAlpha", "Abyz", "Arinam", "Undefined", "Undefined"},
+            {   "Archon Ren", "Lazar", "Empty", "Lisis II", "Undefined", "Undefined", "Undefined"}
         };
         for(int i = 0; i < row.length; i++) {
             for(int j = 0; j < row[i].length; j++) {
@@ -37,8 +37,8 @@ public class BoardState {
         addGroundForce(3, 1, 0, 0, 3);
         addGroundForce(3, 1, 1, 0, 3);
         addShip(3, 6, ShipClass.DREADNOUGHT, 2);
-        addShip(3, 6, ShipClass.WARSUN, 2);
-        addShip(3, 6, ShipClass.WARSUN, 2);
+        // addShip(3, 6, ShipClass.WARSUN, 2);
+        // addShip(3, 6, ShipClass.WARSUN, 2);
     }
 
     private void setTile(int x, int y, Tile newTile){

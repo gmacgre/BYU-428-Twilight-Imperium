@@ -21,7 +21,6 @@ class AirSpace extends StatelessWidget {
   final BoardClickInterface listener;
   @override
   Widget build(BuildContext context) {
-  
     if(player == null || owner == -1) {
       return Container();
     }
@@ -51,7 +50,7 @@ class AirSpace extends StatelessWidget {
           warsunCount++;
       }
     }
-    String hoverContent = '${player!.getName()} Airspace';
+    String hoverContent = '${Strings.raceDisplayName[player!.getName()]!} Airspace';
     if (warsunCount != 0) {
       hoverContent = '$hoverContent\n$warsunCount WarSun(s)';
     }
@@ -73,7 +72,7 @@ class AirSpace extends StatelessWidget {
     if (fighterCount != 0) {
       hoverContent = '$hoverContent\n$fighterCount Fighter(s)';
     }
-    String iconLoc = Strings.raceIcon(player!.getName());
+    String iconLoc = (player!.getName() != Strings.noSelectedRace) ? Strings.raceIcon(player!.getName()) : Strings.agendaIcon;
     double size = constraints.maxWidth * 0.33;
     return GestureDetector(
       onTap: () {
@@ -89,7 +88,7 @@ class AirSpace extends StatelessWidget {
           child: SizedBox(
             height: size, 
             width: size,
-            child: Image.asset(iconLoc, fit: BoxFit.fitWidth,),
+            child: Image.asset(iconLoc, fit: BoxFit.fitWidth),
           )
         ),
       ),

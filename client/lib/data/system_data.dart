@@ -3,14 +3,14 @@ import 'package:client/data/planet_data.dart';
 //This differs from the SystemState, it only includes the basic info of a system
 class SystemModel {
   List<PlanetModel>? planets;
-  List<Anomaly>? anomalies;
+  Anomaly? anomaly;
   Wormhole? wormhole;
   String? homeSystem;
 
-  SystemModel({this.planets, this.anomalies, this.wormhole, this.homeSystem});
+  SystemModel({this.planets, this.anomaly, this.wormhole, this.homeSystem});
 }
 
-enum Wormhole { alpha, beta, delta }
+enum Wormhole { alpha, beta, delta, gamma }
 
 enum Anomaly { asteroid, nebula, supernova, rift }
 
@@ -246,16 +246,16 @@ class SystemData {
       homeSystem: "Yssaril",
     ),
     "Asteroid": SystemModel(
-      anomalies: [Anomaly.asteroid],
+      anomaly: Anomaly.asteroid,
     ),
     "Supernova": SystemModel(
-      anomalies: [Anomaly.asteroid],
+      anomaly: Anomaly.supernova,
     ),
     "Rift": SystemModel(
-      anomalies: [Anomaly.asteroid],
+      anomaly: Anomaly.rift,
     ),
     "Nebula": SystemModel(
-      anomalies: [Anomaly.asteroid],
+      anomaly: Anomaly.nebula,
     ),
     "WormholeAlpha": SystemModel(
       wormhole: Wormhole.alpha,
@@ -267,5 +267,6 @@ class SystemData {
       wormhole: Wormhole.delta,
     ),
     "Empty": SystemModel(),
+    "Undefined": SystemModel()
   };
 }
