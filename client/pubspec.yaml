@@ -71,15 +71,14 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/icons/black/general/
-    - assets/icons/black/race/
-    - assets/icons/color/general/
-    - assets/icons/color/race/
-    - assets/icons/white/general/
-    - assets/icons/white/race/
-    - assets/icons/
-    - assets/
-    - assets/images/
+    - icons/black/general/
+    - icons/black/race/
+    - icons/color/general/
+    - icons/color/race/
+    - icons/white/general/
+    - icons/white/race/
+    - icons/
+    - images/
 
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
@@ -99,15 +98,15 @@ flutter:
   fonts:
     - family: Ambroise Firmin
       fonts:
-        - asset: assets/fonts/ambroise_firmin/regular.otf
-        - asset: assets/fonts/ambroise_firmin/bold.otf
+        - asset: fonts/ambroise_firmin/regular.otf
+        - asset: fonts/ambroise_firmin/bold.otf
           weight: 700
     - family: Handel Gothic D
       fonts:
-        - asset: assets/fonts/handel_gothic_d/regular.ttf
-        - asset: assets/fonts/handel_gothic_d/medium.otf
+        - asset: fonts/handel_gothic_d/regular.ttf
+        - asset: fonts/handel_gothic_d/medium.otf
           weight: 400
-        - asset: assets/fonts/handel_gothic_d/bold.otf
+        - asset: fonts/handel_gothic_d/bold.otf
           weight: 700
 
   # fonts:
