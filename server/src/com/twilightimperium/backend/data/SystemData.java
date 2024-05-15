@@ -33,8 +33,8 @@ public class SystemData {
         PlanetData.planets.get("Centauri"),
         PlanetData.planets.get("Gral")
     ))));
-    systemList.put("Coorneeq", new SystemModel(new ArrayList<>(List.of(
-        PlanetData.planets.get("Coorneeq"),
+    systemList.put("Corneeq", new SystemModel(new ArrayList<>(List.of(
+        PlanetData.planets.get("Corneeq"),
         PlanetData.planets.get("Resculon")
     ))));
     systemList.put("Dal Bootha", new SystemModel(new ArrayList<>(List.of(
@@ -85,66 +85,67 @@ public class SystemData {
     systemList.put("Wellon", new SystemModel(new ArrayList<>(List.of(
         PlanetData.planets.get("Wellon")
     ))));
+    // ---------------------------------- HOME SYSTEMS ----------------------------------
     systemList.put("Nestphar", new SystemModel(new ArrayList<>(List.of(
         PlanetData.planets.get("Nestphar")
-    )), "Arborec"));
+    )), "arborec"));
     systemList.put("Arc Prime", new SystemModel(new ArrayList<>(List.of(
         PlanetData.planets.get("Arc Prime"),
         PlanetData.planets.get("Wren Terra")
-    )), "Letnev"));
+    )), "letnev"));
     systemList.put("Lisis II", new SystemModel(new ArrayList<>(List.of(
         PlanetData.planets.get("Lisis II"),
         PlanetData.planets.get("Ragh")
-    )), "Saar"));
+    )), "saar"));
     systemList.put("Muaat", new SystemModel(new ArrayList<>(List.of(
         PlanetData.planets.get("Muaat")
-    )), "Muaat"));
+    )), "muaat"));
     systemList.put("Hercant", new SystemModel(new ArrayList<>(List.of(
         PlanetData.planets.get("Hercant"),
         PlanetData.planets.get("Arretze"),
         PlanetData.planets.get("Kamdorn")
-    )), "Hacan"));
+    )), "hacan"));
     systemList.put("Jord", new SystemModel(new ArrayList<>(List.of(
         PlanetData.planets.get("Jord")
-    )), "Sol"));
+    )), "sol"));
     systemList.put("Creuss", new SystemModel(new ArrayList<>(List.of(
         PlanetData.planets.get("Creuss")
-    )), SystemModel.Wormhole.delta, "Creuss"));
+    )), SystemModel.Wormhole.delta, "creuss"));
     systemList.put("[0.0.0]", new SystemModel(new ArrayList<>(List.of(
         PlanetData.planets.get("[0.0.0]")
-    )), "L1Z1X"));
+    )), "l1z1x"));
     systemList.put("Moll Primus", new SystemModel(new ArrayList<>(List.of(
         PlanetData.planets.get("Moll Primus")
-    )), "Mentak"));
+    )), "mentak"));
     systemList.put("Druaa", new SystemModel(new ArrayList<>(List.of(
         PlanetData.planets.get("Druaa"),
         PlanetData.planets.get("Maaluuk")
-    )), "Naalu"));
+    )), "naalu"));
     systemList.put("Mordai II", new SystemModel(new ArrayList<>(List.of(
         PlanetData.planets.get("Mordai II")
-    )), "Nekro"));
+    )), "nekro"));
     systemList.put("Tren'Lak", new SystemModel(new ArrayList<>(List.of(
         PlanetData.planets.get("Tren'Lak"),
         PlanetData.planets.get("Quinarra")
-    )), "Sardakk"));
+    )), "sardakk"));
     systemList.put("Jol", new SystemModel(new ArrayList<>(List.of(
         PlanetData.planets.get("Jol"),
         PlanetData.planets.get("Nar")
-    )), "Jol-Nar"));
+    )), "jol_nar"));
     systemList.put("Winnu", new SystemModel(new ArrayList<>(List.of(
         PlanetData.planets.get("Winnu")
-    )), "Winnu"));
+    )), "winnu"));
     systemList.put("Archon Ren", new SystemModel(new ArrayList<>(List.of(
         PlanetData.planets.get("Archon Ren"),
         PlanetData.planets.get("Archon Tau")
-    )), "Xxcha"));
+    )), "xxcha"));
     systemList.put("Darien", new SystemModel(new ArrayList<>(List.of(
         PlanetData.planets.get("Darien")
-    )), "Yin"));
+    )), "yin"));
     systemList.put("Retillion", new SystemModel(new ArrayList<>(List.of(
         PlanetData.planets.get("Retillion"),
         PlanetData.planets.get("Shalloq")
-    )), "Yssaril"));
+    )), "yssaril"));
     systemList.put("Asteroid", new SystemModel(SystemModel.Anomaly.asteroid));
     systemList.put("Supernova", new SystemModel(SystemModel.Anomaly.asteroid));
     systemList.put("Rift", new SystemModel(SystemModel.Anomaly.asteroid));
@@ -153,5 +154,6 @@ public class SystemData {
     systemList.put("WormholeBeta", new SystemModel(SystemModel.Wormhole.beta));
     systemList.put("CreussGate", new SystemModel(SystemModel.Wormhole.delta));
     systemList.put("Empty", new SystemModel());
+    systemList.put("Undefined", new SystemModel());
 }
 }

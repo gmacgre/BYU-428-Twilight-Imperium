@@ -5,7 +5,6 @@ package com.twilightimperium.backend.test.java;
 
 import org.junit.jupiter.api.Test;
 
-import com.twilightimperium.backend.Client;
 import com.twilightimperium.backend.Server;
 
 import java.io.IOException;

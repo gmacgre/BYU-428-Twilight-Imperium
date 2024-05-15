@@ -1,6 +1,6 @@
 package com.twilightimperium.backend.model.RequestResponse;
 
-import com.twilightimperium.backend.model.game.Ship;
+import com.twilightimperium.backend.model.game.entities.Ship;
 
 public class MoveRequest {
     private final Ship[] ships;

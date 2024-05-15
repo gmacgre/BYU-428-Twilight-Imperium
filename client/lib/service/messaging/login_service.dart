@@ -41,6 +41,7 @@ class LoginService implements HTTPServiceObserver {
     try {
       LoginResponse res = JSONEncoder.decodeLoginResponse(body);
       DataCache.instance.userToken = res.userToken;
+      DataCache.instance.userSeatNumber = res.playerTurn;
       _observer.notifySuccess(res.playerTurn, res.userToken);
     } on FormatException catch (e) {
       _observer.notifyFailure('Error Processing /login: ${e.message}');

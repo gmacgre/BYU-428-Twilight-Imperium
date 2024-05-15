@@ -2,25 +2,21 @@ package com.twilightimperium.Handlers;
 
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
 import com.twilightimperium.backend.Server;
 import com.twilightimperium.backend.model.RequestResponse.ErrorResponse;
 import com.twilightimperium.backend.model.RequestResponse.LoginRequest;
 import com.twilightimperium.backend.model.RequestResponse.LoginResponse;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 
 /**
  * Handles login requests to the /login endpoint.
  */
-public class LoginHandler implements HttpHandler {
-    private final Server server;
-    //Fake user to test login
+public class LoginHandler extends BaseHandler {
 
     public LoginHandler(Server server) {
-        this.server = server;
+        super(server);
     }
 
     @Override
@@ -28,6 +24,7 @@ public class LoginHandler implements HttpHandler {
         // Only process POST requests
         Gson gson = new Gson();
         if (!"POST".equals(exchange.getRequestMethod())) {
+            
             sendResponse(exchange, gson.toJson(new ErrorResponse("Bad Request Method")), 405);
             return;
         }
@@ -38,10 +35,8 @@ public class LoginHandler implements HttpHandler {
             
             // Simulated authentication check
             String token = server.login(request.getRoomCode(), request.getRoomPass(),request.getPlayerNum());
-            
-
             if (token != null) {
-                int playerId = server.getGameByToken(token).getPlayerTurn(token);
+                int playerId = server.getGameByToken(token).getPlayerSeatId(token);
                 // Respond with the generated token
                 LoginResponse response = new LoginResponse(token, playerId);
                 String jsonResponse = gson.toJson(response);
@@ -54,20 +49,5 @@ public class LoginHandler implements HttpHandler {
             sendResponse(exchange, gson.toJson(new ErrorResponse("Internal Server Error")), 500);
             e.printStackTrace();
         }
-    }
-
-    /**
-     * Sends a HTTP response with the given body and status code.
-     *
-     * @param exchange The HttpExchange object.
-     * @param responseBody The response body as a String.
-     * @param statusCode The HTTP status code.
-     */
-    private void sendResponse(HttpExchange exchange, String responseBody, int statusCode) throws IOException {
-        exchange.getResponseHeaders().set("Content-Type", "application/json");
-        exchange.sendResponseHeaders(statusCode, responseBody.getBytes(StandardCharsets.UTF_8).length);
-        OutputStream os = exchange.getResponseBody();
-        os.write(responseBody.getBytes(StandardCharsets.UTF_8));
-        os.close();
     }
 }

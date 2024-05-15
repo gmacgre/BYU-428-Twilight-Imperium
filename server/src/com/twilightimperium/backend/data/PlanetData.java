@@ -19,7 +19,7 @@ public class PlanetData {
         planets.put("Lirta IV", new PlanetModel("Lirta IV", 2, 3, PlanetTrait.hazardous));
         planets.put("Centauri", new PlanetModel("Centauri", 1, 3, PlanetTrait.cultural));
         planets.put("Gral", new PlanetModel("Gral", 1, 1, PlanetTrait.industrial, Tech.blue));
-        planets.put("Coorneeq", new PlanetModel("Coorneeq", 1, 2, PlanetTrait.cultural));
+        planets.put("Corneeq", new PlanetModel("Coorneeq", 1, 2, PlanetTrait.cultural));
         planets.put("Resculon", new PlanetModel("Resculon", 2, 0, PlanetTrait.cultural));
         planets.put("Dal Bootha", new PlanetModel("Dal Bootha", 0, 2, PlanetTrait.cultural));
         planets.put("Xxehan", new PlanetModel("Xxehan", 1, 1, PlanetTrait.cultural));

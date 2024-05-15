@@ -1,7 +1,7 @@
 import 'package:http/http.dart' as http;
 
 class HTTPService {
-  final String _serverDomain = 'http://localhost:8080';
+  final String _serverDomain = 'http://192.168.1.13:8080';
   final HTTPServiceObserver _observer;
   HTTPService(this._observer);
 
@@ -13,10 +13,10 @@ class HTTPService {
   void getRequest(String uri, Map<String, String> headers) async {
     try {
       http.Response res =  await http.get(
-      Uri.parse('$_serverDomain$uri'),
-      headers: headers
-    );
-    _determineResult(res);
+        Uri.parse('$_serverDomain$uri'),
+        headers: headers
+      );
+      _determineResult(res);
     }
     on http.ClientException catch (error) {
       _observer.processException('Failed to call ${error.uri.toString()}: ${error.message}');

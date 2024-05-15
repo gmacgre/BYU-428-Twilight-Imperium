@@ -8,7 +8,7 @@ class BoardGridModel {
     for (int i = 0; i < (_depth * 2) + 1; i++) {
       var row = List<BoardSpaceModel>.empty(growable: true);
       for (int j = 0; j < (_depth * 2) + 1; j++) {
-        row.add(BoardSpaceModel(i, j, demo)); //TODO: DEAL WITH THIS
+        row.add(BoardSpaceModel(i, j, demo));
       }
       _spaces.add(row);
     }

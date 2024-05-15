@@ -1,0 +1,32 @@
+package com.twilightimperium.Handlers.cors;
+
+import java.io.IOException;
+import com.google.gson.Gson;
+import com.sun.net.httpserver.*;
+import com.twilightimperium.backend.Server;
+import com.twilightimperium.backend.model.RequestResponse.ErrorResponse;
+import com.twilightimperium.backend.model.game.Game;
+
+public final class GameStateHandler extends BaseCORSHandler{
+
+    public GameStateHandler(Server server) {
+        super(server);
+    }
+    
+    public void handleCORSFree(HttpExchange exchange, String token) throws IOException {
+        Gson gson = new Gson(); 
+        if (!"GET".equals(exchange.getRequestMethod())) {
+            sendResponse(exchange, gson.toJson(new ErrorResponse("Bad Request Method")), 501);
+            return;
+        }
+        else {
+            Game game = server.getGameByToken(token);
+            if (game == null){
+                System.err.println("No Game Found");
+                sendResponse(exchange, gson.toJson(new ErrorResponse("Bad Token")), 405);
+            }
+            String body = game.jsonGameState(token);        
+            sendResponse(exchange, body,200);
+        }
+    }
+}

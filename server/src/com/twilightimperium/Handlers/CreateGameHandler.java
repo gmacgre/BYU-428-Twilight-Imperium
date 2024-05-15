@@ -2,26 +2,21 @@ package com.twilightimperium.Handlers;
 
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
-import com.twilightimperium.backend.Game;
 import com.twilightimperium.backend.Server;
-import com.twilightimperium.backend.model.RequestResponse.CreateRequest;
-import com.twilightimperium.backend.model.RequestResponse.CreateResponse;
+import com.twilightimperium.backend.model.RequestResponse.CreateRequestResponse;
 import com.twilightimperium.backend.model.RequestResponse.ErrorResponse;
+import com.twilightimperium.backend.model.game.Game;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.charset.StandardCharsets;
 
 /**
  * Handles game creation requests to the /create endpoint.
  */
-public class CreateGameHandler implements HttpHandler {
-    private final Server server;
+public class CreateGameHandler extends BaseHandler {
 
     public CreateGameHandler(Server server) {
-        this.server = server;
+        super(server);
     }
 
     @Override
@@ -30,20 +25,19 @@ public class CreateGameHandler implements HttpHandler {
 
         // Only process POST requests
         if (!"POST".equals(exchange.getRequestMethod())) {
-            sendResponse(exchange, gson.toJson(new ErrorResponse("Game Already Exists")), 405);
+            sendResponse(exchange, gson.toJson(new ErrorResponse("Wrong HTTP Method")), 405);
             return;
         }
         try {
             InputStream body = exchange.getRequestBody();
             String requestBodyString = new String(body.readAllBytes());
-            CreateRequest request = gson.fromJson(requestBodyString,CreateRequest.class);
+            CreateRequestResponse request = gson.fromJson(requestBodyString,CreateRequestResponse.class);
             String roomCode = request.getRoomCode();
             String roomPass = request.getRoomPassword();
 
             Game newGame = new Game();
-            String token = server.addNewGame(newGame, roomCode, roomPass); // Add game to list and get a token
-            newGame.addPlayer(token);
-            CreateResponse response = new CreateResponse(token, 0);
+            server.addNewGame(newGame, roomCode, roomPass); // Add game to list and get a token
+            CreateRequestResponse response = new CreateRequestResponse(request.getRoomCode(), request.getRoomPassword());
             String jsonResponse = gson.toJson(response);
 
             // Respond with the token.
@@ -52,22 +46,6 @@ public class CreateGameHandler implements HttpHandler {
             sendResponse(exchange, gson.toJson(new ErrorResponse("Game already Exists")), 405);
             e.printStackTrace();
         }
-    }
-
-
-    /**
-     * Sends an HTTP response with the given body and status code.
-     *
-     * @param exchange The HttpExchange object.
-     * @param responseBody The response body as a String.
-     * @param statusCode The HTTP status code.
-     */
-    private void sendResponse(HttpExchange exchange, String responseBody, int statusCode) throws IOException {
-        exchange.getResponseHeaders().set("Content-Type", "application/json");
-        exchange.sendResponseHeaders(statusCode, responseBody.getBytes(StandardCharsets.UTF_8).length);
-        OutputStream os = exchange.getResponseBody();
-        os.write(responseBody.getBytes(StandardCharsets.UTF_8));
-        os.close();
     }
 }
 

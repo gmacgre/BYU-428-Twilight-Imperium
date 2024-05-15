@@ -1,27 +1,40 @@
 //This currently the best way to have content all in one place in flutter. There is a JSON reader version but I lost the aim in trying to make it work. This will do for now.
 //Everything in this class should be both const and static, with no private variables.
 
+import 'package:client/data/planet_data.dart';
+import 'package:client/data/system_data.dart';
+
 class Strings {
+
+  static String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
   //Make class unable to be instantiated, only referenced statically
   Strings._();
-  static const String appTitle = 'TWILIGHT IMPERIUM';
+  static const String appTitle = 'Twilight Imperium';
+  static const String mainTitle = 'TWILIGHT IMPERIUM';
   static const String tagLine = 'Pax Magnifica, Bellum Gloriosum';
   static const String joinGame = 'Join Game';
   static const String createGame = 'Create Game';
   static const String codeInput = 'Input Room Name';
   static const String passwordInput = 'Input Room Password';
   static const String playerNumberInput = 'Input Seat Number';
-  static const String needBothRoomInput = 'Enter both the Room Code and Password, and a Player Seat Number.';
+  static const String needBothRoomInput =
+      'Enter both the Room Code and Password, and a Player Seat Number.';
   static const String loginAttempt = 'Attempting to Log In...';
   static const String createAttempt = 'Attempting to Create Game...';
+  static const String createSuccess = 'Game Creation Success!';
   static const String fleet = 'Fleet';
   static const String tactic = 'Tactic';
   static const String strategy = 'Strategy';
-  static const String tacticTokenDesc = 'Tactic tokens are used to activate systems in the Action Phase.\nThis allows for movement, combat, and production of units.';
-  static const String fleetTokenDesc = 'Fleet tokens determine the max size of a player\'s fleet in any system.';
-  static const String strategyTokenDesc = 'Strategy tokens are used to play the secondary ability of another\nplayer\'s strategy card when said player uses it.';
-  static const String strategyCardDesc = 'Strategy cards determine initiative order, and can be played as an action.\nThe action played differs by strategy card.';
-  static const String publicObjectiveDesc = 'Public Objectives are objectives that any player can score\nin the Status Phase, or a singular player can score when they play\nthe Imperial Strategy Card. They have values of 1 or 2 points.';
+  static const String tacticTokenDesc =
+      'Tactic tokens are used to activate systems in the Action Phase.\nThis allows for movement, combat, and production of units.';
+  static const String fleetTokenDesc =
+      'Fleet tokens determine the max size of a player\'s fleet in any system.';
+  static const String strategyTokenDesc =
+      'Strategy tokens are used to play the secondary ability of another\nplayer\'s strategy card when said player uses it.';
+  static const String strategyCardDesc =
+      'Strategy cards determine initiative order, and can be played as an action.\nThe action played differs by strategy card.';
+  static const String publicObjectiveDesc =
+      'Public Objectives are objectives that any player can score\nin the Status Phase, or a singular player can score when they play\nthe Imperial Strategy Card. They have values of 1 or 2 points.';
   static const List<String> strategyCardPowerDescription = [
     'This player has yet to select a Strategy Card.',
     'Leadership:\nPrimary Ability:\n- Gain 3 Command Tokens.\n- Spend any amount of influence to gain 1 command token\n  for every 3 influence spent.\nSecondary Ability:\n- Spend any amount of influence to gain 1 command token\n  for every 3 influence spent.',
@@ -36,15 +49,101 @@ class Strings {
   static const String invalidStrategyCard = 'This Strategy Card ID is invalid.';
   static const String untakenStrategyCards = 'Untaken Strategy Cards:';
   static const String publicObjectives = 'Public Objectives:';
+  static const String selectedSystem = 'Selected System:';
   static String tokenCount(int count, String type) {
     return 'This player has $count ${type.toLowerCase()} token(s).';
   }
+
   static String successNeedConnect(int id) {
     return "Success! Connecting to Game (Player $id)...";
   }
 
   static String victoryPoints = 'Victory Points';
 
+  static String noSelectedRace = 'not_chosen';
 
-  static String noSelectedRace = 'Not chosen';
+  static const String selectedShips = 'Selected Ships';
+  static const String selectableShips = 'Selectable Ships';
+  static const String endTurn = 'End Turn';
+  static const String confirm = 'Confirm';
+  static const String cancel = 'Cancel';
+  static const String submit = 'Submit';
+
+  static String agendaIcon = 'icons/color/general/agenda.png';
+  static String codexIcon = 'icons/color/general/codex.png';
+  static String raceIcon(String race) {
+    return 'icons/color/race/$race.png';
+  }
+
+  static String flagship = 'Flagship';
+  static String dreadnought = 'Dreadnought';
+  static String cruiser = 'Cruiser';
+  static String destroyer = 'Destroyer';
+  static String carrier = 'Carrier';
+  static String fighter = 'Fighter';
+  static String warsun = 'War Sun';
+  static String pds = 'PDS';
+  static String spacedock = 'Spacedock';
+  static String buildUnitDesc(
+      String type, int cost, int move, int combat, int capacity) {
+    return '$type\nCost: $cost  Move: $move\nCombat: $combat  Capacity: $capacity';
+  }
+
+  static const String production = "Production";
+  static const String nextPhase = 'Next Phase';
+  static const String exhausted = 'Exhausted';
+  static const String ready = 'Ready';
+
+  static const String noSystemSelected = 'No System Selected';
+
+  static Map<PlanetTrait, String> planetTrait = {
+    PlanetTrait.hazardous: 'Hazardous',
+    PlanetTrait.industrial: 'Industrial',
+    PlanetTrait.cultural: 'Cultural',
+    PlanetTrait.none: 'Normal'
+  };
+
+  static Map<String, String> raceDisplayName = {
+    'arborec': 'Arborec',
+    'argent': 'Argent',
+    'creuss': 'Creuss',
+    'empyrean': 'Empyrean',
+    'hacan': 'Hacan',
+    'jol_nar': 'Jol Nar',
+    'keleres': 'Keleres',
+    'l1z1x': 'L1Z1X',
+    'lazax': 'Lazax',
+    'letnev': 'Letnev',
+    'mahact': 'Mahact',
+    'mentak': 'Mentak',
+    'muaat': 'Muaat',
+    'naalu': 'Naalu',
+    'naaz_rhoka': 'Naaz-Rokha',
+    'nekro': 'Nekro Virus',
+    'nomad': 'Nomad',
+    'saar': 'Saar',
+    'sardakk': 'Sardakk',
+    'sol': 'Sol',
+    'titans': 'Titans',
+    'vuil_raith': 'Vuil\'Raith',
+    'winnu': 'Winnu',
+    'xxcha': 'Xxcha',
+    'yin': 'Yin',
+    'yssaril': 'Yssaril',
+    'not_chosen': 'Unchosen'
+  };
+
+  static Map<Anomaly, String> anomalyDisplayName = {
+    Anomaly.asteroid: 'Asteroid Field',
+    Anomaly.nebula: 'Nebula',
+    Anomaly.rift: 'Gravity Rift',
+    Anomaly.supernova: 'Supernova',
+    Anomaly.undefined: 'Unselected Home System'
+  };
+
+  static Map<Wormhole, String> wormholeDisplayName = {
+    Wormhole.alpha: 'Alpha Wormhole',
+    Wormhole.beta: 'Beta Wormhole',
+    Wormhole.delta: 'Gamma Wormhole',
+  };
 }
