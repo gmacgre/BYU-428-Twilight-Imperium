@@ -1,23 +1,21 @@
-import 'package:client/model/update/update.dart';
+import 'package:client/model/request_response/coords.dart';
+import 'package:client/model/request_response/update/update.dart';
 
 class ActivateUpdateInfo implements UpdateInfo {
 
   ActivateUpdateInfo({
-    required this.x,
-    required this.y
+    required this.coords
   });
 
-  int x;
-  int y;
+  Coords coords;
 
 
   factory ActivateUpdateInfo.fromJson(Map<String, dynamic> json) {
     return switch (json) {
       {
-        'x': int x,
-        'y': int y
+        'location': Map<String, dynamic> json
       } =>
-        ActivateUpdateInfo(x: x, y: y),
+        ActivateUpdateInfo(coords: Coords.fromJson(json)),
       _ => throw const FormatException('Failed to load ActivateUpdateInfo.'),
     };
   }

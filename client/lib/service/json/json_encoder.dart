@@ -3,7 +3,7 @@ import 'package:client/model/request_response/create/create_request.dart';
 import 'package:client/model/request_response/error_response.dart';
 import 'package:client/model/request_response/gameState/game_state_response.dart';
 import 'package:client/model/request_response/login/login_response.dart';
-import 'package:client/model/update/update.dart';
+import 'package:client/model/request_response/update/update.dart';
 
 class JSONEncoder {
   static String encode(Object toEncode) {

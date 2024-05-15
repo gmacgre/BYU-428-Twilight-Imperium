@@ -1,4 +1,4 @@
-import 'package:client/model/update/update.dart';
+import 'package:client/model/request_response/update/update.dart';
 import 'package:client/service/messaging/update_service.dart';
 
 final class UpdateThread implements UpdateServiceObserver{

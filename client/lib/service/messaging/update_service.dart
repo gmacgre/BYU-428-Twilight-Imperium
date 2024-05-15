@@ -1,4 +1,4 @@
-import 'package:client/model/update/update.dart';
+import 'package:client/model/request_response/update/update.dart';
 import 'package:client/service/http/http_service.dart';
 import 'package:client/service/json/json_encoder.dart';
 

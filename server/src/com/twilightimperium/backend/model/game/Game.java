@@ -8,11 +8,14 @@ import com.twilightimperium.backend.model.game.entities.Ship;
 import com.twilightimperium.backend.model.game.message.AddPlayerMessage;
 import com.twilightimperium.backend.model.game.state.GameState;
 import com.twilightimperium.backend.model.game.state.GameStateNode;
-import com.twilightimperium.backend.model.update.ActivateUpdate;
 import com.twilightimperium.backend.model.update.MoveUpdate;
 import com.twilightimperium.backend.model.update.NewPlayerUpdate;
-import com.twilightimperium.backend.model.update.SystemPlacedUpdate;
 import com.twilightimperium.backend.model.update.Update;
+import com.twilightimperium.backend.model.update.placed.ActivateUpdate;
+import com.twilightimperium.backend.model.update.placed.AirForcePlacedUpdate;
+import com.twilightimperium.backend.model.update.placed.GroundForcePlacedUpdate;
+import com.twilightimperium.backend.model.update.placed.SpacedockPlacedUpdate;
+import com.twilightimperium.backend.model.update.placed.SystemPlacedUpdate;
 
 // While this class is the top of an individual game's heirarchy, it's main purpose
 // Is to be an interface for handlers, and to deal with authenticating incoming actions (i.e. with tokens)
@@ -139,9 +142,15 @@ public class Game {
 
             AddPlayerMessage msg = state.addPlayer(seatId, race[seatId]);
             if(!msg.modified) return; // Don't make updates if nothing was changed!
-
+            Location location = new Location(msg.x, msg.y);
             addUpdate(new NewPlayerUpdate(seatId, race[seatId]), token);
-            addUpdate(new SystemPlacedUpdate(seatId, new Location(msg.x, msg.y), msg.system), token);
+            addUpdate(new SystemPlacedUpdate(seatId, location, msg.subMessage.system), token);
+            addUpdate(new SpacedockPlacedUpdate(seatId, location, msg.subMessage.spacedockLocation), token);
+            addUpdate(new AirForcePlacedUpdate(seatId, location, msg.subMessage.airforce), token);
+            for(int i = 0; i < msg.subMessage.forces.length; i++) {
+                addUpdate(new GroundForcePlacedUpdate(seatId, location, i, msg.subMessage.forces[i]), token);
+            }
+
         } else {
             throw new RuntimeException();
         }
@@ -155,7 +164,7 @@ public class Game {
         if(!state.activateSystem(x, y, player)) {
             return false;
         }
-        addUpdate(new ActivateUpdate(player, x, y), token);
+        addUpdate(new ActivateUpdate(player, new Location(x, y)), token);
         return true;
     }
 

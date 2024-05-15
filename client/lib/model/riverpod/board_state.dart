@@ -1,3 +1,9 @@
+import 'package:client/data/ship_data.dart';
+import 'package:client/data/system_data.dart';
+import 'package:client/model/request_response/update/air_force_placed.dart';
+import 'package:client/model/request_response/update/ground_force_placed.dart';
+import 'package:client/model/request_response/update/spacedock_placed.dart';
+import 'package:client/model/request_response/update/system_placed.dart';
 import 'package:client/res/coordinate.dart';
 import 'package:client/board/production_provider.dart';
 import 'package:client/board/ship_selector_provider.dart';
@@ -5,8 +11,8 @@ import 'package:client/data/datacache.dart';
 import 'package:client/model/ship_model.dart';
 import 'package:client/model/system_state.dart';
 import 'package:client/model/turn_phase.dart';
-import 'package:client/model/update/activate.dart';
-import 'package:client/model/update/update.dart';
+import 'package:client/model/request_response/update/activate.dart';
+import 'package:client/model/request_response/update/update.dart';
 import 'package:client/service/messaging/activation_service.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -239,11 +245,51 @@ class BoardState extends _$BoardState {
         case 'activate': {
           if(u.info is ActivateUpdateInfo) {
             var info = u.info as ActivateUpdateInfo;
-            _activationHold = Coordinate(info.x, info.y);
+            _activationHold = Coordinate(info.coords.x, info.coords.y);
             _setSystemActive();
           }
+          break;
         }
-        break;
+        case 'groundForcePlaced' : {
+          if(u.info is GroundForcePlacedUpdateInfo) {
+            var info = u.info as GroundForcePlacedUpdateInfo;
+            if(state.systemStates[info.coords.x][info.coords.y].planets![info.planetIdx].numGroundForces == 0) {
+              state.systemStates[info.coords.x][info.coords.y].planets![info.planetIdx].planetOwner = u.player; 
+            }
+            state.systemStates[info.coords.x][info.coords.y].planets![info.planetIdx].numGroundForces += info.quantity;
+            state = BoardStateObject(systemStates: state.systemStates, oldState: state, alreadyProvided: {});
+          }
+          break;
+        }
+        case 'systemPlaced': {
+          if(u.info is SystemPlacedUpdateInfo) {
+            var info = u.info as SystemPlacedUpdateInfo;
+            state.systemStates[info.coords.x][info.coords.y] = SystemState(systemModel: SystemData.systemList[info.system]!);
+            state = BoardStateObject(systemStates: state.systemStates, oldState: state, alreadyProvided: {});
+          }
+          break;
+        }
+        case 'spacedockPlaced': {
+          if(u.info is SpacedockPlacedUpdateInfo) {
+            var info = u.info as SpacedockPlacedUpdateInfo;
+            state.systemStates[info.coords.x][info.coords.y].planets![info.planetIdx].existsSpaceDock = true;
+            state = BoardStateObject(systemStates: state.systemStates, oldState: state, alreadyProvided: {});
+          }
+          break;
+        }
+        case 'airforcePlaced': {
+          if(u.info is AirForcePlacedUpdateInfo) {
+            var info = u.info as AirForcePlacedUpdateInfo;
+            if(state.systemStates[info.coords.x][info.coords.y].airSpace.isEmpty) {
+              state.systemStates[info.coords.x][info.coords.y].systemOwner = u.player; 
+            }
+            for(ShipType type in info.airforce) {
+              state.systemStates[info.coords.x][info.coords.y].airSpace.add(ShipData.defaultData[type]!);
+            }
+            state = BoardStateObject(systemStates: state.systemStates, oldState: state, alreadyProvided: {});
+          }
+          break;
+        }
       }
       // TODO: ADD NEW UPDATE TYPES HERE
     }

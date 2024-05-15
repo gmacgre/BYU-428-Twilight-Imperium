@@ -2,6 +2,7 @@ package com.twilightimperium.backend.model.game.state;
 import com.twilightimperium.backend.data.FactionData;
 import com.twilightimperium.backend.data.FactionSetup;
 import com.twilightimperium.backend.model.game.entities.ShipClass;
+import com.twilightimperium.backend.model.game.message.AddPlayerSubMessage;
 import com.twilightimperium.backend.model.game.state.tile.Tile;
 
 public class BoardState {
@@ -68,15 +69,16 @@ public class BoardState {
     }
     
     // Should only be used in the Game.addPlayer method
-    public String setPlayerHomeSystem(String race, int[] coords, int owner) {
+    public AddPlayerSubMessage setPlayerHomeSystem(String race, int[] coords, int owner) {
         FactionSetup setup = FactionData.setup.get(race);
         map[coords[0]][coords[1]].setSystem(setup.getHomeSystem());
         for (ShipClass s : setup.getAirforce()) {
             addShip(coords[0], coords[1], s, owner);
         }
-        map[coords[0]][coords[1]].spreadForces(setup.getGroundForces(), owner);
-        map[coords[0]][coords[1]].addSpacedock(owner);
-        return setup.getHomeSystem();
+        int[] forces = map[coords[0]][coords[1]].spreadForces(setup.getGroundForces(), owner);
+        int sdl = map[coords[0]][coords[1]].addSpacedock(owner);
+
+        return new AddPlayerSubMessage(setup.getHomeSystem(), forces, sdl, setup.getAirforce());
     }
     public class InvalidMoveException extends Exception{
         String error_message;

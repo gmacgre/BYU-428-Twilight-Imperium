@@ -1,6 +1,7 @@
-package com.twilightimperium.backend.model.update;
+package com.twilightimperium.backend.model.update.placed;
 
 import com.twilightimperium.backend.model.game.Location;
+import com.twilightimperium.backend.model.update.Update;
 
 public class SystemPlacedUpdate extends Update {
     public SystemPlacedUpdate(int player, Location loc, String systemName) {
@@ -8,11 +9,10 @@ public class SystemPlacedUpdate extends Update {
     }
 }
 
-final class SystemPlacedInfo implements UpdateInfo {
-    private Location location;
+final class SystemPlacedInfo extends PlacedUpdateInfo {
     private String system;
     public SystemPlacedInfo(Location location, String system) {
-        this.location = location;
+        super(location);
         this.system = system;
     }
     public String getSystem() {
@@ -20,11 +20,5 @@ final class SystemPlacedInfo implements UpdateInfo {
     }
     public void setSystem(String system) {
         this.system = system;
-    }
-    public Location getLocation() {
-        return location;
-    }
-    public void setLocation(Location location) {
-        this.location = location;
     }
 }

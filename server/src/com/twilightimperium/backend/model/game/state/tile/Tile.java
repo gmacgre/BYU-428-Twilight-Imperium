@@ -72,20 +72,24 @@ public class Tile {
     }
 
 
-    public void spreadForces(int groundForces, int owner) {
+    public int[] spreadForces(int groundForces, int owner) {
         int size = state.planetStates.size();
+        int[] toReturn = new int[size];
         int perPlanet = groundForces / size;
         int remainder = groundForces % size;
         for(int i = 0; i < size; i++) {
             addGroundForce(i, perPlanet, owner);
+            toReturn[i] = perPlanet;
             if(remainder != 0) {
                 addGroundForce(i, 1, owner);
                 remainder--;
+                toReturn[i]++;
             }
         }
+        return toReturn;
     }
 
-    public boolean addSpacedock(int owner) {
+    public int addSpacedock(int owner) {
         // Always pick the system with the greater value that the owner controls
         int idx = -1;
         int value = -1;
@@ -99,11 +103,9 @@ public class Tile {
                 idx = i;
             }
         }
-        if(idx == -1) {
-            // All systems have spacedocks or are controlled by others already!
-            return false;
+        if(idx != -1) {
+            state.planetStates.get(idx).hasSpacedock = true;
         }
-        state.planetStates.get(idx).hasSpacedock = true;
-        return true;
+        return idx;
     }
 }

@@ -1,4 +1,5 @@
 import 'package:client/model/player.dart';
+import 'package:client/model/request_response/coords.dart';
 import 'package:client/model/turn_phase.dart';
 
 
@@ -199,27 +200,6 @@ class GlobalState {
           coords: Coords.fromJson(coords)
         ),
       _ => throw const FormatException('Failed to load GlobalState')
-    };
-  }
-}
-
-class Coords {
-  final int x;
-  final int y;
-
-  Coords({
-    required this.x,
-    required this.y
-  });
-
-  factory Coords.fromJson(Map<String, dynamic> json) {
-    return switch (json) {
-      {
-        'x': int x,
-        'y': int y
-      } =>
-        Coords(x: x, y: y),
-      _ => throw const FormatException('Failed to load ResponseShipCoords')
     };
   }
 }

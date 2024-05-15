@@ -6,7 +6,7 @@ public abstract class Update {
     protected UpdateInfo info;
 
 
-    Update(String type, int player, UpdateInfo info) {
+    protected Update(String type, int player, UpdateInfo info) {
         this.type = type;
         this.player = player;
         this.info = info;

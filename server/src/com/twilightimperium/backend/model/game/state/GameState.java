@@ -8,6 +8,7 @@ import com.twilightimperium.backend.model.game.Location;
 import com.twilightimperium.backend.model.game.entities.Player;
 import com.twilightimperium.backend.model.game.entities.Ship;
 import com.twilightimperium.backend.model.game.message.AddPlayerMessage;
+import com.twilightimperium.backend.model.game.message.AddPlayerSubMessage;
 
 public class GameState {
     WorldInfo world;
@@ -44,13 +45,14 @@ public class GameState {
         };
         int[] spot = homeSystemLocation[seatId];
         if(board.systemAlreadySet(spot[0], spot[1])) {
-            return new AddPlayerMessage(true);
+            return new AddPlayerMessage(false);
         }
         Player toadd = new Player();
         toadd.setRace(race);
         players.set(seatId, toadd);
-        String system = board.setPlayerHomeSystem(race, spot, seatId);
-        return new AddPlayerMessage(spot[0], spot[1], system);
+        AddPlayerSubMessage submsg = board.setPlayerHomeSystem(race, spot, seatId);
+
+        return new AddPlayerMessage(spot[0], spot[1], submsg);
     }
 
     public boolean activateSystem(int x, int y, int player) {
