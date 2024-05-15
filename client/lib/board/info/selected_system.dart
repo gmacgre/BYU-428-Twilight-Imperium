@@ -51,6 +51,9 @@ class SelectedSystem extends StatelessWidget {
   }
 
   String _buildSystemName(SystemModel model) {
+    if (model.homeSystem != null && model.homeSystem == 'Undefined') {
+      return 'Unselected Home System';
+    }
     if (model.planets == null && model.anomaly == null && model.wormhole == null) {
       return 'Empty Space';
     }

@@ -20,15 +20,13 @@ public final class GameStateHandler extends BaseCORSHandler{
             return;
         }
         else {
-            
             Game game = server.getGameByToken(token);
             if (game == null){
                 System.err.println("No Game Found");
                 sendResponse(exchange, gson.toJson(new ErrorResponse("Bad Token")), 405);
             }
-            server.updatePlayer(token);
-            
-            sendResponse(exchange, game.jsonGameState(),200);
+            String body = game.jsonGameState(token);        
+            sendResponse(exchange, body,200);
         }
     }
 }

@@ -1,5 +1,8 @@
 package com.twilightimperium.backend.model.game.state;
+import com.twilightimperium.backend.data.FactionData;
+import com.twilightimperium.backend.data.FactionSetup;
 import com.twilightimperium.backend.model.game.entities.ShipClass;
+import com.twilightimperium.backend.model.game.message.AddPlayerSubMessage;
 import com.twilightimperium.backend.model.game.state.tile.Tile;
 
 public class BoardState {
@@ -16,29 +19,23 @@ public class BoardState {
         // This is a default map, use it for now.
         // 6 Player default map
         String[][] row = {
-            {   "Undefined", "Undefined", "Undefined", "Jord", "Tequ'ran", "Empty", "Winnu"},
+            {   "Undefined", "Undefined", "Undefined", "Undefined", "Tequ'ran", "Empty", "Undefined"},
             {   "Undefined", "Undefined", "Thibah", "Mellon", "Lodor", "New Albion", "Vefut II"},
             {   "Undefined", "Supernova", "WormholeBeta", "Asteroid", "Mehar Xull", "Empty", "Centauri"},
-            {   "Jol", "Bereg", "Tar'Mann", "Mecatol Rex", "Nebula", "Corneeq", "Hercant"},
+            {   "Undefined", "Bereg", "Tar'Mann", "Mecatol Rex", "Nebula", "Corneeq", "Undefined"},
             {   "Dal Bootha", "Saudor", "Asteroid", "Wellon", "Quann", "Qucen'n", "Undefined"},
             {   "Empty", "Arnor", "WormholeAlpha", "Abyz", "Arinam", "Undefined", "Undefined"},
-            {   "Archon Ren", "Lazar", "Empty", "Lisis II", "Undefined", "Undefined", "Undefined"}
+            {   "Undefined", "Lazar", "Empty", "Undefined", "Undefined", "Undefined", "Undefined"}
         };
         for(int i = 0; i < row.length; i++) {
             for(int j = 0; j < row[i].length; j++) {
                 map[i][j].setSystem(row[i][j]);
             }
         }
-        addShip(3, 0, ShipClass.CARRIER, 0);
-        addShip(3, 0, ShipClass.FIGHTER, 0);
-        addShip(3, 0, ShipClass.FIGHTER, 0);
-        addShip(3, 0, ShipClass.FIGHTER, 0);
-        addGroundForce(3, 0, 0, 2, 0);
-        addGroundForce(3, 1, 0, 0, 3);
-        addGroundForce(3, 1, 1, 0, 3);
-        addShip(3, 6, ShipClass.DREADNOUGHT, 2);
-        // addShip(3, 6, ShipClass.WARSUN, 2);
-        // addShip(3, 6, ShipClass.WARSUN, 2);
+    }
+
+    public boolean systemAlreadySet(int x, int y) {
+        return map[x][y].getSystem() != "Undefined";
     }
 
     private void setTile(int x, int y, Tile newTile){
@@ -70,7 +67,19 @@ public class BoardState {
     public boolean activateTile(int x, int y, int player){
         return map[x][y].activate(player);       
     }
+    
+    // Should only be used in the Game.addPlayer method
+    public AddPlayerSubMessage setPlayerHomeSystem(String race, int[] coords, int owner) {
+        FactionSetup setup = FactionData.setup.get(race);
+        map[coords[0]][coords[1]].setSystem(setup.getHomeSystem());
+        for (ShipClass s : setup.getAirforce()) {
+            addShip(coords[0], coords[1], s, owner);
+        }
+        int[] forces = map[coords[0]][coords[1]].spreadForces(setup.getGroundForces(), owner);
+        int sdl = map[coords[0]][coords[1]].addSpacedock(owner);
 
+        return new AddPlayerSubMessage(setup.getHomeSystem(), forces, sdl, setup.getAirforce());
+    }
     public class InvalidMoveException extends Exception{
         String error_message;
         InvalidMoveException(String msg){

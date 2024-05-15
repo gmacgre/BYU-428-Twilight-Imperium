@@ -1,4 +1,4 @@
-import 'package:client/model/update/update.dart';
+import 'package:client/model/request_response/update/update.dart';
 
 class NewPlayerUpdateInfo implements UpdateInfo {
   String race;

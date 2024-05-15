@@ -7,8 +7,6 @@ import com.twilightimperium.backend.model.RequestResponse.ErrorResponse;
 import com.twilightimperium.backend.model.RequestResponse.MoveRequest;
 import com.twilightimperium.backend.model.game.Game;
 import com.twilightimperium.backend.model.game.entities.Ship;
-import com.twilightimperium.backend.model.update.MoveUpdate;
-import com.twilightimperium.backend.model.update.Update;
 
 public class MoveHandler extends BaseTurnCheckHandler{
 
@@ -26,11 +24,7 @@ public class MoveHandler extends BaseTurnCheckHandler{
             Ship[] ships = request.getShips();
 
             Game game = server.getGameByToken(token);
-            if (game.move(ships)){
-                int playerNum = game.getPlayerSeatId(token);
-                Update newUpdate = new MoveUpdate(playerNum);
-                game.addUpdate(newUpdate);
-                server.updatePlayer(token);
+            if (game.move(ships, token)){
                 sendResponse(exchange, "",200);
             } else {
                 sendResponse(exchange, gson.toJson(new ErrorResponse("Invalid Move Command")),405);

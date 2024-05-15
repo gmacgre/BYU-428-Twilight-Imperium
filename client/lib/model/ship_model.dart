@@ -60,7 +60,7 @@ enum ShipType {
       case 'WARSUNS': {
         return ShipType.warsun;
       }
-      case 'DREADNAUGHT': {
+      case 'DREADNOUGHT': {
         return ShipType.dreadnought;
       }
       case 'CRUISER': {
@@ -77,5 +77,20 @@ enum ShipType {
       }
     }
     return ShipType.fighter;
+  }
+}
+
+class ShipTypeFactory {
+  static ShipType fromJson(String input) {
+    return switch (input) {
+      'CARRIER' => ShipType.carrier,
+      'CRUISER' => ShipType.cruiser,
+      'FIGHTER' => ShipType.fighter,
+      'DESTROYER' => ShipType.destroyer,
+      'FLAGSHIP' => ShipType.flagship,
+      'WARSUN' => ShipType.warsun,
+      'DREADNOUGHT' => ShipType.dreadnought,
+      _ => ShipType.fighter
+    };
   }
 }

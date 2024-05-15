@@ -12,7 +12,7 @@ class SystemModel {
 
 enum Wormhole { alpha, beta, delta, gamma }
 
-enum Anomaly { asteroid, nebula, supernova, rift }
+enum Anomaly { asteroid, nebula, supernova, rift, undefined }
 
 class SystemData {
   static final Map<String, SystemModel> systemList = {
@@ -267,6 +267,6 @@ class SystemData {
       wormhole: Wormhole.delta,
     ),
     "Empty": SystemModel(),
-    "Undefined": SystemModel()
+    "Undefined": SystemModel(homeSystem: 'Undefined', anomaly: Anomaly.undefined)
   };
 }

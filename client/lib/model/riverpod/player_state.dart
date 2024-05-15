@@ -1,7 +1,7 @@
 import 'package:client/data/datacache.dart';
 import 'package:client/model/player.dart';
-import 'package:client/model/update/new_player.dart';
-import 'package:client/model/update/update.dart';
+import 'package:client/model/request_response/update/new_player.dart';
+import 'package:client/model/request_response/update/update.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'player_state.g.dart';
