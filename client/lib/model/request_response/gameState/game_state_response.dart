@@ -1,6 +1,6 @@
 import 'package:client/model/player.dart';
-import 'package:client/model/request_response/coords.dart';
 import 'package:client/model/turn_phase.dart';
+import 'package:client/res/coordinate.dart';
 
 
 //This is three or four nested class levels of hell. :(

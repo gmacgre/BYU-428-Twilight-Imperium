@@ -27,7 +27,7 @@ class GlobalInfo extends ConsumerWidget {
     //Build n player overview Widgets
     //One non-player info Widget
     List<Widget> toReturn = [];
-    Coordinate? coords = ref.read(boardStateProvider).selectedCoordinate;
+    Coords? coords = ref.read(boardStateProvider).selectedCoordinate;
 
     for(int i = 0; i < players.length; i++) {
       toReturn.add(
@@ -67,7 +67,7 @@ class GlobalInfo extends ConsumerWidget {
               const OutlinedLetters(content: Strings.selectedSystem),
               SelectedSystem(
                 coords: coords,
-                state: (coords == null) ? null : ref.read(boardStateProvider).systemStates[coords.q][coords.r],
+                state: (coords == null) ? null : ref.read(boardStateProvider).systemStates[coords.x][coords.y],
               )
             ],
           ),

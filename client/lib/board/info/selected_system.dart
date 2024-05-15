@@ -16,7 +16,7 @@ class SelectedSystem extends StatelessWidget {
     super.key
   });
 
-  final Coordinate? coords;
+  final Coords? coords;
   final SystemState? state;
 
   @override

@@ -1,26 +1,7 @@
 import 'dart:collection';
 
-import 'package:client/data/datacache.dart';
 import 'package:client/model/ship_model.dart';
-
-class Coords{
-  int x;
-  int y;
-
-  Coords(this.x, this.y);
-
-  @override
-  bool operator == (Object other) =>
-      identical(this, other) ||
-      other is Coords &&
-          runtimeType == other.runtimeType &&
-          x == other.x &&
-          y == other.y;
-          
-  @override
-  // TODO: implement hashCode
-  int get hashCode => super.hashCode;
-}
+import 'package:client/res/coordinate.dart';
 
 //Ship Wrapper for Coords and gas/movement
 class Ship{
@@ -50,8 +31,6 @@ Coords activatedSystem
   The system (given as Coords) we are trying to validate we can reach.
 */
 bool validateMoves(Map<Coords, List<ShipModel>> shipsToMove, Coords activatedSystem){
-  var state = DataCache.instance.boardState;
-
   //For each ship start pathfinding until movement is 0
     //BFS for each ship path
     //Check Airspace

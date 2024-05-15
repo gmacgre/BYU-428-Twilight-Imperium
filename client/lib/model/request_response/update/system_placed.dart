@@ -1,5 +1,5 @@
-import 'package:client/model/request_response/coords.dart';
 import 'package:client/model/request_response/update/update.dart';
+import 'package:client/res/coordinate.dart';
 
 class SystemPlacedUpdateInfo implements UpdateInfo {
   String system;

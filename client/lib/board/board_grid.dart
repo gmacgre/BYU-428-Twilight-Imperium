@@ -31,9 +31,9 @@ class _BoardGridState extends ConsumerState<BoardGrid> {
     
     List<List<SystemState>> systems =
         ref.watch(boardStateProvider).systemStates;
-    Coordinate? activeCoordinate =
+    Coords? activeCoordinate =
         ref.watch(boardStateProvider).activeCoordinate;
-    Coordinate? selectedCoordinate =
+    Coords? selectedCoordinate =
         // ref.watch(shipSelectorProvider).selectedCoordinate;
         ref.watch(boardStateProvider).selectedCoordinate;
     TurnPhase phase = ref.watch(boardStateProvider).currentPhase;
@@ -74,19 +74,19 @@ class _BoardGridState extends ConsumerState<BoardGrid> {
                         //To translate from model to view, subtract _depth to coordinates
                         //To transalte from view to model, add _depth from coordinates
                         return BoardSpace(
-                          coordinate: Coordinate(
+                          coordinate: Coords(
                             coordinates.q + widget._depth,
                             coordinates.r + widget._depth,
                           ),
                           systemState: systems[(coordinates.q + widget._depth)]
                               [(coordinates.r + widget._depth)],
-                          activated: (activeCoordinate?.q ==
+                          activated: (activeCoordinate?.x ==
                                   coordinates.q + widget._depth &&
-                              activeCoordinate?.r ==
+                              activeCoordinate?.y ==
                                   coordinates.r + widget._depth),
-                          selected: (selectedCoordinate?.q ==
+                          selected: (selectedCoordinate?.x ==
                                   coordinates.q + widget._depth &&
-                              selectedCoordinate?.r ==
+                              selectedCoordinate?.y ==
                                   coordinates.r + widget._depth),
                         );
                       },
@@ -148,7 +148,7 @@ class _BoardGridState extends ConsumerState<BoardGrid> {
     );
   }
 
-  bool _getButtonHighlight(TurnPhase phase, Coordinate? selected) {
+  bool _getButtonHighlight(TurnPhase phase, Coords? selected) {
     if (phase == TurnPhase.production || phase == TurnPhase.movement) {
       return true;
     }

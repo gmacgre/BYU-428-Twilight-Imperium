@@ -16,14 +16,14 @@ class ShipSelectorWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     bool shipSelectorActive =
         ref.watch(boardStateProvider).currentPhase == TurnPhase.movement;
-    Coordinate? selectedCoordinate =
+    Coords? selectedCoordinate =
         ref.watch(boardStateProvider).selectedCoordinate;
     var selectedShipsMap = ref.watch(shipSelectorProvider).selectedShips;
     var selectableShips = [];
     if (selectedCoordinate != null) {
       selectableShips = ref
           .watch(boardStateProvider)
-          .systemStates[selectedCoordinate.q][selectedCoordinate.r]
+          .systemStates[selectedCoordinate.x][selectedCoordinate.y]
           .airSpace;
     }
     var selectedShips = selectedShipsMap.values.expand((x) => x).toList();

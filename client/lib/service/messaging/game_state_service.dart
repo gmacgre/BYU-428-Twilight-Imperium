@@ -34,7 +34,7 @@ class GameStateService implements HTTPServiceObserver {
       DataCache cache = DataCache.instance;
       cache.players = res.players;
       cache.activePlayer = res.world.activePlayer;
-      cache.activeSystem = Coordinate(res.world.coords.x, res.world.coords.y);
+      cache.activeSystem = Coords(res.world.coords.x, res.world.coords.y);
       if (res.world.activePlayer == cache.userSeatNumber) {
         cache.phase = res.world.phase;
       }

@@ -20,7 +20,7 @@ class DataCache {
 
   int activePlayer = 0;
 
-  Coordinate activeSystem = Coordinate(0, 0);
+  Coords activeSystem = Coords(0, 0);
 
   TurnPhase phase = TurnPhase.observation;
 

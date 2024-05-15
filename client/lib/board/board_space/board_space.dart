@@ -21,7 +21,7 @@ class BoardSpace extends ConsumerStatefulWidget {
     required this.selected,
   });
   final SystemState systemState;
-  final Coordinate coordinate;
+  final Coords coordinate;
   final bool activated;
   final bool selected;
 
