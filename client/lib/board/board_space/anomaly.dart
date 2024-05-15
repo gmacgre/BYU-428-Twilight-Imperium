@@ -27,6 +27,7 @@ class AnomalyWidget extends StatelessWidget {
               Anomaly.rift => _RiftPainter(),
               Anomaly.nebula => _NebulaPainter(),
               Anomaly.supernova => _SupernovaPainter(),
+              Anomaly.undefined => _UndefinedPainter()
             },
           )
         ),
@@ -187,4 +188,39 @@ class _SupernovaPainter extends CustomPainter {
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
     return false;
   }
+}
+
+class _UndefinedPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    Paint p = Paint()..color = const Color.fromARGB(255, 118, 31, 25);
+    canvas.drawCircle(Offset(size.width * 0.5, size.height * 0.5), size.width * 0.25, p);
+    p.color = Colors.white30;
+    Path path = Path();
+    List<List<double>> points = [
+      [size.width * 0.45, size.height * 0.5],
+      [size.width * 0.25, size.height * 0.3],
+      [size.width * 0.3, size.height * 0.25],
+      [size.width * 0.5, size.height * 0.45],
+      [size.width * 0.7, size.height * 0.25],
+      [size.width * 0.75, size.height * 0.3],
+      [size.width * 0.55, size.height * 0.5],
+      [size.width * 0.75, size.height * 0.7],
+      [size.width * 0.7, size.height * 0.75],
+      [size.width * 0.5, size.height * 0.55],
+      [size.width * 0.3, size.height * 0.75],
+      [size.width * 0.25, size.height * 0.7],
+    ];
+    path.moveTo(points[0][0], points[0][1]);
+    for(int i = 0; i < points.length; i++) {
+      path.lineTo(points[(i+1)%points.length][0], points[(i+1)%points.length][1]);
+    }
+    canvas.drawPath(path, p);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return false;
+  }
+
 }

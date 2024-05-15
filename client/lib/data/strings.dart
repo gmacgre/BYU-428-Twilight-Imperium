@@ -138,6 +138,7 @@ class Strings {
     Anomaly.nebula: 'Nebula',
     Anomaly.rift: 'Gravity Rift',
     Anomaly.supernova: 'Supernova',
+    Anomaly.undefined: 'Unselected Home System'
   };
 
   static Map<Wormhole, String> wormholeDisplayName = {
