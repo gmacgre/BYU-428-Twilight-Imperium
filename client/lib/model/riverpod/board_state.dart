@@ -13,6 +13,7 @@ import 'package:client/model/system_state.dart';
 import 'package:client/model/turn_phase.dart';
 import 'package:client/model/request_response/update/activate.dart';
 import 'package:client/model/request_response/update/update.dart';
+import 'package:client/service/game_logic/ship_movement.dart';
 import 'package:client/service/messaging/activation_service.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -159,12 +160,7 @@ class BoardState extends _$BoardState {
   void endPhase() {
     var currentPhase = state.currentPhase;
     if (currentPhase == TurnPhase.activation && state.selectedCoordinate != null) {
-      state = BoardStateObject(
-        systemStates: state.systemStates,
-        currentPhase: TurnPhase.movement,
-        oldState: state,
-        alreadyProvided: const {'cp'}
-      );
+      activateSystem(state.selectedCoordinate!);
       return;
     }
     if (currentPhase == TurnPhase.movement) {
@@ -207,17 +203,23 @@ class BoardState extends _$BoardState {
 
   void activateSystem(Coords coordinate) {
     _activationHold = coordinate;
-    _activateService.sendActivationRequest(coordinate.x, coordinate.y);
+    _setSystemActive();
+    // _activateService.sendActivationRequest(coordinate.x, coordinate.y);
   }
 
   void _setSystemActive() {
     TurnPhase toSet = (state.activePlayer == state.playerSeatNumber) ? TurnPhase.movement : TurnPhase.observation;
+    Set<Coords> validSources = {};
+    if(toSet == TurnPhase.movement) {
+      validSources = ShipMovementLogic.possibleMoves(_activationHold!, state.systemStates, state.activePlayer).toSet();
+    }
     state = BoardStateObject(
       systemStates: state.systemStates,
       activeCoordinate: _activationHold,
       currentPhase: toSet,
       oldState: state,
-      alreadyProvided: const {'cp', 'ac'}
+      highlightSet: validSources,
+      alreadyProvided: const {'cp', 'ac', 'hs'}
     );
     _activationHold = null;
   }
@@ -341,6 +343,7 @@ class BoardStateObject {
   late TurnPhase currentPhase;                     // The current phase in a player's turn- TurnPhase.observe otherwise
   late SystemState? activeSystemState;        // The state of the currently active system, for easier access
   late int activePlayer;
+  late Set<Coords> highlightSet;
 
   static const List<String> _variableSet = [
     'ac', // activeCoordinate
@@ -348,7 +351,8 @@ class BoardStateObject {
     'im', // isModified
     'ps', // playerSeatNumber
     'cp', // currentPhase
-    'ap'  // activePlayer
+    'ap', // activePlayer
+    'hs'  // highlightSet
   ];
 
 
@@ -365,6 +369,7 @@ class BoardStateObject {
     this.playerSeatNumber = -1,
     this.currentPhase = TurnPhase.activation,
     this.activePlayer = 0,
+    this.highlightSet = const {},
     required BoardStateObject? oldState,
     required Set<String> alreadyProvided
   }) {
@@ -394,6 +399,9 @@ class BoardStateObject {
         }
         case 'ap': {
           activePlayer = oldState.activePlayer;
+        }
+        case 'hs': {
+          highlightSet = oldState.highlightSet;
         }
       }
     }

@@ -33,14 +33,14 @@ class _GamePageState extends ConsumerState<GamePage> implements UpdateThreadObse
       ],
     );
     String token = DataCache.instance.userToken;
-    if(token == "") {
-      Future.microtask(() 
-      {
-        Navigator.of(context).pushNamed('/');
-        UpdateThread.thread.stop();
-      }
-      );
-    }
+    // if(token == "") {
+    //   Future.microtask(() 
+    //   {
+    //     Navigator.of(context).pushNamed('/');
+    //     UpdateThread.thread.stop();
+    //   }
+    //   );
+    // }
     //Start a thread that repeatedly gets updates or the game state
     UpdateThread updater = UpdateThread.thread;
     updater.start(this, token);

@@ -37,6 +37,7 @@ class _BoardGridState extends ConsumerState<BoardGrid> {
         // ref.watch(shipSelectorProvider).selectedCoordinate;
         ref.watch(boardStateProvider).selectedCoordinate;
     TurnPhase phase = ref.watch(boardStateProvider).currentPhase;
+    Set<Coords> highlightable = ref.watch(boardStateProvider).highlightSet;
     // If we are in combat, pull up the combat window
     if(phase == TurnPhase.combat) {
       return const CombatPage(state: CombatState.enteringCombat);
@@ -88,6 +89,8 @@ class _BoardGridState extends ConsumerState<BoardGrid> {
                                   coordinates.q + widget._depth &&
                               selectedCoordinate?.y ==
                                   coordinates.r + widget._depth),
+                          highlight: highlightable.contains(Coords(coordinates.q + widget._depth,
+                            coordinates.r + widget._depth))
                         );
                       },
                     ),

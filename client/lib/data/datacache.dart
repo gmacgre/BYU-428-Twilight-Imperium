@@ -22,7 +22,7 @@ class DataCache {
 
   Coords activeSystem = Coords(0, 0);
 
-  TurnPhase phase = TurnPhase.observation;
+  TurnPhase phase = TurnPhase.activation;
 
   List<Player> players = [
     Player('jol_nar', false, 5, 5, 5, 3, false, 1),
@@ -50,7 +50,7 @@ class DataCache {
           PlanetState(planet: SystemData.systemList['Abyz']!.planets![0], planetOwner: 1, numGroundForces: 3),
           PlanetState(planet: SystemData.systemList['Abyz']!.planets![1], planetOwner: 3, numGroundForces: 3)
         ],
-        systemOwner: 2
+        systemOwner: 0
       ),
       SystemState(systemModel: SystemData.systemList['Arinam']!,
       planets: [
@@ -69,7 +69,7 @@ class DataCache {
         ShipModel(1, 1, 1, 1, ShipType.fighter),
         ShipModel(1, 1, 1, 1, ShipType.fighter),
         ShipModel(1, 1, 1, 1, ShipType.flagship),
-      ], systemOwner: 2),
+      ], systemOwner: 0),
       SystemState(systemModel: SystemData.systemList['Empty']!),
       SystemState(systemModel: SystemData.systemList['Lazar']!),
       SystemState(systemModel: SystemData.systemList['Empty']!),
@@ -82,7 +82,7 @@ class DataCache {
       airSpace: [
         ShipModel(1, 1, 1, 1, ShipType.cruiser),
 
-      ], systemOwner: 3),
+      ], systemOwner: 0),
       SystemState(systemModel: SystemData.systemList['Mellon']!),
       SystemState(systemModel: SystemData.systemList['Empty']!),
       SystemState(systemModel: SystemData.systemList['Bereg']!),
@@ -96,7 +96,7 @@ class DataCache {
         ShipModel(1, 1, 1, 1, ShipType.fighter),
         ShipModel(1, 1, 1, 1, ShipType.fighter),
         ShipModel(1, 1, 1, 1, ShipType.flagship),
-      ], systemOwner: 2),
+      ], systemOwner: 0),
       SystemState(systemModel: SystemData.systemList['Empty']!),
       SystemState(systemModel: SystemData.systemList['Dal Bootha']!),
       SystemState(systemModel: SystemData.systemList['Mecatol Rex']!),
