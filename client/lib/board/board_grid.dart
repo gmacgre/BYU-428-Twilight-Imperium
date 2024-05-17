@@ -34,7 +34,6 @@ class _BoardGridState extends ConsumerState<BoardGrid> {
     Coords? activeCoordinate =
         ref.watch(boardStateProvider).activeCoordinate;
     Coords? selectedCoordinate =
-        // ref.watch(shipSelectorProvider).selectedCoordinate;
         ref.watch(boardStateProvider).selectedCoordinate;
     TurnPhase phase = ref.watch(boardStateProvider).currentPhase;
     Set<Coords> highlightable = ref.watch(boardStateProvider).highlightSet;

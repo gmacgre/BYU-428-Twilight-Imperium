@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+import 'package:client/data/system_data.dart';
 import 'package:client/model/ship_model.dart';
 import 'package:client/model/system_state.dart';
 import 'package:client/res/coordinate.dart';
@@ -30,6 +31,9 @@ class ShipMovementLogic{
   // If there is at least one ship with the movement large enough to reach the activated system
   // At that system to the list as a coordinate.
   static List<Coords> possibleMoves(Coords activatedSystem, List<List<SystemState>> board, int activePlayer) {
+
+    // Do a "Tech Check" here for the active player
+
     List<Coords> toReturn = [];
     Set<Coords> visited = {};
     Queue<Pair<Coords, int>> queue = Queue();
@@ -49,17 +53,29 @@ class ShipMovementLogic{
       }
       visited.add(currSystem);
 
+      SystemState s = board[currSystem.x][currSystem.y];
+
+      if (s.systemModel.anomaly != null && s.systemModel.anomaly == Anomaly.nebula) {
+        // Leaving a nebula is only possible at distance 1.
+        // TODO: UPDATE WITH GRAVITY DRIVE AND FLANK SPEED?
+        if(distance > 1) {
+          continue;
+        }
+      }
+
       // Determine whether to add the system or not to the return list
-      if(board[currSystem.x][currSystem.y].airSpace.isNotEmpty &&
-        board[currSystem.x][currSystem.y].systemOwner == activePlayer &&
+      if(s.airSpace.isNotEmpty &&
+        s.systemOwner == activePlayer &&
         distance != 0) {
-        for (ShipModel ship in board[currSystem.x][currSystem.y].airSpace) {
+        for (ShipModel ship in s.airSpace) {
           if(ship.movement >= distance) {
             toReturn.add(currSystem);
             break;
           }
         }
       }
+
+      
 
       // Add adjacent systems
       distance++;
@@ -69,10 +85,10 @@ class ShipMovementLogic{
       adjacent = Coords(currSystem.x+1, currSystem.y);
       queue.addLast(Pair(adjacent, distance));
 
-      adjacent = Coords(currSystem.x+1, currSystem.y+1);
+      adjacent = Coords(currSystem.x+1, currSystem.y-1);
       queue.addLast(Pair(adjacent, distance));
 
-      adjacent = Coords(currSystem.x-1, currSystem.y-1);
+      adjacent = Coords(currSystem.x-1, currSystem.y+1);
       queue.addLast(Pair(adjacent, distance));
 
       adjacent = Coords(currSystem.x, currSystem.y+1);
@@ -80,6 +96,22 @@ class ShipMovementLogic{
 
       adjacent = Coords(currSystem.x, currSystem.y-1);
       queue.addLast(Pair(adjacent, distance));
+
+      if(s.systemModel.wormhole != null) {
+        for(int x = 0; x < board.length; x++) {
+          for(int y = 0; y < board[x].length; y++) {
+            // Don't go out the wormhole the way you came in!
+            if(x == currSystem.x && y == currSystem.y) {
+              continue;
+            }
+
+            if(board[x][y].systemModel.wormhole != null && board[x][y].systemModel.wormhole == s.systemModel.wormhole) {
+              adjacent = Coords(x, y);
+              queue.addLast(Pair(adjacent, distance));
+            }
+          }
+        }
+      }
     }  
     return toReturn;
   }
