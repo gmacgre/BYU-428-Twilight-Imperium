@@ -55,6 +55,7 @@ class _BoardSpaceState extends ConsumerState<BoardSpace> {
       builder: (context, constraints) { return Stack(
         children: [
           CustomPaint(painter: _AirspaceOwnerColorCustomPainter(owner: airSpaceOwner),),
+          CustomPaint(painter: _SelectableCustomPainter(shouldPaint: widget.highlight),),
           GestureDetector(
             onTap: () => _processTap(),
             onDoubleTap: () => _processDoubleTap(),
@@ -93,9 +94,6 @@ class _BoardSpaceState extends ConsumerState<BoardSpace> {
     }
     if (widget.selected) {
       return const Color.fromARGB(155, 0, 187, 212);
-    }
-    if(widget.highlight) {
-      return const Color.fromARGB(255, 93, 62, 98);
     }
     return const Color.fromARGB(0, 0, 0, 0);
   }
@@ -167,6 +165,26 @@ class _AirspaceOwnerColorCustomPainter extends CustomPainter {
       c = ColorData.playerAirspaceColor[owner];
     }
     canvas.drawPaint(Paint()..color = c);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return false;
+  }
+
+}
+class _SelectableCustomPainter extends CustomPainter {
+  bool shouldPaint;
+
+  _SelectableCustomPainter({
+    required this.shouldPaint
+  });
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if(shouldPaint) {
+      canvas.drawPaint(Paint()..color = Colors.white24);
+    }
   }
 
   @override

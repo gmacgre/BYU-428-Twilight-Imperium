@@ -45,7 +45,9 @@ class ShipMovementLogic{
       Coords currSystem = pair.first;
       int distance = pair.second;
       if(currSystem.x > 6 || currSystem.x < 0 ||
-        currSystem.y > 6 || currSystem.y < 0) {
+        currSystem.y > 6 || currSystem.y < 0 ||
+        (currSystem.x + currSystem.y < 3) ||
+        (currSystem.x + currSystem.y > 6)) {
         continue;
       }
       if(visited.contains(currSystem)) {
@@ -62,6 +64,10 @@ class ShipMovementLogic{
           continue;
         }
       }
+      if(s.systemOwner != -1 && s.systemOwner != activePlayer && currSystem != activatedSystem) {
+        // Tech check here for going through other players
+        continue;
+      }
 
       // Determine whether to add the system or not to the return list
       if(s.airSpace.isNotEmpty &&
@@ -74,8 +80,6 @@ class ShipMovementLogic{
           }
         }
       }
-
-      
 
       // Add adjacent systems
       distance++;

@@ -1,3 +1,4 @@
+import 'package:client/data/ship_data.dart';
 import 'package:client/res/coordinate.dart';
 import 'package:client/combat/force_makeup.dart';
 import 'package:client/data/system_data.dart';
@@ -47,15 +48,15 @@ class DataCache {
           ShipModel(1, 1, 1, 1, ShipType.fighter),
         ],
         planets: [
-          PlanetState(planet: SystemData.systemList['Abyz']!.planets![0], planetOwner: 1, numGroundForces: 3),
-          PlanetState(planet: SystemData.systemList['Abyz']!.planets![1], planetOwner: 3, numGroundForces: 3)
+          PlanetState(planet: SystemData.systemList['Abyz']!.planets![0], planetOwner: 1, numGroundForces: 3, numPDS: 1, existsSpaceDock: true),
+          PlanetState(planet: SystemData.systemList['Abyz']!.planets![1], planetOwner: 3, numGroundForces: 3, numPDS: 2, existsSpaceDock: true)
         ],
         systemOwner: 0
       ),
       SystemState(systemModel: SystemData.systemList['Arinam']!,
       planets: [
-        PlanetState(planet: SystemData.systemList['Arinam']!.planets![0], planetOwner: 4, numGroundForces: 2),
-        PlanetState(planet: SystemData.systemList['Arinam']!.planets![1], planetOwner: 5, numGroundForces: 8)
+        PlanetState(planet: SystemData.systemList['Arinam']!.planets![0], planetOwner: 4, numGroundForces: 2, numPDS: 0, existsSpaceDock: true),
+        PlanetState(planet: SystemData.systemList['Arinam']!.planets![1], planetOwner: 5, numGroundForces: 8, numPDS: 1, existsSpaceDock: false)
       ]),
       SystemState(systemModel: SystemData.systemList['Empty']!),
       SystemState(systemModel: SystemData.systemList['Arnor']!),
@@ -66,14 +67,28 @@ class DataCache {
       SystemState(systemModel: SystemData.systemList['Undefined']!),
       SystemState(systemModel: SystemData.systemList['Corneeq']!, 
       airSpace: [
-        ShipModel(1, 1, 1, 1, ShipType.fighter),
-        ShipModel(1, 1, 1, 1, ShipType.fighter),
-        ShipModel(1, 1, 1, 1, ShipType.flagship),
+        ShipData.defaultData[ShipType.cruiser]!,
+        ShipData.defaultData[ShipType.cruiser]!,
       ], systemOwner: 0),
-      SystemState(systemModel: SystemData.systemList['Empty']!),
-      SystemState(systemModel: SystemData.systemList['Lazar']!),
-      SystemState(systemModel: SystemData.systemList['Empty']!),
-      SystemState(systemModel: SystemData.systemList['Lodor']!),
+      SystemState(systemModel: SystemData.systemList['Empty']!,
+      airSpace: [
+        ShipData.defaultData[ShipType.cruiser]!,
+        ShipData.defaultData[ShipType.cruiser]!,
+      ], systemOwner: 1),
+      SystemState(systemModel: SystemData.systemList['Lazar']!,airSpace: [
+        ShipData.defaultData[ShipType.cruiser]!,
+        ShipData.defaultData[ShipType.cruiser]!,
+      ], systemOwner: 2),
+      SystemState(systemModel: SystemData.systemList['Empty']!,
+      airSpace: [
+        ShipData.defaultData[ShipType.cruiser]!,
+        ShipData.defaultData[ShipType.cruiser]!,
+      ], systemOwner: 3),
+      SystemState(systemModel: SystemData.systemList['Lodor']!,
+      airSpace: [
+        ShipData.defaultData[ShipType.cruiser]!,
+        ShipData.defaultData[ShipType.cruiser]!,
+      ], systemOwner: 4),
     ],
     //Column 3
     [
@@ -83,7 +98,11 @@ class DataCache {
         ShipModel(1, 1, 1, 1, ShipType.cruiser),
 
       ], systemOwner: 0),
-      SystemState(systemModel: SystemData.systemList['Mellon']!),
+      SystemState(systemModel: SystemData.systemList['Mellon']!,
+      airSpace: [
+        ShipData.defaultData[ShipType.cruiser]!,
+        ShipData.defaultData[ShipType.cruiser]!,
+      ], systemOwner: 5),
       SystemState(systemModel: SystemData.systemList['Empty']!),
       SystemState(systemModel: SystemData.systemList['Bereg']!),
       SystemState(systemModel: SystemData.systemList['Empty']!),
@@ -112,7 +131,7 @@ class DataCache {
       SystemState(systemModel: SystemData.systemList['Empty']!),
       SystemState(
         systemModel: SystemData.systemList['Quann']!,
-        planets: [ PlanetState(planet: SystemData.systemList['Quann']!.planets![0], exhausted: true, planetOwner: 0, numGroundForces: 1)]),
+        planets: [ PlanetState(planet: SystemData.systemList['Quann']!.planets![0], exhausted: true, planetOwner: 0, numGroundForces: 1, numPDS: 0, existsSpaceDock: false)]),
       SystemState(systemModel: SystemData.systemList['Empty']!),
       SystemState(systemModel: SystemData.systemList['Undefined']!),
     ],
@@ -123,7 +142,7 @@ class DataCache {
       SystemState(systemModel: SystemData.systemList['Nebula']!),
       SystemState(systemModel: SystemData.systemList['Darien']!,
       planets: [
-        PlanetState(planet: SystemData.systemList['Darien']!.planets![0], planetOwner: 2, numGroundForces: 0)
+        PlanetState(planet: SystemData.systemList['Darien']!.planets![0], planetOwner: 2, numGroundForces: 0, numPDS: 2, existsSpaceDock: false)
       ]),
       SystemState(systemModel: SystemData.systemList['CreussGate']!),
       SystemState(systemModel: SystemData.systemList['Undefined']!),

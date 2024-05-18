@@ -76,7 +76,9 @@ class GameStateService implements HTTPServiceObserver {
       toReturn.add(PlanetState(
         planet: SystemData.systemList[system.systemName]!.planets![i],
         planetOwner: system.state.planets[i].owner,
-        numGroundForces: system.state.planets[i].numGroundForces
+        numGroundForces: system.state.planets[i].numGroundForces,
+        numPDS: system.state.planets[i].numPds,
+        existsSpaceDock: system.state.planets[i].hasSpacedock        
       ));
     }
     return toReturn;

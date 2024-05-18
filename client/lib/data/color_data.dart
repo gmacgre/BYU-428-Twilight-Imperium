@@ -14,14 +14,14 @@ class ColorData {
   ];
 
   static final List<Color> playerAirspaceColor = [
-    const Color.fromARGB(100, 244, 67, 54),
-    const Color.fromARGB(100, 33, 149, 243),
-    const Color.fromARGB(100, 155, 39, 176),
-    const Color.fromARGB(100, 76, 175, 79),
-    const Color.fromARGB(100, 255, 235, 59),
-    const Color.fromARGB(100, 0, 0, 0),
-    const Color.fromARGB(100, 255, 153, 0),
-    const Color.fromARGB(100, 233, 30, 98)
+    const Color.fromARGB(200, 147, 40, 32),
+    const Color.fromARGB(200, 21, 89, 145),
+    const Color.fromARGB(200, 79, 20, 90),
+    const Color.fromARGB(200, 52, 122, 55),
+    const Color.fromARGB(200, 148, 136, 34),
+    const Color.fromARGB(150, 0, 0, 0),
+    const Color.fromARGB(200, 255, 153, 0),
+    const Color.fromARGB(200, 233, 30, 98)
   ];
 
   static final Map<PlanetTrait, Color> traitColor = {

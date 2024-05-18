@@ -10,12 +10,16 @@ class Planet extends StatefulWidget {
     required this.planet,
     required this.owner,
     required this.numGroundForces,
+    required this.hasSpacedock,
+    required this.numPDS,
     required this.diameter
   });
   final PlanetModel planet;
   final int owner;
   final int numGroundForces;
   final double diameter;
+  final bool hasSpacedock;
+  final int numPDS;
   @override
   State<Planet> createState() => _PlanetState();
 }
