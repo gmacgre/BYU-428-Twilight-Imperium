@@ -8,7 +8,7 @@ class ColorData {
     Colors.purple,
     Colors.green,
     Colors.yellow,
-    Colors.black87,
+    Colors.black,
     Colors.orange,
     Colors.pink
   ];

@@ -1,3 +1,4 @@
+import 'package:client/data/planet_data.dart';
 import 'package:client/data/ship_data.dart';
 import 'package:client/res/coordinate.dart';
 import 'package:client/combat/force_makeup.dart';
@@ -118,7 +119,10 @@ class DataCache {
       ], systemOwner: 0),
       SystemState(systemModel: SystemData.systemList['Empty']!),
       SystemState(systemModel: SystemData.systemList['Dal Bootha']!),
-      SystemState(systemModel: SystemData.systemList['Mecatol Rex']!),
+      SystemState(systemModel: SystemData.systemList['Mecatol Rex']!,
+      planets: [
+        PlanetState(planet: PlanetData.planets['Mecatol Rex']!, planetOwner: 5, numGroundForces: 0, existsSpaceDock: true, numPDS: 1)
+      ]),
       SystemState(systemModel: SystemData.systemList['Empty']!),
       SystemState(systemModel: SystemData.systemList['Empty']!),
       SystemState(systemModel: SystemData.systemList['Centauri']!),
