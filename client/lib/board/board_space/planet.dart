@@ -1,6 +1,8 @@
 import 'package:client/data/color_data.dart';
 import 'package:client/data/planet_data.dart';
+import 'package:client/res/hover_tip.dart';
 import 'package:client/res/outlined_letters.dart';
+import 'package:client/res/unit_tokens/pds.dart';
 import 'package:client/res/unit_tokens/spacedock.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -63,7 +65,14 @@ class _PlanetState extends State<Planet> {
                 width: ((widget.planet.name == 'Mecatol Rex') ? widget.diameter * 1.5 : widget.diameter) * 0.4,
                 top: ((widget.planet.name == 'Mecatol Rex') ? widget.diameter * 1.5 : widget.diameter) * 0.05,
                 left: ((widget.planet.name == 'Mecatol Rex') ? widget.diameter * 1.5 : widget.diameter) * 0.6,
-                child: SpacedockIcon(color: (widget.owner == -1 || !widget.hasSpacedock)? Colors.transparent : ColorData.playerColor[widget.owner])
+                child: HoverTip(message: 'Spacedock Prod ${widget.planet.resources + 2}', child: SpacedockIcon(color: (widget.owner == -1 || !widget.hasSpacedock)? Colors.transparent : ColorData.playerColor[widget.owner]))
+              ) : Container(),
+              (widget.numPDS != 0 && widget.owner != -1)? Positioned(
+                height: ((widget.planet.name == 'Mecatol Rex') ? widget.diameter * 1.5 : widget.diameter) * 0.4,
+                width: ((widget.planet.name == 'Mecatol Rex') ? widget.diameter * 1.5 : widget.diameter) * 0.4,
+                top: ((widget.planet.name == 'Mecatol Rex') ? widget.diameter * 1.5 : widget.diameter) * 0.55,
+                left: ((widget.planet.name == 'Mecatol Rex') ? widget.diameter * 1.5 : widget.diameter) * 0.05,
+                child: HoverTip(message: '${widget.numPDS} PDS System(s)', child: PDSIcon(color: ColorData.playerColor[widget.owner]))
               ) : Container()
             ]
           ),
