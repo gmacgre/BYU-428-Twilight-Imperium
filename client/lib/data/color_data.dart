@@ -8,9 +8,20 @@ class ColorData {
     Colors.purple,
     Colors.green,
     Colors.yellow,
-    Colors.black87,
+    Colors.black,
     Colors.orange,
     Colors.pink
+  ];
+
+  static final List<Color> playerAirspaceColor = [
+    const Color.fromARGB(200, 147, 40, 32),
+    const Color.fromARGB(200, 21, 89, 145),
+    const Color.fromARGB(200, 79, 20, 90),
+    const Color.fromARGB(200, 52, 122, 55),
+    const Color.fromARGB(200, 148, 136, 34),
+    const Color.fromARGB(150, 0, 0, 0),
+    const Color.fromARGB(200, 255, 153, 0),
+    const Color.fromARGB(200, 233, 30, 98)
   ];
 
   static final Map<PlanetTrait, Color> traitColor = {

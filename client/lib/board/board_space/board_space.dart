@@ -2,6 +2,7 @@
 import 'package:client/board/board_space/air_space.dart';
 import 'package:client/board/board_space/board_click_interface.dart';
 import 'package:client/board/board_space/system.dart';
+import 'package:client/data/color_data.dart';
 import 'package:client/res/coordinate.dart';
 import 'package:client/board/ship_selector_provider.dart';
 import 'package:client/model/player.dart';
@@ -19,11 +20,13 @@ class BoardSpace extends ConsumerStatefulWidget {
     required this.coordinate,
     required this.activated,
     required this.selected,
+    required this.highlight
   });
   final SystemState systemState;
-  final Coordinate coordinate;
+  final Coords coordinate;
   final bool activated;
   final bool selected;
+  final bool highlight;
 
   @override
   ConsumerState<BoardSpace> createState() => _BoardSpaceState();
@@ -38,7 +41,7 @@ class _BoardSpaceState extends ConsumerState<BoardSpace> {
   @override
   Widget build(BuildContext context) {
     _listener = _BoardClick(this);
-    Color overlay = const Color.fromARGB(0, 0, 0, 0);
+    Color overlay;
     existsActivatedSystem =
         ref.watch(boardStateProvider).activeCoordinate != null;
     phase = ref.read(boardStateProvider).currentPhase;
@@ -46,18 +49,13 @@ class _BoardSpaceState extends ConsumerState<BoardSpace> {
     seatId = ref.read(boardStateProvider).playerSeatNumber;
     int airSpaceOwner = widget.systemState.systemOwner;
     Player? playerASOwner = (airSpaceOwner != -1) ? ref.read(playerStateProvider).players[airSpaceOwner] : null;
-    if (widget.activated) {
-      overlay = const Color.fromARGB(155, 255, 100, 55);
-    }
-    if (widget.selected) {
-      overlay = const Color.fromARGB(155, 0, 187, 212);
-    }
-    if (widget.selected && widget.activated) {
-      overlay = const Color.fromARGB(155, 128, 144, 134);
-    }
+    overlay = _getOverlayColor();
+    
     return LayoutBuilder(
       builder: (context, constraints) { return Stack(
         children: [
+          CustomPaint(painter: _AirspaceOwnerColorCustomPainter(owner: airSpaceOwner),),
+          CustomPaint(painter: _SelectableCustomPainter(shouldPaint: widget.highlight),),
           GestureDetector(
             onTap: () => _processTap(),
             onDoubleTap: () => _processDoubleTap(),
@@ -85,6 +83,19 @@ class _BoardSpaceState extends ConsumerState<BoardSpace> {
       );
       }
     );
+  }
+
+  Color _getOverlayColor() {
+    if (widget.selected && widget.activated) {
+      return const Color.fromARGB(155, 128, 144, 134);
+    }
+    if (widget.activated) {
+      return const Color.fromARGB(155, 255, 100, 55);
+    }
+    if (widget.selected) {
+      return const Color.fromARGB(155, 0, 187, 212);
+    }
+    return const Color.fromARGB(0, 0, 0, 0);
   }
 
   _processTap() {
@@ -135,4 +146,50 @@ class _BoardClick implements BoardClickInterface {
     _parent._processTap();
   }
   
+}
+
+class _AirspaceOwnerColorCustomPainter extends CustomPainter {
+  final int owner;
+  _AirspaceOwnerColorCustomPainter({
+    required this.owner
+  });
+
+  
+  @override
+  void paint(Canvas canvas, Size size) {
+    Color c;
+    if(owner == -1) {
+      c = const Color.fromARGB(0,0,0,0);
+    }
+    else {
+      c = ColorData.playerAirspaceColor[owner];
+    }
+    canvas.drawPaint(Paint()..color = c);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return false;
+  }
+
+}
+class _SelectableCustomPainter extends CustomPainter {
+  bool shouldPaint;
+
+  _SelectableCustomPainter({
+    required this.shouldPaint
+  });
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if(shouldPaint) {
+      canvas.drawPaint(Paint()..color = Colors.white24);
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return false;
+  }
+
 }

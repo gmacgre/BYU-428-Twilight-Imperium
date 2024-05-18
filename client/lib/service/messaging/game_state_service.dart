@@ -34,7 +34,7 @@ class GameStateService implements HTTPServiceObserver {
       DataCache cache = DataCache.instance;
       cache.players = res.players;
       cache.activePlayer = res.world.activePlayer;
-      cache.activeSystem = Coordinate(res.world.coords.x, res.world.coords.y);
+      cache.activeSystem = Coords(res.world.coords.x, res.world.coords.y);
       if (res.world.activePlayer == cache.userSeatNumber) {
         cache.phase = res.world.phase;
       }
@@ -76,7 +76,9 @@ class GameStateService implements HTTPServiceObserver {
       toReturn.add(PlanetState(
         planet: SystemData.systemList[system.systemName]!.planets![i],
         planetOwner: system.state.planets[i].owner,
-        numGroundForces: system.state.planets[i].numGroundForces
+        numGroundForces: system.state.planets[i].numGroundForces,
+        numPDS: system.state.planets[i].numPds,
+        existsSpaceDock: system.state.planets[i].hasSpacedock        
       ));
     }
     return toReturn;

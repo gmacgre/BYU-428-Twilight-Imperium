@@ -13,7 +13,7 @@ class ShipSelector extends _$ShipSelector {
     return ShipSelectorObject();
   }
 
-  void activate(Coordinate coordinate) {
+  void activate(Coords coordinate) {
     if (ref.read(boardStateProvider).activeCoordinate == null) {
       return;
     }
@@ -68,7 +68,7 @@ class ShipSelector extends _$ShipSelector {
 }
 
 class ShipSelectorObject {
-  Map<Coordinate, List<ShipModel>> selectedShips;
+  Map<Coords, List<ShipModel>> selectedShips;
 
   ShipSelectorObject({
     this.selectedShips = const {},

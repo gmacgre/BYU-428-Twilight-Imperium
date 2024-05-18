@@ -13,7 +13,7 @@ class ObjectiveView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String imageLocation = 'assets/icons/color/general/public_${(value == 1)? 'i' : 'ii'}.png';
+    String imageLocation = 'icons/color/general/public_${(value == 1)? 'i' : 'ii'}.png';
     return DecoratedBox(
       decoration: BoxDecoration(
         color: (value == 1)? Colors.amberAccent : Colors.blueAccent,

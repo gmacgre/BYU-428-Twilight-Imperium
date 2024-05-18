@@ -1,6 +1,7 @@
 import 'package:client/data/color_data.dart';
 import 'package:client/data/planet_data.dart';
 import 'package:client/res/outlined_letters.dart';
+import 'package:client/res/unit_tokens/spacedock.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -10,12 +11,16 @@ class Planet extends StatefulWidget {
     required this.planet,
     required this.owner,
     required this.numGroundForces,
+    required this.hasSpacedock,
+    required this.numPDS,
     required this.diameter
   });
   final PlanetModel planet;
   final int owner;
   final int numGroundForces;
   final double diameter;
+  final bool hasSpacedock;
+  final int numPDS;
   @override
   State<Planet> createState() => _PlanetState();
 }
@@ -33,22 +38,34 @@ class _PlanetState extends State<Planet> {
           key: key,
           onEnter: _onEnter,
           onExit: _onExit,
-          child: Container(
-            width: (widget.planet.name == 'Mecatol Rex') ? widget.diameter * 1.5 : widget.diameter,
-            height: (widget.planet.name == 'Mecatol Rex') ? widget.diameter * 1.5 : widget.diameter,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadiusDirectional.circular(50),
-              color: (widget.owner == -1)? Colors.white : ColorData.playerColor[widget.owner],
-              border: Border.all(
-                width: 3,
-                color: ColorData.traitColor[widget.planet.trait]!,
-              )
-            ),
-            child: Center(
-              child: OutlinedLetters(
-                content: '${widget.numGroundForces}'
+          child: Stack(
+            children: [
+              Container(
+                width: (widget.planet.name == 'Mecatol Rex') ? widget.diameter * 1.5 : widget.diameter,
+                height: (widget.planet.name == 'Mecatol Rex') ? widget.diameter * 1.5 : widget.diameter,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadiusDirectional.circular(50),
+                  color: (widget.owner == -1)? Colors.white : ColorData.playerColor[widget.owner],
+                  border: Border.all(
+                    width: 3,
+                    color: ColorData.traitColor[widget.planet.trait]!,
+                  )
+                ),
+                child: Center(
+                  child: OutlinedLetters(
+                    content: '${widget.numGroundForces}'
+                  ),
+                ),
               ),
-            ),
+              // Show other "surrounding" elements
+              (widget.hasSpacedock && widget.owner != -1)? Positioned(
+                height: ((widget.planet.name == 'Mecatol Rex') ? widget.diameter * 1.5 : widget.diameter) * 0.4,
+                width: ((widget.planet.name == 'Mecatol Rex') ? widget.diameter * 1.5 : widget.diameter) * 0.4,
+                top: ((widget.planet.name == 'Mecatol Rex') ? widget.diameter * 1.5 : widget.diameter) * 0.05,
+                left: ((widget.planet.name == 'Mecatol Rex') ? widget.diameter * 1.5 : widget.diameter) * 0.6,
+                child: SpacedockIcon(color: (widget.owner == -1 || !widget.hasSpacedock)? Colors.transparent : ColorData.playerColor[widget.owner])
+              ) : Container()
+            ]
           ),
         ),
       ),

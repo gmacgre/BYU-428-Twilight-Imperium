@@ -16,7 +16,7 @@ class SelectedSystem extends StatelessWidget {
     super.key
   });
 
-  final Coordinate? coords;
+  final Coords? coords;
   final SystemState? state;
 
   @override
@@ -105,7 +105,7 @@ class PlanetInfo extends StatelessWidget {
     PlanetState fullState;
     if (planet == null) {
       toUse = PlanetData.planets['null']!;
-      fullState = PlanetState(planet: toUse, planetOwner: -1, numGroundForces: 0);
+      fullState = PlanetState(planet: toUse, planetOwner: -1, numGroundForces: 0, numPDS: 0, existsSpaceDock: false);
     }
     else {
       toUse = planet!;

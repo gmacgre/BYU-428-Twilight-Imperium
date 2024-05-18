@@ -51,7 +51,9 @@ class _SystemState extends ConsumerState<System> {
             planet: widget.system.planets![i], 
             owner: widget.planets![i].planetOwner, 
             numGroundForces: widget.planets![i].numGroundForces, 
-            diameter: size
+            diameter: size,
+            hasSpacedock: widget.planets![i].existsSpaceDock,
+            numPDS: widget.planets![i].numPDS,
           )
         );
       }

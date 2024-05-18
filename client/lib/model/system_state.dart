@@ -18,7 +18,7 @@ class SystemState{
       this.planets = null;
     }
     else {
-      this.planets = systemModel.planets!.map((e) => PlanetState(planet: e, planetOwner: -1, numGroundForces: 0)).toList();
+      this.planets = systemModel.planets!.map((e) => PlanetState(planet: e, planetOwner: -1, numGroundForces: 0, numPDS: 0, existsSpaceDock: false)).toList();
     }
     if(planets != null) {
       this.planets = planets;
