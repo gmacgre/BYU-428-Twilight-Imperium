@@ -1,17 +1,23 @@
 import 'package:client/data/color_data.dart';
+import 'package:client/res/outlined_letters.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
 class PDSIcon extends StatelessWidget {
   const PDSIcon({
     required this.color,
+    required this.count,
     super.key
   });
   final Color color;
+  final int count;
 
   @override
   Widget build(BuildContext context) {
-    return CustomPaint(painter: _PDSPainter(color: color),);
+    return CustomPaint(
+      painter: _PDSPainter(color: color),
+      child: OutlinedLetters(content: '$count',),
+      );
   }
 }
 
