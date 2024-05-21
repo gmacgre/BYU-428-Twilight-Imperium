@@ -72,7 +72,7 @@ class _PlanetState extends State<Planet> {
                 width: ((widget.planet.name == 'Mecatol Rex') ? widget.diameter * 1.5 : widget.diameter) * 0.4,
                 top: ((widget.planet.name == 'Mecatol Rex') ? widget.diameter * 1.5 : widget.diameter) * 0.55,
                 left: ((widget.planet.name == 'Mecatol Rex') ? widget.diameter * 1.5 : widget.diameter) * 0.05,
-                child: HoverTip(message: '${widget.numPDS} PDS System(s)', child: PDSIcon(color: ColorData.playerColor[widget.owner]))
+                child: HoverTip(message: '${widget.numPDS} PDS System(s)', child: PDSIcon(color: ColorData.playerColor[widget.owner], count: widget.numPDS,))
               ) : Container()
             ]
           ),
