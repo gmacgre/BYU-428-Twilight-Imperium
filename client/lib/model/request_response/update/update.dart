@@ -2,6 +2,7 @@ import 'package:client/model/request_response/update/activate.dart';
 import 'package:client/model/request_response/update/air_force_placed.dart';
 import 'package:client/model/request_response/update/ground_force_placed.dart';
 import 'package:client/model/request_response/update/new_player.dart';
+import 'package:client/model/request_response/update/pds_placed.dart';
 import 'package:client/model/request_response/update/spacedock_placed.dart';
 import 'package:client/model/request_response/update/system_placed.dart';
 import 'package:client/model/request_response/update/unknown.dart';
@@ -42,6 +43,7 @@ class Update {
       'airforcePlaced' => AirForcePlacedUpdateInfo.fromJson(info),
       'systemPlaced' => SystemPlacedUpdateInfo.fromJson(info),
       'spacedockPlaced' => SpacedockPlacedUpdateInfo.fromJson(info),
+      'pdsPlaced' => PDSPlacedUpdateInfo.fromJson(info),
       _ => UnknownUpdateInfo()
     };
   }

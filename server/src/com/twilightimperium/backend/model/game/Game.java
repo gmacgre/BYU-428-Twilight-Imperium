@@ -14,6 +14,7 @@ import com.twilightimperium.backend.model.update.Update;
 import com.twilightimperium.backend.model.update.placed.ActivateUpdate;
 import com.twilightimperium.backend.model.update.placed.AirForcePlacedUpdate;
 import com.twilightimperium.backend.model.update.placed.GroundForcePlacedUpdate;
+import com.twilightimperium.backend.model.update.placed.PDSPlacedUpdate;
 import com.twilightimperium.backend.model.update.placed.SpacedockPlacedUpdate;
 import com.twilightimperium.backend.model.update.placed.SystemPlacedUpdate;
 
@@ -147,6 +148,11 @@ public class Game {
             addUpdate(new SystemPlacedUpdate(seatId, location, msg.subMessage.system), token);
             addUpdate(new SpacedockPlacedUpdate(seatId, location, msg.subMessage.spacedockLocation), token);
             addUpdate(new AirForcePlacedUpdate(seatId, location, msg.subMessage.airforce), token);
+            if(msg.subMessage.pdsLocation != null) {
+                for(int i : msg.subMessage.pdsLocation) {
+                    addUpdate(new PDSPlacedUpdate(seatId, location, i), token);
+                }
+            }
             for(int i = 0; i < msg.subMessage.forces.length; i++) {
                 addUpdate(new GroundForcePlacedUpdate(seatId, location, i, msg.subMessage.forces[i]), token);
             }

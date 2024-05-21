@@ -2,6 +2,7 @@ import 'package:client/data/ship_data.dart';
 import 'package:client/data/system_data.dart';
 import 'package:client/model/request_response/update/air_force_placed.dart';
 import 'package:client/model/request_response/update/ground_force_placed.dart';
+import 'package:client/model/request_response/update/pds_placed.dart';
 import 'package:client/model/request_response/update/spacedock_placed.dart';
 import 'package:client/model/request_response/update/system_placed.dart';
 import 'package:client/res/coordinate.dart';
@@ -204,7 +205,7 @@ class BoardState extends _$BoardState {
   void activateSystem(Coords coordinate) {
     _activationHold = coordinate;
     _setSystemActive();
-    // _activateService.sendActivationRequest(coordinate.x, coordinate.y);
+    _activateService.sendActivationRequest(coordinate.x, coordinate.y);
   }
 
   void _setSystemActive() {
@@ -275,6 +276,14 @@ class BoardState extends _$BoardState {
           if(u.info is SpacedockPlacedUpdateInfo) {
             var info = u.info as SpacedockPlacedUpdateInfo;
             state.systemStates[info.coords.x][info.coords.y].planets![info.planetIdx].existsSpaceDock = true;
+            state = BoardStateObject(systemStates: state.systemStates, oldState: state, alreadyProvided: {});
+          }
+          break;
+        }
+        case 'pdsPlaced': {
+          if(u.info is PDSPlacedUpdateInfo) {
+            var info = u.info as PDSPlacedUpdateInfo;
+            state.systemStates[info.coords.x][info.coords.y].planets![info.planetIdx].numPDS++;
             state = BoardStateObject(systemStates: state.systemStates, oldState: state, alreadyProvided: {});
           }
           break;

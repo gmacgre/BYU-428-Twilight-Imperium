@@ -7,12 +7,14 @@ public class AddPlayerSubMessage {
     public int[] forces;
     public int spacedockLocation;
     public ShipClass[] airforce;
+    public int[] pdsLocation;
 
-    public AddPlayerSubMessage(String nSys, int[] nForce, int nSD, ShipClass[] airforce) {
+    public AddPlayerSubMessage(String nSys, int[] nForce, int nSD, ShipClass[] airforce, int[] pdsLocation) {
         system = nSys;
         forces = nForce;
         spacedockLocation = nSD;
         this.airforce = airforce;
+        this.pdsLocation = pdsLocation;
     }
 
     public AddPlayerSubMessage() {

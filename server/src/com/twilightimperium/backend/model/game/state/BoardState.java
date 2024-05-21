@@ -77,8 +77,16 @@ public class BoardState {
         }
         int[] forces = map[coords[0]][coords[1]].spreadForces(setup.getGroundForces(), owner);
         int sdl = map[coords[0]][coords[1]].addSpacedock(owner);
+        int[] pdsPlacement = null;
+        if(setup.getNumPds() != 0) {
+            pdsPlacement = new int[setup.getNumPds()];
+            for(int i = 0; i < setup.getNumPds(); i++) {
+                pdsPlacement[i] = map[coords[0]][coords[1]].addPDS(owner);
+            }
+        }
+        
 
-        return new AddPlayerSubMessage(setup.getHomeSystem(), forces, sdl, setup.getAirforce());
+        return new AddPlayerSubMessage(setup.getHomeSystem(), forces, sdl, setup.getAirforce(), pdsPlacement);
     }
     public class InvalidMoveException extends Exception{
         String error_message;
