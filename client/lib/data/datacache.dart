@@ -1,7 +1,7 @@
 import 'package:client/data/planet_data.dart';
 import 'package:client/data/ship_data.dart';
 import 'package:client/res/coordinate.dart';
-import 'package:client/combat/force_makeup.dart';
+import 'package:client/pages/game/combat/force_makeup.dart';
 import 'package:client/data/system_data.dart';
 import 'package:client/model/objective.dart';
 import 'package:client/model/planet_state.dart';

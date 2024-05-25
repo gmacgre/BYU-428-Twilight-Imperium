@@ -1,6 +1,6 @@
-import 'package:client/board/board_grid.dart';
-import 'package:client/pages/game_page.dart';
-import 'package:client/combat/combat_page.dart';
+import 'package:client/pages/game/board/board_grid.dart';
+import 'package:client/pages/game/combat/combat_page.dart';
+import 'package:client/pages/game/game_page.dart';
 import 'package:flutter/material.dart';
 import 'package:client/pages/create_join/create_join.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

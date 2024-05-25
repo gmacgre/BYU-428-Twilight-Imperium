@@ -1,10 +1,10 @@
 import 'package:client/data/datacache.dart';
 import 'package:client/data/strings.dart';
-import 'package:client/board/info/global_info.dart';
-import 'package:client/board/info/player_info.dart';
 import 'package:client/model/riverpod/board_state.dart';
 import 'package:client/model/player.dart';
 import 'package:client/model/riverpod/player_state.dart';
+import 'package:client/pages/game/board/info/global_info.dart';
+import 'package:client/pages/game/board/info/player_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

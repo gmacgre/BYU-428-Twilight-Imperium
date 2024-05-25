@@ -1,6 +1,6 @@
-import 'package:client/combat/combat_panel.dart';
-import 'package:client/combat/combat_forces.dart';
-import 'package:client/combat/force_makeup.dart';
+import 'package:client/pages/game/combat/combat_panel.dart';
+import 'package:client/pages/game/combat/combat_forces.dart';
+import 'package:client/pages/game/combat/force_makeup.dart';
 import 'package:client/data/datacache.dart';
 import 'package:client/data/strings.dart';
 import 'package:flutter/material.dart';

@@ -1,5 +1,5 @@
+import 'package:client/pages/game/board/ship_selector_provider.dart';
 import 'package:client/res/coordinate.dart';
-import 'package:client/board/ship_selector_provider.dart';
 import 'package:client/data/strings.dart';
 import 'package:client/model/riverpod/board_state.dart';
 import 'package:client/model/turn_phase.dart';

@@ -1,4 +1,4 @@
-import 'package:client/combat/combat_page.dart';
+import 'package:client/pages/game/combat/combat_page.dart';
 import 'package:client/res/outlined_letters.dart';
 import 'package:flutter/material.dart';
 

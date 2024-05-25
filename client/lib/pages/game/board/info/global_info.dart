@@ -1,8 +1,8 @@
+import 'package:client/pages/game/board/info/objective_view.dart';
+import 'package:client/pages/game/board/info/player_overview.dart';
+import 'package:client/pages/game/board/info/selected_system.dart';
+import 'package:client/pages/game/board/info/strategy_card.dart';
 import 'package:client/res/coordinate.dart';
-import 'package:client/board/info/objective_view.dart';
-import 'package:client/board/info/player_overview.dart';
-import 'package:client/board/info/selected_system.dart';
-import 'package:client/board/info/strategy_card.dart';
 import 'package:client/model/riverpod/board_state.dart';
 import 'package:client/model/objective.dart';
 import 'package:client/model/player.dart';

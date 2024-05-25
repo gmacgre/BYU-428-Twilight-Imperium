@@ -1,9 +1,9 @@
-import 'package:client/board/board_grid.dart';
 import 'package:client/data/datacache.dart';
-import 'package:client/board/info/info_panel.dart';
 import 'package:client/model/riverpod/board_state.dart';
 import 'package:client/model/riverpod/player_state.dart';
 import 'package:client/model/request_response/update/update.dart';
+import 'package:client/pages/game/board/board_grid.dart';
+import 'package:client/pages/game/board/info/info_panel.dart';
 import 'package:client/updater/update_thread.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

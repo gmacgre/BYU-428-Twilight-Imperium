@@ -1,9 +1,9 @@
-import 'package:client/board/board_space/board_space.dart';
 import 'package:client/model/riverpod/player_state.dart';
+import 'package:client/pages/game/board/board_space/board_space.dart';
+import 'package:client/pages/game/board/production_widget.dart';
 import 'package:client/res/coordinate.dart';
-import 'package:client/board/production_widget.dart';
-import 'package:client/board/ship_selector_widget.dart';
-import 'package:client/combat/combat_page.dart';
+import 'package:client/pages/game/board/ship_selector_widget.dart';
+import 'package:client/pages/game/combat/combat_page.dart';
 import 'package:client/data/strings.dart';
 import 'package:client/model/riverpod/board_state.dart';
 import 'package:client/model/system_state.dart';

@@ -1,8 +1,8 @@
-import 'package:client/board/production_provider.dart';
 import 'package:client/data/strings.dart';
 import 'package:client/model/riverpod/board_state.dart';
 import 'package:client/model/ship_model.dart';
 import 'package:client/model/turn_phase.dart';
+import 'package:client/pages/game/board/production_provider.dart';
 import 'package:client/res/outlined_letters.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
