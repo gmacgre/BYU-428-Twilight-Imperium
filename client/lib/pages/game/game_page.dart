@@ -63,26 +63,32 @@ class _GamePageState extends ConsumerState<GamePage> implements UpdateThreadObse
     UpdateThread updater = UpdateThread.thread;
     updater.start(this, token);
 
-    return (_deSynced) ? Stack(
-      children: [
-        toReturn,
-        DecoratedBox(
-          decoration: const BoxDecoration(color: Colors.black38),
-          child: SizedBox(
-            width: width,
-            height: height,
-            child: const Center(
-              child: Text(
-                'DESYNCED GAME',
-                style: TextStyle(
-                  color: Colors.white
+    return DefaultTextStyle(
+      style: const TextStyle(
+        color: Colors.amberAccent,
+        fontFamily: 'Handel Gothic D'
+      ),
+      child: (_deSynced) ? Stack(
+        children: [
+          toReturn,
+          DecoratedBox(
+            decoration: const BoxDecoration(color: Colors.black38),
+            child: SizedBox(
+              width: width,
+              height: height,
+              child: const Center(
+                child: Text(
+                  'DESYNCED GAME',
+                  style: TextStyle(
+                    color: Colors.white
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-      ],
-    ) : toReturn;
+        ],
+      ) : toReturn,
+    );
   }
 
   @override

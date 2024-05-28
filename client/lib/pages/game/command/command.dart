@@ -19,31 +19,25 @@ class CommandWidget extends ConsumerWidget {
     int ap = ref.watch(boardStateProvider).activePlayer;
     String apRace = ref.watch(playerStateProvider).players[ap].getName();
 
-    
-
-    return LayoutBuilder(
-      builder: (context, constraints) => Stack(
-        children: [
-          Container(
-            height: constraints.maxHeight,
-            width: constraints.maxWidth,
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey, width: 4.0),
-              color: Colors.blueGrey
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey, width: 4.0),
+        color: Colors.blueGrey
+      ),
+      child: LayoutBuilder(
+        builder: (context, constraints) => Row(
+          children: [
+            Expanded(
+              child: switch(phase) {
+                TurnPhase.observation => const ObservationCommandWidget(),
+                TurnPhase.activation => const ActionCommandWidget(),
+                TurnPhase.movement => const MovementCommandWidget(),
+                TurnPhase.production => const ProductionCommandWidget(),
+                _ => const Placeholder()
+              },
             ),
-            child: switch(phase) {
-              TurnPhase.observation => const ObservationCommandWidget(),
-              TurnPhase.activation => const ActionCommandWidget(),
-              TurnPhase.movement => const MovementCommandWidget(),
-              TurnPhase.production => const ProductionCommandWidget(),
-              _ => const Placeholder()
-            },
-          ),
-          // Active Player Icon
-          Positioned(
-            bottom: constraints.maxHeight * 0.1,
-            right: constraints.maxHeight * 0.1,
-            child: Container(
+            // Active Player Icon
+            Container(
               decoration: BoxDecoration(
                 color: ColorData.playerColor[ap],
                 border: Border.all(color: ColorData.playerColor[ap])
@@ -61,7 +55,6 @@ class CommandWidget extends ConsumerWidget {
                       style: TextStyle(
                         fontSize: constraints.maxHeight * 0.13,
                         color: ColorData.playerColorOutline[ap],
-                        decoration: TextDecoration.none
                       ),
                     ),
                   ),
@@ -76,8 +69,8 @@ class CommandWidget extends ConsumerWidget {
                 ],
               ),
             )
-          )
-        ]
+          ]
+        ),
       ),
     );    
     

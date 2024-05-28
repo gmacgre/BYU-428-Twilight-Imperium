@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     return MaterialApp(
       title: Strings.appTitle,
       theme: ThemeData(
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
             backgroundColor: MaterialStateProperty.all(Colors.amber.shade300),
           ),
         ),
+        
       ),
       routes: {
         '/': (context) => const CreateAndJoinPage(),
