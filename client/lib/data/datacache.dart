@@ -70,6 +70,12 @@ class DataCache {
       airSpace: [
         ShipData.defaultData[ShipType.cruiser]!,
         ShipData.defaultData[ShipType.cruiser]!,
+        ShipData.defaultData[ShipType.cruiser]!,
+        ShipData.defaultData[ShipType.cruiser]!,
+        ShipData.defaultData[ShipType.cruiser]!,
+        ShipData.defaultData[ShipType.cruiser]!,
+        ShipData.defaultData[ShipType.cruiser]!,
+        ShipData.defaultData[ShipType.cruiser]!,
       ], systemOwner: 0),
       SystemState(systemModel: SystemData.systemList['Empty']!,
       airSpace: [

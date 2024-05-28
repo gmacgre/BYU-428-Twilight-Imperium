@@ -3,6 +3,7 @@
 
 import 'package:client/data/planet_data.dart';
 import 'package:client/data/system_data.dart';
+import 'package:client/model/turn_phase.dart';
 
 class Strings {
 
@@ -88,6 +89,16 @@ class Strings {
       String type, int cost, int move, int combat, int capacity) {
     return '$type\nCost: $cost  Move: $move\nCombat: $combat  Capacity: $capacity';
   }
+
+  static const Map<TurnPhase, String> phaseDisplayName = {
+    TurnPhase.activation: 'Activation',
+    TurnPhase.combat: 'Combat',
+    TurnPhase.invasion: 'Invasion',
+    TurnPhase.movement: 'Movement',
+    TurnPhase.observation: 'Observation',
+    TurnPhase.production: 'Production',
+    TurnPhase.error: 'Error'
+  };
 
   static const String production = "Production";
   static const String nextPhase = 'Next Phase';
