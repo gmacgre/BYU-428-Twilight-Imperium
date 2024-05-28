@@ -84,6 +84,12 @@ class _GamePageState extends ConsumerState<GamePage> implements UpdateThreadObse
       ],
     ) : toReturn;
   }
+
+  @override
+  void dispose() {
+    UpdateThread.thread.stop();
+    super.dispose();
+  }
   
   @override
   void presentUpdate(List<Update> updates) {
