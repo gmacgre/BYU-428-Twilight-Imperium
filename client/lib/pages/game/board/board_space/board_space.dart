@@ -162,7 +162,7 @@ class _AirspaceOwnerColorCustomPainter extends CustomPainter {
       c = const Color.fromARGB(0,0,0,0);
     }
     else {
-      c = ColorData.playerAirspaceColor[owner];
+      c = ColorData.playerColorFaded[owner];
     }
     canvas.drawPaint(Paint()..color = c);
   }

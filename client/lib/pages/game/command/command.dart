@@ -55,20 +55,23 @@ class CommandWidget extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(0,4,0,0),
+                    padding: EdgeInsets.fromLTRB(0,constraints.maxHeight * 0.05,0,0),
                     child: Text(
-                      'Player ${ap + 1}',
-                      style: const TextStyle(
-                        fontSize: 15,
-                        color: Colors.amberAccent,
+                      'Turn:',
+                      style: TextStyle(
+                        fontSize: constraints.maxHeight * 0.13,
+                        color: ColorData.playerColorOutline[ap],
                         decoration: TextDecoration.none
                       ),
                     ),
                   ),
-                  Image.asset(
-                    Strings.raceIcon(apRace),
-                    height: constraints.maxHeight * 0.5,
-                    width: constraints.maxHeight * 0.5,
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0,0,0,constraints.maxHeight * 0.05),
+                    child: Image.asset(
+                      Strings.raceIcon(apRace),
+                      height: constraints.maxHeight * 0.5,
+                      width: constraints.maxHeight * 0.5,
+                    ),
                   )
                 ],
               ),

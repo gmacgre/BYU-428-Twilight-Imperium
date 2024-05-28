@@ -112,6 +112,11 @@ class DataCache {
     //Column 4
     [
       SystemState(systemModel: SystemData.systemList['Hercant']!,
+      planets: [
+        PlanetState(planet: SystemData.systemList['Hercant']!.planets![0], planetOwner: -1, numGroundForces: 0, existsSpaceDock: false, numPDS: 0),
+        PlanetState(planet: SystemData.systemList['Hercant']!.planets![1], planetOwner: 1, numGroundForces: 1, existsSpaceDock: true, numPDS: 0),
+        PlanetState(planet: SystemData.systemList['Hercant']!.planets![2], planetOwner: 2, numGroundForces: 1, existsSpaceDock: true, numPDS: 1),
+      ],
       airSpace: [
         ShipModel(1, 1, 1, 1, ShipType.fighter),
         ShipModel(1, 1, 1, 1, ShipType.fighter),
