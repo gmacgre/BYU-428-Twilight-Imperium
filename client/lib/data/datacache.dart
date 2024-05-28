@@ -102,7 +102,7 @@ class DataCache {
       SystemState(systemModel: SystemData.systemList['Undefined']!),
       SystemState(systemModel: SystemData.systemList['Mehar Xull']!,
       airSpace: [
-        ShipModel(1, 1, 1, 1, ShipType.cruiser),
+        ShipData.defaultData[ShipType.cruiser]!,
 
       ], systemOwner: 0),
       SystemState(systemModel: SystemData.systemList['Mellon']!,

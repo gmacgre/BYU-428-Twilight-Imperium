@@ -1,8 +1,10 @@
 import 'package:client/data/color_data.dart';
+import 'package:client/data/strings.dart';
 import 'package:client/model/riverpod/board_state.dart';
 import 'package:client/model/ship_model.dart';
 import 'package:client/pages/game/board/ship_selector_provider.dart';
 import 'package:client/res/coordinate.dart';
+import 'package:client/res/outlined_letters.dart';
 import 'package:client/res/unit_tokens/carrier.dart';
 import 'package:client/res/unit_tokens/cruiser.dart';
 import 'package:client/res/unit_tokens/destroyer.dart';
@@ -22,6 +24,14 @@ class MovementCommandWidget extends ConsumerStatefulWidget {
 
 class _MovementCommandWidgetState extends ConsumerState<MovementCommandWidget> {
 
+  late final ScrollController _scrollController;
+
+  @override
+  void initState() {
+    _scrollController = ScrollController();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     
@@ -39,38 +49,79 @@ class _MovementCommandWidgetState extends ConsumerState<MovementCommandWidget> {
     List<ShipModel>? selectedShips = ref.watch(shipSelectorProvider).selectedShips[selectedCoordinates];
     List<ShipModel> shipsToDisplay = ref.read(boardStateProvider).systemStates[selectedCoordinates.x][selectedCoordinates.y].airSpace;
 
-    return LayoutBuilder(
-      builder: (context, constraints) => SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          children: shipsToDisplay.map((e) => 
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: _SelectableShip(model: e, owner: activePlayer, height: constraints.maxHeight * 0.6),
-            )
-          ).toList()
+    return _finalBuild(
+      LayoutBuilder(
+        builder: (context, constraints) => Scrollbar(
+          thumbVisibility: true,
+          controller: _scrollController,
+          child: SingleChildScrollView(
+            controller: _scrollController,
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: shipsToDisplay.map((e) => 
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      _SelectableShip(model: e, owner: activePlayer, height: constraints.maxHeight * 0.5),
+                    ]
+                  ),
+                )
+              ).toList()
+            ),
+          ),
         ),
       ),
     );
   }
 
+  Widget _finalBuild(Widget internal) {
+    return Row(
+      children: [
+        Expanded(
+          flex: 17,
+          child: internal
+        ),
+        Expanded(
+          flex: 3,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(4,0,4,0),
+            child: ElevatedButton(
+              onPressed: () => {_submitMoves()},
+              child: const OutlinedLetters(content: Strings.submitMoves)
+            ),
+          )
+        )
+      ],
+    );
+  }
+
   Widget _buildOtherPlayerSystemSelected() {
-    return const Center(
-      child: Text('Selected System owned by another Player!')
+    return _finalBuild(
+      const Center(
+        child: Text('Selected System owned by another Player!')
+      )
     );
   }
 
   Widget _buildNoSystemSelected() {
-    return const Center(
-      child: Text('Select a system to move ships from.')
+    return _finalBuild(
+      const Center(
+        child: Text('Select a system to add ships to movement')
+      )
     );
   }
 
   Widget _buildOutOfRangeSystemSelected() {
-    return const Center(
-      child: Text('Ships in System Cannot Reach Activated System.')
+    return _finalBuild(
+      const Center(
+        child: Text('No ships can reach activated system from here.')
+      )
     );
   }
+  
+  void _submitMoves() {}
 }
 
 class _SelectableShip extends StatelessWidget {

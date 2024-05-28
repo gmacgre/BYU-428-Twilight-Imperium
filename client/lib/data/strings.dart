@@ -69,6 +69,7 @@ class Strings {
   static const String confirm = 'Confirm';
   static const String cancel = 'Cancel';
   static const String submit = 'Submit';
+  static const String submitMoves = 'Submit Moves';
 
   static String agendaIcon = 'icons/color/general/agenda.png';
   static String codexIcon = 'icons/color/general/codex.png';
