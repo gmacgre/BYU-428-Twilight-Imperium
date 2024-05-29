@@ -1,9 +1,9 @@
 
 import 'package:client/data/color_data.dart';
+import 'package:client/model/riverpod/ship_selector_provider.dart';
 import 'package:client/pages/game/board/board_space/air_space.dart';
 import 'package:client/pages/game/board/board_space/board_click_interface.dart';
 import 'package:client/pages/game/board/board_space/system.dart';
-import 'package:client/pages/game/board/ship_selector_provider.dart';
 import 'package:client/res/coordinate.dart';
 import 'package:client/model/player.dart';
 import 'package:client/model/riverpod/board_state.dart';

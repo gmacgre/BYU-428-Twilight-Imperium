@@ -1,8 +1,8 @@
 import 'package:client/data/color_data.dart';
 import 'package:client/data/strings.dart';
 import 'package:client/model/riverpod/board_state.dart';
+import 'package:client/model/riverpod/ship_selector_provider.dart';
 import 'package:client/model/ship_model.dart';
-import 'package:client/pages/game/board/ship_selector_provider.dart';
 import 'package:client/res/coordinate.dart';
 import 'package:client/res/outlined_letters.dart';
 import 'package:client/res/unit_tokens/carrier.dart';
@@ -52,8 +52,7 @@ class _MovementCommandWidgetState extends ConsumerState<MovementCommandWidget> {
     if(!ref.read(boardStateProvider).highlightSet.contains(selectedCoordinates)) {
       return _buildOutOfRangeSystemSelected();
     }
-    List<ShipModel>? selectedShips = ref.watch(shipSelectorProvider).selectedShips[selectedCoordinates];
-    print(selectedShips);
+    List<bool>? selectedShips = ref.watch(shipSelectorProvider).selectedShips[selectedCoordinates];
     List<ShipModel> shipsToDisplay = ref.read(boardStateProvider).systemStates[selectedCoordinates.x][selectedCoordinates.y].airSpace;
 
     return _finalBuild(
@@ -72,8 +71,8 @@ class _MovementCommandWidgetState extends ConsumerState<MovementCommandWidget> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        _SelectableShip(model: e.value, owner: activePlayer, height: constraints.maxHeight * 0.5),
-                        TextButton(onPressed: () => {_addShipToOrder(e.key, e.value)}, child: const Text('Add to Move'))
+                        _SelectableShip(model: e.value, owner: activePlayer, highlight: (selectedShips != null) ? selectedShips[e.key] : false, height: constraints.maxHeight * 0.5),
+                        TextButton(onPressed: () => {_addShipToOrder(e.key, (selectedShips != null) ? !selectedShips[e.key] : true)}, child: const Text('Add to Move'))
                       ]
                     ),
                   )
@@ -160,8 +159,9 @@ class _MovementCommandWidgetState extends ConsumerState<MovementCommandWidget> {
   }
   
   void _submitMoves() {
+    ref.read(shipSelectorProvider.notifier).preSubmit();
     if(confirm) {
-      // Actually finalize the moves
+      ref.read(shipSelectorProvider.notifier).submit();
     }
     else {
       setState(() {
@@ -170,9 +170,8 @@ class _MovementCommandWidgetState extends ConsumerState<MovementCommandWidget> {
     }
   }
   
-  void _addShipToOrder(int key, ShipModel m) {
-    print('Adding Ship #$key to Order');
-    ref.read(shipSelectorProvider.notifier).selectShip(m);
+  void _addShipToOrder(int key, bool newStatus) {
+    (newStatus) ? ref.read(shipSelectorProvider.notifier).selectShip(key) : ref.read(shipSelectorProvider.notifier).deselectShip(key);
   }
 
   void _deconfirm() {
@@ -186,9 +185,11 @@ class _SelectableShip extends StatelessWidget {
   final ShipModel model;
   final int owner;
   final double height;
+  final bool highlight;
   const _SelectableShip({
     required this.model,
     required this.owner,
+    required this.highlight,
     required this.height
   });
 
@@ -196,77 +197,88 @@ class _SelectableShip extends StatelessWidget {
   Widget build(BuildContext context) {
     Color outline = ColorData.playerColorOutline[owner];
     Color fill = ColorData.playerColor[owner];
-    return switch(model.type) {
-      ShipType.flagship => FlagshipIcon(
-        outline: outline,
-        fill: fill,
-        combat: model.combat,
-        move: model.movement,
-        capacity: model.capacity,
-        cost: model.cost,
-        width: height * 2, 
-        height: height
-      ),
-      ShipType.warsun => WarSunIcon(
-        outline: outline,
-        fill: fill,
-        combat: model.combat,
-        move: model.movement,
-        capacity: model.capacity,
-        cost: model.cost,
-        width: height, 
-        height: height
-      ),
-      ShipType.dreadnought => DreadnaughtIcon(
-        outline: outline,
-        fill: fill,
-        combat: model.combat,
-        move: model.movement,
-        capacity: model.capacity,
-        cost: model.cost,
-        width: height * 2, 
-        height: height
-      ),
-      ShipType.carrier => CarrierIcon(
-        outline: outline,
-        fill: fill,
-        combat: model.combat,
-        move: model.movement,
-        capacity: model.capacity,
-        cost: model.cost,
-        width: height * 2, 
-        height: height
-      ),
-      ShipType.cruiser => CruiserIcon(
-        outline: outline,
-        fill: fill,
-        combat: model.combat,
-        move: model.movement,
-        capacity: model.capacity,
-        cost: model.cost,
-        width: height * 2, 
-        height: height
-      ),
-      ShipType.destroyer => DestroyerIcon(
-        outline: outline,
-        fill: fill,
-        combat: model.combat,
-        move: model.movement,
-        capacity: model.capacity,
-        cost: model.cost,
-        width: height * 1.5, 
-        height: height
-      ),
-      ShipType.fighter => FighterIcon(
-        outline: outline,
-        fill: fill,
-        combat: model.combat,
-        move: model.movement,
-        capacity: model.capacity,
-        cost: model.cost,
-        width: height, 
-        height: height
-      )
-    };
+    return Stack(
+      children: [
+        Container(
+          height: height,
+          width: (model.type == ShipType.warsun || model.type == ShipType.fighter) ? height : height * 2,
+          decoration: (highlight) ? const BoxDecoration(
+            color: Colors.amberAccent
+          ) : null,
+        ),
+        switch(model.type) {
+          ShipType.flagship => FlagshipIcon(
+            outline: outline,
+            fill: fill,
+            combat: model.combat,
+            move: model.movement,
+            capacity: model.capacity,
+            cost: model.cost,
+            width: height * 2, 
+            height: height
+          ),
+          ShipType.warsun => WarSunIcon(
+            outline: outline,
+            fill: fill,
+            combat: model.combat,
+            move: model.movement,
+            capacity: model.capacity,
+            cost: model.cost,
+            width: height, 
+            height: height
+          ),
+          ShipType.dreadnought => DreadnaughtIcon(
+            outline: outline,
+            fill: fill,
+            combat: model.combat,
+            move: model.movement,
+            capacity: model.capacity,
+            cost: model.cost,
+            width: height * 2, 
+            height: height
+          ),
+          ShipType.carrier => CarrierIcon(
+            outline: outline,
+            fill: fill,
+            combat: model.combat,
+            move: model.movement,
+            capacity: model.capacity,
+            cost: model.cost,
+            width: height * 2, 
+            height: height
+          ),
+          ShipType.cruiser => CruiserIcon(
+            outline: outline,
+            fill: fill,
+            combat: model.combat,
+            move: model.movement,
+            capacity: model.capacity,
+            cost: model.cost,
+            width: height * 2, 
+            height: height
+          ),
+          ShipType.destroyer => DestroyerIcon(
+            outline: outline,
+            fill: fill,
+            combat: model.combat,
+            move: model.movement,
+            capacity: model.capacity,
+            cost: model.cost,
+            width: height * 1.5, 
+            height: height
+          ),
+          ShipType.fighter => FighterIcon(
+            outline: outline,
+            fill: fill,
+            combat: model.combat,
+            move: model.movement,
+            capacity: model.capacity,
+            cost: model.cost,
+            width: height, 
+            height: height
+          )
+        },
+      ]
+    );
   }
 }

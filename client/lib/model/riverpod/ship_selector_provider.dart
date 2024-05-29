@@ -1,6 +1,6 @@
+import 'package:client/data/datacache.dart';
 import 'package:client/res/coordinate.dart';
 import 'package:client/model/riverpod/board_state.dart';
-import 'package:client/model/ship_model.dart';
 import 'package:client/model/turn_phase.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -10,7 +10,9 @@ part 'ship_selector_provider.g.dart';
 class ShipSelector extends _$ShipSelector {
   @override
   ShipSelectorObject build() {
-    return ShipSelectorObject();
+    Map<Coords, List<bool>> oldState = DataCache.instance.selectedShips;
+    DataCache.instance.selectedShips = {};
+    return ShipSelectorObject(selectedShips: oldState);
   }
 
   void activate(Coords coordinate) {
@@ -27,29 +29,46 @@ class ShipSelector extends _$ShipSelector {
     );
   }
 
-  void selectShip(ShipModel ship) {
+  void selectShip(int idx) {
     var selectedShips = {...state.selectedShips};
     var selectedCoordinate = ref.read(boardStateProvider).selectedCoordinate;
-    if (selectedCoordinate != null) {
-      if (selectedShips[selectedCoordinate] == null) {
-        selectedShips[selectedCoordinate] = [];
-      }
-      selectedShips[selectedCoordinate]!.add(ship);
+    if (selectedCoordinate == null) {
+      return;
     }
+    if (selectedShips[selectedCoordinate] == null) {
+      // make an array of airspace size
+      int size = ref.read(boardStateProvider).systemStates[selectedCoordinate.x][selectedCoordinate.y].airSpace.length;
+      selectedShips[selectedCoordinate] = List.filled(size, false, growable: false);
+    }
+    selectedShips[selectedCoordinate]![idx] = true;
 
     state = ShipSelectorObject(
       selectedShips: selectedShips,
     );
   }
 
-  void deselectShip(ShipModel ship) {
+  void deselectShip(int idx) {
     var selectedShips = {...state.selectedShips};
     var selectedCoordinate = ref.read(boardStateProvider).selectedCoordinate;
-    if (selectedCoordinate != null) {
-      if (selectedShips[selectedCoordinate] != null) {
-        selectedShips[selectedCoordinate]!.remove(ship);
+    if (selectedCoordinate == null) {
+      return;
+    }
+    // Remove from the Move Order
+    selectedShips[selectedCoordinate]![idx] = false;
+
+    // Check if no ships are ordered, and if so, remove the list from the map
+    bool toRemove = true;
+    for(bool b in selectedShips[selectedCoordinate]!) {
+      if(b) {
+        toRemove = false;
+        break;
       }
     }
+    if(toRemove) {
+      selectedShips.remove(selectedCoordinate);
+    }
+
+    // Set the new State
     state = ShipSelectorObject(
       selectedShips: selectedShips,
     );
@@ -57,18 +76,23 @@ class ShipSelector extends _$ShipSelector {
 
   void submit() {
     ref.read(boardStateProvider.notifier).moveShips(
-          map: state.selectedShips,
-        );
-    state = ShipSelectorObject();
+      orders: state.selectedShips,
+    );
+    cancel();
   }
 
   void cancel() {
+    DataCache.instance.selectedShips = {};
     state = ShipSelectorObject();
+  }
+
+  void preSubmit() {
+    DataCache.instance.selectedShips = state.selectedShips;
   }
 }
 
 class ShipSelectorObject {
-  Map<Coords, List<ShipModel>> selectedShips;
+  Map<Coords, List<bool>> selectedShips;
 
   ShipSelectorObject({
     this.selectedShips = const {},

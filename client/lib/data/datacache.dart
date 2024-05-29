@@ -14,11 +14,15 @@ import 'package:client/model/turn_phase.dart';
 // NOTE: This class is basically technical debt, but functions as a layer of safety for the program. If no server is reachable, it uses these defaults instead.
 // DO NOT REMOVE
 class DataCache {
+  
+
   DataCache._();
   static final DataCache instance = DataCache._();
 
   String userToken = '';
   int userSeatNumber = 0;
+
+  Map<Coords, List<bool>> selectedShips = {};
 
   int activePlayer = 0;
 
