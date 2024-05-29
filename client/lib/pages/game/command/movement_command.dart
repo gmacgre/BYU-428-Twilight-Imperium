@@ -26,6 +26,8 @@ class _MovementCommandWidgetState extends ConsumerState<MovementCommandWidget> {
 
   late final ScrollController _scrollController;
 
+  bool confirm = false;
+
   @override
   void initState() {
     _scrollController = ScrollController();
@@ -34,6 +36,10 @@ class _MovementCommandWidgetState extends ConsumerState<MovementCommandWidget> {
 
   @override
   Widget build(BuildContext context) {
+
+    if(confirm) {
+      return _buildConfirm();
+    }
     
     Coords? selectedCoordinates = ref.watch(boardStateProvider).selectedCoordinate;
     if(selectedCoordinates == null || selectedCoordinates == ref.read(boardStateProvider).activeCoordinate) {
@@ -47,28 +53,32 @@ class _MovementCommandWidgetState extends ConsumerState<MovementCommandWidget> {
       return _buildOutOfRangeSystemSelected();
     }
     List<ShipModel>? selectedShips = ref.watch(shipSelectorProvider).selectedShips[selectedCoordinates];
+    print(selectedShips);
     List<ShipModel> shipsToDisplay = ref.read(boardStateProvider).systemStates[selectedCoordinates.x][selectedCoordinates.y].airSpace;
 
     return _finalBuild(
       LayoutBuilder(
-        builder: (context, constraints) => Scrollbar(
-          thumbVisibility: true,
-          controller: _scrollController,
-          child: SingleChildScrollView(
+        builder: (context, constraints) => Center(
+          child: Scrollbar(
+            thumbVisibility: true,
             controller: _scrollController,
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: shipsToDisplay.map((e) => 
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      _SelectableShip(model: e, owner: activePlayer, height: constraints.maxHeight * 0.5),
-                    ]
-                  ),
-                )
-              ).toList()
+            child: SingleChildScrollView(
+              controller: _scrollController,
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: shipsToDisplay.asMap().entries.map((e) => 
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        _SelectableShip(model: e.value, owner: activePlayer, height: constraints.maxHeight * 0.5),
+                        TextButton(onPressed: () => {_addShipToOrder(e.key, e.value)}, child: const Text('Add to Move'))
+                      ]
+                    ),
+                  )
+                ).toList()
+              ),
             ),
           ),
         ),
@@ -97,6 +107,34 @@ class _MovementCommandWidgetState extends ConsumerState<MovementCommandWidget> {
     );
   }
 
+  Widget _buildConfirm() {
+    return _finalBuild(
+      Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const Text('Are you sure these are all the ships you want to move?'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(onPressed: () => {_submitMoves()}, child: const OutlinedLetters(content: 'Yes')),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(onPressed: () => {_deconfirm()}, child: const OutlinedLetters(content: 'No')),
+                )
+              ],
+            )
+          ],
+        )
+      )
+    );
+  }
+
   Widget _buildOtherPlayerSystemSelected() {
     return _finalBuild(
       const Center(
@@ -121,7 +159,27 @@ class _MovementCommandWidgetState extends ConsumerState<MovementCommandWidget> {
     );
   }
   
-  void _submitMoves() {}
+  void _submitMoves() {
+    if(confirm) {
+      // Actually finalize the moves
+    }
+    else {
+      setState(() {
+        confirm = true;
+      });
+    }
+  }
+  
+  void _addShipToOrder(int key, ShipModel m) {
+    print('Adding Ship #$key to Order');
+    ref.read(shipSelectorProvider.notifier).selectShip(m);
+  }
+
+  void _deconfirm() {
+    setState(() {
+      confirm = false;
+    });
+  }
 }
 
 class _SelectableShip extends StatelessWidget {
