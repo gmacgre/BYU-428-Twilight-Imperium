@@ -108,13 +108,8 @@ class _BoardSpaceState extends ConsumerState<BoardSpace> {
   }
 
   _processDoubleTap() {
-    if(!existsActivatedSystem){
-      highlightSystem();
-      activateSystem();
-    }
-    else {
-      selectShips();
-    }
+    // TODO: Maybe make this different later?
+    _processTap();
   }
 
   activateSystem() {

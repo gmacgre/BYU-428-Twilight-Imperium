@@ -32,11 +32,11 @@ class DataCache {
 
   List<Player> players = [
     Player('jol_nar', false, 5, 5, 5, 3, false, 1),
-    Player('sol', false, 5, 5, 5, 3, false, 1),
-    Player('hacan', false, 5, 5, 5, 3, false, 1),
-    Player('l1z1x', false, 5, 5, 5, 3, false, 1),
-    Player('letnev', false, 5, 5, 5, 3, false, 1),
-    Player('creuss', false, 5, 5, 5, 3, false, 1),
+    Player('sol', false, 5, 5, 5, 3, false, 3),
+    Player('hacan', false, 5, 5, 5, 3, false, 2),
+    Player('l1z1x', false, 5, 5, 5, 3, false, 4),
+    Player('letnev', false, 5, 5, 5, 3, false, 5),
+    Player('creuss', false, 5, 5, 5, 3, false, 6),
   ];
 
   List<Objective> publicObjectives = [];

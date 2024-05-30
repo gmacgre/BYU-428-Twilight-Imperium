@@ -28,6 +28,10 @@ class Player {
     _race = newRace;
   }
 
+  bool getPassed() {
+    return _passed;
+  }
+
   int getTacticPool() {
     return _tacticPool;
   }

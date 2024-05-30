@@ -107,29 +107,27 @@ class _MovementCommandWidgetState extends ConsumerState<MovementCommandWidget> {
   }
 
   Widget _buildConfirm() {
-    return _finalBuild(
-      Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const Text('Are you sure these are all the ships you want to move?'),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ElevatedButton(onPressed: () => {_submitMoves()}, child: const OutlinedLetters(content: 'Yes')),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ElevatedButton(onPressed: () => {_deconfirm()}, child: const OutlinedLetters(content: 'No')),
-                )
-              ],
-            )
-          ],
-        )
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const Text('Are you sure these are all the ships you want to move?'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton(onPressed: () => {_submitMoves()}, child: const OutlinedLetters(content: 'Yes')),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton(onPressed: () => {_deconfirm()}, child: const OutlinedLetters(content: 'No')),
+              )
+            ],
+          )
+        ],
       )
     );
   }

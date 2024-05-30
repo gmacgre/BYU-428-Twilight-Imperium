@@ -1,10 +1,12 @@
 import 'package:client/data/ship_data.dart';
 import 'package:client/data/system_data.dart';
+import 'package:client/model/player.dart';
 import 'package:client/model/request_response/update/air_force_placed.dart';
 import 'package:client/model/request_response/update/ground_force_placed.dart';
 import 'package:client/model/request_response/update/pds_placed.dart';
 import 'package:client/model/request_response/update/spacedock_placed.dart';
 import 'package:client/model/request_response/update/system_placed.dart';
+import 'package:client/model/riverpod/player_state.dart';
 import 'package:client/model/riverpod/production_provider.dart';
 import 'package:client/model/riverpod/ship_selector_provider.dart';
 import 'package:client/res/coordinate.dart';
@@ -229,6 +231,32 @@ class BoardState extends _$BoardState {
   void endTurn() {
     //This will need to send the end turn request to the server
     DataCache.instance.boardState = state.systemStates;
+    // Find the player with the next highest strategy card and make them the active player.
+    List<Player> players = ref.read(playerStateProvider).players;
+    int aPlayerCard = players[state.activePlayer].getStrategyCard();
+    int nextPlayer = -1;
+    int value = 0;
+    for(int i = 0; i < players.length; i++) {
+      if(i == state.activePlayer) {
+        continue;
+      }
+      Player p = players[i];
+      if(p.getPassed()) {
+        continue;
+      }
+      // Getting this value requires some explanation- basically it naturally sorts the next card in sequence at value 7.
+      // Subsequent cards get values 6, 5, 4 etc. until 1.
+      int val = (aPlayerCard - p.getStrategyCard()) % 8;
+      if(val > value) {
+        value = val;
+        nextPlayer = i;
+      }
+    }
+    if(nextPlayer == -1) {
+      //TODO: Only possible if all players have passed- go to Status phase
+    }
+    DataCache.instance.activePlayer = nextPlayer;
+    DataCache.instance.phase = (DataCache.instance.userSeatNumber == nextPlayer) ? TurnPhase.activation : TurnPhase.observation;
     ref.invalidate(shipSelectorProvider);
     ref.invalidate(productionProvider);
     ref.invalidateSelf();
