@@ -1,5 +1,5 @@
-import 'package:client/board/info/player_overview.dart';
 import 'package:client/model/player.dart';
+import 'package:client/pages/game/info/player_overview.dart';
 import 'package:flutter/material.dart';
 
 class PlayerInfo extends StatelessWidget {

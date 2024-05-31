@@ -13,7 +13,8 @@ class ColorData {
     Colors.pink
   ];
 
-  static final List<Color> playerAirspaceColor = [
+
+  static final List<Color> playerColorFaded = [
     const Color.fromARGB(200, 147, 40, 32),
     const Color.fromARGB(200, 21, 89, 145),
     const Color.fromARGB(200, 79, 20, 90),
@@ -22,6 +23,17 @@ class ColorData {
     const Color.fromARGB(150, 0, 0, 0),
     const Color.fromARGB(200, 255, 153, 0),
     const Color.fromARGB(200, 233, 30, 98)
+  ];
+
+  static final List<Color> playerColorOutline = [
+    Colors.black,
+    Colors.black,
+    Colors.white,
+    Colors.black,
+    Colors.black,
+    Colors.white,
+    Colors.black,
+    Colors.black
   ];
 
   static final Map<PlanetTrait, Color> traitColor = {

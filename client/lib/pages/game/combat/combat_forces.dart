@@ -1,4 +1,4 @@
-import 'package:client/combat/force_makeup.dart';
+import 'package:client/pages/game/combat/force_makeup.dart';
 import 'package:client/data/strings.dart';
 import 'package:client/res/unit_tokens/carrier.dart';
 import 'package:client/res/unit_tokens/cruiser.dart';

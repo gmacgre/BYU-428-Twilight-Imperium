@@ -1,7 +1,7 @@
-import 'package:client/board/board_space/board_click_interface.dart';
 import 'package:client/data/strings.dart';
 import 'package:client/model/player.dart';
 import 'package:client/model/ship_model.dart';
+import 'package:client/pages/game/board/board_space/board_click_interface.dart';
 import 'package:client/res/hover_tip.dart';
 import 'package:flutter/material.dart';
 

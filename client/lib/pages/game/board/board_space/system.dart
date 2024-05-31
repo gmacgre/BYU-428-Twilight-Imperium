@@ -1,9 +1,9 @@
-import 'package:client/board/board_space/anomaly.dart';
-import 'package:client/board/board_space/board_click_interface.dart';
-import 'package:client/board/board_space/planet.dart';
-import 'package:client/board/board_space/wormhole.dart';
 import 'package:client/data/system_data.dart';
 import 'package:client/model/planet_state.dart';
+import 'package:client/pages/game/board/board_space/anomaly.dart';
+import 'package:client/pages/game/board/board_space/board_click_interface.dart';
+import 'package:client/pages/game/board/board_space/planet.dart';
+import 'package:client/pages/game/board/board_space/wormhole.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

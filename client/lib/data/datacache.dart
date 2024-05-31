@@ -1,7 +1,7 @@
 import 'package:client/data/planet_data.dart';
 import 'package:client/data/ship_data.dart';
 import 'package:client/res/coordinate.dart';
-import 'package:client/combat/force_makeup.dart';
+import 'package:client/pages/game/combat/force_makeup.dart';
 import 'package:client/data/system_data.dart';
 import 'package:client/model/objective.dart';
 import 'package:client/model/planet_state.dart';
@@ -14,11 +14,15 @@ import 'package:client/model/turn_phase.dart';
 // NOTE: This class is basically technical debt, but functions as a layer of safety for the program. If no server is reachable, it uses these defaults instead.
 // DO NOT REMOVE
 class DataCache {
+  
+
   DataCache._();
   static final DataCache instance = DataCache._();
 
   String userToken = '';
   int userSeatNumber = 0;
+
+  Map<Coords, List<bool>> selectedShips = {};
 
   int activePlayer = 0;
 
@@ -28,11 +32,11 @@ class DataCache {
 
   List<Player> players = [
     Player('jol_nar', false, 5, 5, 5, 3, false, 1),
-    Player('sol', false, 5, 5, 5, 3, false, 1),
-    Player('hacan', false, 5, 5, 5, 3, false, 1),
-    Player('l1z1x', false, 5, 5, 5, 3, false, 1),
-    Player('letnev', false, 5, 5, 5, 3, false, 1),
-    Player('creuss', false, 5, 5, 5, 3, false, 1),
+    Player('sol', false, 5, 5, 5, 3, false, 3),
+    Player('hacan', false, 5, 5, 5, 3, false, 2),
+    Player('l1z1x', false, 5, 5, 5, 3, false, 4),
+    Player('letnev', false, 5, 5, 5, 3, false, 5),
+    Player('creuss', false, 5, 5, 5, 3, false, 6),
   ];
 
   List<Objective> publicObjectives = [];
@@ -70,6 +74,12 @@ class DataCache {
       airSpace: [
         ShipData.defaultData[ShipType.cruiser]!,
         ShipData.defaultData[ShipType.cruiser]!,
+        ShipData.defaultData[ShipType.cruiser]!,
+        ShipData.defaultData[ShipType.cruiser]!,
+        ShipData.defaultData[ShipType.cruiser]!,
+        ShipData.defaultData[ShipType.cruiser]!,
+        ShipData.defaultData[ShipType.cruiser]!,
+        ShipData.defaultData[ShipType.cruiser]!,
       ], systemOwner: 0),
       SystemState(systemModel: SystemData.systemList['Empty']!,
       airSpace: [
@@ -96,7 +106,7 @@ class DataCache {
       SystemState(systemModel: SystemData.systemList['Undefined']!),
       SystemState(systemModel: SystemData.systemList['Mehar Xull']!,
       airSpace: [
-        ShipModel(1, 1, 1, 1, ShipType.cruiser),
+        ShipData.defaultData[ShipType.cruiser]!,
 
       ], systemOwner: 0),
       SystemState(systemModel: SystemData.systemList['Mellon']!,
@@ -112,6 +122,11 @@ class DataCache {
     //Column 4
     [
       SystemState(systemModel: SystemData.systemList['Hercant']!,
+      planets: [
+        PlanetState(planet: SystemData.systemList['Hercant']!.planets![0], planetOwner: -1, numGroundForces: 0, existsSpaceDock: false, numPDS: 0),
+        PlanetState(planet: SystemData.systemList['Hercant']!.planets![1], planetOwner: 1, numGroundForces: 1, existsSpaceDock: true, numPDS: 0),
+        PlanetState(planet: SystemData.systemList['Hercant']!.planets![2], planetOwner: 2, numGroundForces: 1, existsSpaceDock: true, numPDS: 1),
+      ],
       airSpace: [
         ShipModel(1, 1, 1, 1, ShipType.fighter),
         ShipModel(1, 1, 1, 1, ShipType.fighter),

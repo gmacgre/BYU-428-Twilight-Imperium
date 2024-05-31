@@ -15,36 +15,6 @@ class PDSIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomPaint(
       painter: _PDSPainter(color: color),
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(0,6,0,0),
-          child: Stack(
-            children: [
-              Text(
-                '$count', 
-                style: TextStyle(
-                  fontSize: 8.0,
-                  decoration: TextDecoration.none,
-                  foreground: Paint()
-                    ..color=Colors.black
-                    ..style=PaintingStyle.stroke
-                    ..strokeWidth=3
-                ),
-              ),
-              Text(
-                '$count', 
-                style: TextStyle(
-                  fontSize: 8.0,
-                  decoration: TextDecoration.none,
-                  foreground: Paint()
-                    ..color=Colors.white
-                    ..strokeWidth=1
-                ),
-              )
-            ]
-          ),
-        ),
-      )
     );
   }
 }

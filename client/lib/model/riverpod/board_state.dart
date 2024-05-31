@@ -1,13 +1,15 @@
 import 'package:client/data/ship_data.dart';
 import 'package:client/data/system_data.dart';
+import 'package:client/model/player.dart';
 import 'package:client/model/request_response/update/air_force_placed.dart';
 import 'package:client/model/request_response/update/ground_force_placed.dart';
 import 'package:client/model/request_response/update/pds_placed.dart';
 import 'package:client/model/request_response/update/spacedock_placed.dart';
 import 'package:client/model/request_response/update/system_placed.dart';
+import 'package:client/model/riverpod/player_state.dart';
+import 'package:client/model/riverpod/production_provider.dart';
+import 'package:client/model/riverpod/ship_selector_provider.dart';
 import 'package:client/res/coordinate.dart';
-import 'package:client/board/production_provider.dart';
-import 'package:client/board/ship_selector_provider.dart';
 import 'package:client/data/datacache.dart';
 import 'package:client/model/ship_model.dart';
 import 'package:client/model/system_state.dart';
@@ -16,7 +18,6 @@ import 'package:client/model/request_response/update/activate.dart';
 import 'package:client/model/request_response/update/update.dart';
 import 'package:client/service/game_logic/ship_movement.dart';
 import 'package:client/service/messaging/activation_service.dart';
-import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'board_state.g.dart';
@@ -101,59 +102,52 @@ class BoardState extends _$BoardState {
 
   /// This is used to move ships from one system to another.
   /// The move for each ship should have already been validated.
-  void moveShips({required Map<Coords, List<ShipModel>> map}) {
-    for (var entry in map.entries) {
-      var from = entry.key;
-      var ships = entry.value;
-      debugPrint('Moving ships from $from to ${state.activeCoordinate}');
-      if (ships.isEmpty) {
-        return;
-      }
-      var fromSystem = state.systemStates[from.x][from.y];
+  void moveShips({required Map<Coords, List<bool>> orders}) {
+    
+    var systems = [...state.systemStates];
+    var toSystem = systems[state.activeCoordinate!.x]
+        [state.activeCoordinate!.y];
 
+    for(var systemOrder in orders.entries) {
+      var fromSystem = systems[systemOrder.key.x][systemOrder.key.y];
+      var toMove = systemOrder.value;
+      
       List<ShipModel> shipsToAdd = List.empty(growable: true);
-      for (int i = 0; i < ships.length; i++) {
-        fromSystem.airSpace.remove(ships[i]);
-        shipsToAdd.add(ships[i]);
+      for (int i = 0; i < toMove.length; i++) {
+        if(toMove[i] == true) {
+          shipsToAdd.add(fromSystem.airSpace[i]);
+        } 
       }
-      var systems = [...state.systemStates];
-      var toSystem = state.systemStates[state.activeCoordinate!.x]
-          [state.activeCoordinate!.y];
 
-      systems[from.x][from.y] = SystemState(
-          systemModel: fromSystem.systemModel, airSpace: fromSystem.airSpace);
-      systems[state.activeCoordinate!.x][state.activeCoordinate!.y] =
-          SystemState(
-        systemModel: toSystem.systemModel,
-        airSpace: [
-          ...shipsToAdd,
-          ...toSystem.airSpace,
-        ],
-      );
+      for(int i = toMove.length - 1; i >= 0; i--) {
+        if(toMove[i] == true) {
+          fromSystem.airSpace.removeAt(i);
+        }
+      }
+
+      fromSystem.systemOwner = (fromSystem.airSpace.isEmpty) ? -1 : systems[systemOrder.key.x][systemOrder.key.y].systemOwner;
+      toSystem.airSpace =
+      [
+        ...shipsToAdd,
+        ...toSystem.airSpace,
+      ];
+    }
+
+    systems[state.activeCoordinate!.x][state.activeCoordinate!.y] = toSystem;
+    
+    if(state.activeSystemState!.systemOwner != -1 && state.activeSystemState!.systemOwner != state.activePlayer) {
+      // Combat will ensue, find the collection of each sides forces
+      _launchCombat();
+    }
+    else {
+      systems[state.activeCoordinate!.x][state.activeCoordinate!.y].systemOwner = state.activePlayer;
+      state.activeSystemState!.systemOwner = state.activePlayer;
       state = BoardStateObject(
         systemStates: systems,
         oldState: state,
-        alreadyProvided: const {}
-      );
-    }
-    //If someone owns the airspace and it's not the current player, go to combat phase
-    // TODO: Real launch is here for later
-    if (state.activeSystemState!.systemOwner != -1 &&
-        DataCache.instance.userSeatNumber != state.activeSystemState!.systemOwner) {
-      state = BoardStateObject(
-        systemStates: state.systemStates,
-        currentPhase: TurnPhase.combat,
-        oldState: state,
-        alreadyProvided: const {'cp'}
-      );
-    } else {
-      //I'm skipping ground invasions for now, if there is no space combat we're going straight to production
-      state = BoardStateObject(
-        //TODO : THIS WILL NEED TO BE MODIFIED LATER AS WELL
-        systemStates: state.systemStates,
-        currentPhase: TurnPhase.combat,
-        oldState: state,
-        alreadyProvided: const {'cp'}
+        currentPhase: TurnPhase.production,
+        highlightSet: {},
+        alreadyProvided: const {'cp', 'hs'}
       );
     }
   }
@@ -237,6 +231,32 @@ class BoardState extends _$BoardState {
   void endTurn() {
     //This will need to send the end turn request to the server
     DataCache.instance.boardState = state.systemStates;
+    // Find the player with the next highest strategy card and make them the active player.
+    List<Player> players = ref.read(playerStateProvider).players;
+    int aPlayerCard = players[state.activePlayer].getStrategyCard();
+    int nextPlayer = -1;
+    int value = 0;
+    for(int i = 0; i < players.length; i++) {
+      if(i == state.activePlayer) {
+        continue;
+      }
+      Player p = players[i];
+      if(p.getPassed()) {
+        continue;
+      }
+      // Getting this value requires some explanation- basically it naturally sorts the next card in sequence at value 7.
+      // Subsequent cards get values 6, 5, 4 etc. until 1.
+      int val = (aPlayerCard - p.getStrategyCard()) % 8;
+      if(val > value) {
+        value = val;
+        nextPlayer = i;
+      }
+    }
+    if(nextPlayer == -1) {
+      //TODO: Only possible if all players have passed- go to Status phase
+    }
+    DataCache.instance.activePlayer = nextPlayer;
+    DataCache.instance.phase = (DataCache.instance.userSeatNumber == nextPlayer) ? TurnPhase.activation : TurnPhase.observation;
     ref.invalidate(shipSelectorProvider);
     ref.invalidate(productionProvider);
     ref.invalidateSelf();
@@ -338,6 +358,28 @@ class BoardState extends _$BoardState {
     ref.invalidate(shipSelectorProvider);
     ref.invalidate(productionProvider);
     ref.invalidateSelf();
+  }
+
+  void _launchCombat() {
+    if (state.activeSystemState!.systemOwner != -1 &&
+        DataCache.instance.userSeatNumber != state.activeSystemState!.systemOwner) {
+      state = BoardStateObject(
+        systemStates: state.systemStates,
+        currentPhase: TurnPhase.activation,
+        oldState: state,
+        highlightSet: {},
+        alreadyProvided: const {'cp', 'hs'}
+      );
+    } else {
+      //I'm skipping ground invasions for now, if there is no space combat we're going straight to production
+      state = BoardStateObject(
+        //TODO : THIS WILL NEED TO BE MODIFIED LATER AS WELL
+        systemStates: state.systemStates,
+        currentPhase: TurnPhase.activation,
+        oldState: state,
+        alreadyProvided: const {'cp', 'hs'}
+      );
+    }
   }
 }
 
