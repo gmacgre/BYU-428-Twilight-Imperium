@@ -140,8 +140,10 @@ class BoardState extends _$BoardState {
       _launchCombat();
     }
     else {
-      systems[state.activeCoordinate!.x][state.activeCoordinate!.y].systemOwner = state.activePlayer;
-      state.activeSystemState!.systemOwner = state.activePlayer;
+      if(toSystem.airSpace.isNotEmpty) {
+        systems[state.activeCoordinate!.x][state.activeCoordinate!.y].systemOwner = state.activePlayer;
+        state.activeSystemState!.systemOwner = state.activePlayer;
+      }
       state = BoardStateObject(
         systemStates: systems,
         oldState: state,
