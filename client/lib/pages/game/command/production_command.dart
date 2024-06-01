@@ -10,9 +10,17 @@ class ProductionCommandWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     SystemState state = ref.read(boardStateProvider).activeSystemState!;
+    int activePlayer = ref.read(boardStateProvider).activePlayer;
     
     if( state.planets == null || 
-        state.planets!.isEmpty) {
+        state.planets!.isEmpty ||
+        state.systemOwner != activePlayer) {
+      return _buildCannotProduce(ref);
+    }
+
+    bool hasWorkingSpacedock = state.planets!.fold(false, (previousValue, element) => (element.existsSpaceDock && element.planetOwner == activePlayer)? true: previousValue);
+
+    if(!hasWorkingSpacedock){
       return _buildCannotProduce(ref);
     }
 
