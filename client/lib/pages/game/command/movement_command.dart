@@ -54,6 +54,7 @@ class _MovementCommandWidgetState extends ConsumerState<MovementCommandWidget> {
     }
     List<bool>? selectedShips = ref.watch(shipSelectorProvider).selectedShips[selectedCoordinates];
     List<ShipModel> shipsToDisplay = ref.read(boardStateProvider).systemStates[selectedCoordinates.x][selectedCoordinates.y].airSpace;
+    List<bool>? allowed = ref.read(boardStateProvider).distanceData[selectedCoordinates]!;
 
     return _finalBuild(
       LayoutBuilder(
@@ -65,16 +66,29 @@ class _MovementCommandWidgetState extends ConsumerState<MovementCommandWidget> {
               controller: _scrollController,
               scrollDirection: Axis.horizontal,
               child: Row(
-                children: shipsToDisplay.asMap().entries.map((e) => 
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        _SelectableShip(model: e.value, owner: activePlayer, highlight: (selectedShips != null) ? selectedShips[e.key] : false, height: constraints.maxHeight * 0.5),
-                        TextButton(onPressed: () => {_addShipToOrder(e.key, (selectedShips != null) ? !selectedShips[e.key] : true)}, child: const Text('Add to Move'))
-                      ]
-                    ),
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: shipsToDisplay.asMap().entries.map((e) => (!allowed[e.key])? const SizedBox(height: 0, width: 0,) :
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      _SelectableShip(model: e.value, owner: activePlayer, highlight: (selectedShips != null) ? selectedShips[e.key] : false, height: constraints.maxHeight * 0.4),
+                      SizedBox(
+                        height: constraints.maxHeight * 0.3,
+                        child: TextButton(
+                          onPressed: () => {_addShipToOrder(e.key, (selectedShips != null) ? !selectedShips[e.key] : true)}, 
+                          style: TextButton.styleFrom(
+                            foregroundColor: Colors.amberAccent,
+                            textStyle: const TextStyle(
+                              fontFamily: 'Handel Gothic D',
+                              color: Colors.black
+                            )
+                          ),
+                          child: const Text(
+                            'Add to Move',
+                          )
+                        ),
+                      )
+                    ]
                   )
                 ).toList()
               ),
@@ -195,88 +209,88 @@ class _SelectableShip extends StatelessWidget {
   Widget build(BuildContext context) {
     Color outline = ColorData.playerColorOutline[owner];
     Color fill = ColorData.playerColor[owner];
-    return Stack(
-      children: [
-        Container(
-          height: height,
-          width: (model.type == ShipType.warsun || model.type == ShipType.fighter) ? height : height * 2,
-          decoration: (highlight) ? const BoxDecoration(
-            color: Colors.amberAccent
-          ) : null,
+    return Container(
+      decoration: (highlight) ? const BoxDecoration(
+        color: Color.fromARGB(150, 255, 214, 64),
+        borderRadius: BorderRadius.all(Radius.circular(20))
+      ) : null,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Center(
+          child: switch(model.type) {
+            ShipType.flagship => FlagshipIcon(
+              outline: outline,
+              fill: fill,
+              combat: model.combat,
+              move: model.movement,
+              capacity: model.capacity,
+              cost: model.cost,
+              width: height * 2, 
+              height: height
+            ),
+            ShipType.warsun => WarSunIcon(
+              outline: outline,
+              fill: fill,
+              combat: model.combat,
+              move: model.movement,
+              capacity: model.capacity,
+              cost: model.cost,
+              width: height, 
+              height: height
+            ),
+            ShipType.dreadnought => DreadnaughtIcon(
+              outline: outline,
+              fill: fill,
+              combat: model.combat,
+              move: model.movement,
+              capacity: model.capacity,
+              cost: model.cost,
+              width: height * 2, 
+              height: height
+            ),
+            ShipType.carrier => CarrierIcon(
+              outline: outline,
+              fill: fill,
+              combat: model.combat,
+              move: model.movement,
+              capacity: model.capacity,
+              cost: model.cost,
+              width: height * 2, 
+              height: height
+            ),
+            ShipType.cruiser => CruiserIcon(
+              outline: outline,
+              fill: fill,
+              combat: model.combat,
+              move: model.movement,
+              capacity: model.capacity,
+              cost: model.cost,
+              width: height * 2, 
+              height: height
+            ),
+            ShipType.destroyer => DestroyerIcon(
+              outline: outline,
+              fill: fill,
+              combat: model.combat,
+              move: model.movement,
+              capacity: model.capacity,
+              cost: model.cost,
+              width: height * 1.5, 
+              height: height
+            ),
+            ShipType.fighter => FighterIcon(
+              outline: outline,
+              fill: fill,
+              combat: model.combat,
+              move: model.movement,
+              capacity: model.capacity,
+              cost: model.cost,
+              width: height, 
+              height: height
+            )
+          }, 
         ),
-        switch(model.type) {
-          ShipType.flagship => FlagshipIcon(
-            outline: outline,
-            fill: fill,
-            combat: model.combat,
-            move: model.movement,
-            capacity: model.capacity,
-            cost: model.cost,
-            width: height * 2, 
-            height: height
-          ),
-          ShipType.warsun => WarSunIcon(
-            outline: outline,
-            fill: fill,
-            combat: model.combat,
-            move: model.movement,
-            capacity: model.capacity,
-            cost: model.cost,
-            width: height, 
-            height: height
-          ),
-          ShipType.dreadnought => DreadnaughtIcon(
-            outline: outline,
-            fill: fill,
-            combat: model.combat,
-            move: model.movement,
-            capacity: model.capacity,
-            cost: model.cost,
-            width: height * 2, 
-            height: height
-          ),
-          ShipType.carrier => CarrierIcon(
-            outline: outline,
-            fill: fill,
-            combat: model.combat,
-            move: model.movement,
-            capacity: model.capacity,
-            cost: model.cost,
-            width: height * 2, 
-            height: height
-          ),
-          ShipType.cruiser => CruiserIcon(
-            outline: outline,
-            fill: fill,
-            combat: model.combat,
-            move: model.movement,
-            capacity: model.capacity,
-            cost: model.cost,
-            width: height * 2, 
-            height: height
-          ),
-          ShipType.destroyer => DestroyerIcon(
-            outline: outline,
-            fill: fill,
-            combat: model.combat,
-            move: model.movement,
-            capacity: model.capacity,
-            cost: model.cost,
-            width: height * 1.5, 
-            height: height
-          ),
-          ShipType.fighter => FighterIcon(
-            outline: outline,
-            fill: fill,
-            combat: model.combat,
-            move: model.movement,
-            capacity: model.capacity,
-            cost: model.cost,
-            width: height, 
-            height: height
-          )
-        },
-      ]
+      ) 
     );
   }
 }
