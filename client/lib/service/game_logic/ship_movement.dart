@@ -30,11 +30,11 @@ class ShipMovementLogic{
   // Run a BFS on the board to see who can move to a system.
   // If there is at least one ship with the movement large enough to reach the activated system
   // At that system to the list as a coordinate.
-  static List<Coords> possibleMoves(Coords activatedSystem, List<List<SystemState>> board, int activePlayer) {
+  static Map<Coords, List<bool>> possibleMoves(Coords activatedSystem, List<List<SystemState>> board, int activePlayer) {
 
     // Do a "Tech Check" here for the active player
 
-    List<Coords> toReturn = [];
+    Map<Coords, List<bool>> toReturn = {};
     Set<Coords> visited = {};
     Queue<Pair<Coords, int>> queue = Queue();
     queue.addLast(Pair(activatedSystem, 0));
@@ -73,11 +73,16 @@ class ShipMovementLogic{
       if(s.airSpace.isNotEmpty &&
         s.systemOwner == activePlayer &&
         distance != 0) {
-        for (ShipModel ship in s.airSpace) {
-          if(ship.movement >= distance) {
-            toReturn.add(currSystem);
-            break;
+        List<bool> allowed = List.filled(s.airSpace.length, false, growable: false);
+        bool shouldAdd = false;
+        for (int i = 0; i < s.airSpace.length; i++) {
+          if(s.airSpace[i].movement >= distance) {
+            allowed[i] = true;
+            shouldAdd = true;
           }
+        }
+        if(shouldAdd) {
+          toReturn[currSystem] = allowed;
         }
       }
 

@@ -147,7 +147,8 @@ class BoardState extends _$BoardState {
         oldState: state,
         currentPhase: TurnPhase.production,
         highlightSet: {},
-        alreadyProvided: const {'cp', 'hs'}
+        distanceData: {},
+        alreadyProvided: const {'cp', 'hs', 'dd'}
       );
     }
   }
@@ -205,16 +206,19 @@ class BoardState extends _$BoardState {
   void _setSystemActive() {
     TurnPhase toSet = (state.activePlayer == state.playerSeatNumber) ? TurnPhase.movement : TurnPhase.observation;
     Set<Coords> validSources = {};
+    Map<Coords, List<bool>> distanceData = {};
     if(toSet == TurnPhase.movement) {
-      validSources = ShipMovementLogic.possibleMoves(_activationHold!, state.systemStates, state.activePlayer).toSet();
+      distanceData = ShipMovementLogic.possibleMoves(_activationHold!, state.systemStates, state.activePlayer);
     }
+    validSources = distanceData.keys.toSet();
     state = BoardStateObject(
       systemStates: state.systemStates,
       activeCoordinate: _activationHold,
       currentPhase: toSet,
       oldState: state,
       highlightSet: validSources,
-      alreadyProvided: const {'cp', 'ac', 'hs'}
+      distanceData: distanceData,
+      alreadyProvided: const {'cp', 'ac', 'hs', 'dd'}
     );
     _activationHold = null;
   }
@@ -395,6 +399,7 @@ class BoardStateObject {
   late SystemState? activeSystemState;        // The state of the currently active system, for easier access
   late int activePlayer;
   late Set<Coords> highlightSet;
+  late Map<Coords, List<bool>> distanceData;
 
   static const List<String> _variableSet = [
     'ac', // activeCoordinate
@@ -403,7 +408,8 @@ class BoardStateObject {
     'ps', // playerSeatNumber
     'cp', // currentPhase
     'ap', // activePlayer
-    'hs'  // highlightSet
+    'hs', // highlightSet
+    'dd'  // distanceData
   ];
 
 
@@ -421,6 +427,7 @@ class BoardStateObject {
     this.currentPhase = TurnPhase.activation,
     this.activePlayer = 0,
     this.highlightSet = const {},
+    this.distanceData = const {},
     required BoardStateObject? oldState,
     required Set<String> alreadyProvided
   }) {
@@ -453,6 +460,9 @@ class BoardStateObject {
         }
         case 'hs': {
           highlightSet = oldState.highlightSet;
+        }
+        case 'dd': {
+          distanceData = oldState.distanceData;
         }
       }
     }

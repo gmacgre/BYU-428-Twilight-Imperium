@@ -54,6 +54,7 @@ class _MovementCommandWidgetState extends ConsumerState<MovementCommandWidget> {
     }
     List<bool>? selectedShips = ref.watch(shipSelectorProvider).selectedShips[selectedCoordinates];
     List<ShipModel> shipsToDisplay = ref.read(boardStateProvider).systemStates[selectedCoordinates.x][selectedCoordinates.y].airSpace;
+    List<bool>? allowed = ref.read(boardStateProvider).distanceData[selectedCoordinates]!;
 
     return _finalBuild(
       LayoutBuilder(
@@ -66,7 +67,7 @@ class _MovementCommandWidgetState extends ConsumerState<MovementCommandWidget> {
               scrollDirection: Axis.horizontal,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: shipsToDisplay.asMap().entries.map((e) => 
+                children: shipsToDisplay.asMap().entries.map((e) => (!allowed[e.key])? const SizedBox(height: 0, width: 0,) :
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
