@@ -1,5 +1,7 @@
+import 'package:client/data/planet_data.dart';
 import 'package:client/data/ship_data.dart';
 import 'package:client/data/system_data.dart';
+import 'package:client/model/planet_state.dart';
 import 'package:client/model/player.dart';
 import 'package:client/model/request_response/update/air_force_placed.dart';
 import 'package:client/model/request_response/update/ground_force_placed.dart';
@@ -16,6 +18,7 @@ import 'package:client/model/system_state.dart';
 import 'package:client/model/turn_phase.dart';
 import 'package:client/model/request_response/update/activate.dart';
 import 'package:client/model/request_response/update/update.dart';
+import 'package:client/res/pair.dart';
 import 'package:client/service/game_logic/ship_movement.dart';
 import 'package:client/service/messaging/activation_service.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -386,6 +389,24 @@ class BoardState extends _$BoardState {
         alreadyProvided: const {'cp', 'hs'}
       );
     }
+  }
+
+  // Used to get the list of planets a player owns in the player overview, and any expediture windows
+  List<Pair<PlanetState, PlanetModel>> getOwnedPlanets(int player) {
+    List<Pair<PlanetState, PlanetModel>> toReturn = [];
+    for(List<SystemState> col in state.systemStates) {
+      for(SystemState system in col) {
+        if(system.planets == null) {
+          continue;
+        }
+        for(int i = 0; i < system.systemModel.planets!.length; i++) {
+          if(system.planets![i].planetOwner == player) {
+            toReturn.add(Pair(system.planets![i], system.systemModel.planets![i]));
+          }
+        }
+      }
+    }
+    return toReturn;
   }
 }
 

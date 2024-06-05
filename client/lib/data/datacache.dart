@@ -124,7 +124,7 @@ class DataCache {
     [
       SystemState(systemModel: SystemData.systemList['Hercant']!,
       planets: [
-        PlanetState(planet: SystemData.systemList['Hercant']!.planets![0], planetOwner: -1, numGroundForces: 0, existsSpaceDock: false, numPDS: 0),
+        PlanetState(planet: SystemData.systemList['Hercant']!.planets![0], planetOwner: 0, numGroundForces: 0, existsSpaceDock: true, numPDS: 0),
         PlanetState(planet: SystemData.systemList['Hercant']!.planets![1], planetOwner: 1, numGroundForces: 1, existsSpaceDock: true, numPDS: 0),
         PlanetState(planet: SystemData.systemList['Hercant']!.planets![2], planetOwner: 2, numGroundForces: 1, existsSpaceDock: true, numPDS: 1),
       ],
